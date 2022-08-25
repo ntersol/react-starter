@@ -48,6 +48,7 @@ on EC2 etc.
 
 Considered for future inclusion:
 
+* Overview:  React app page flow
 * Redux
 * Router
 * Context API
@@ -61,4 +62,5 @@ Considered for future inclusion:
 * Linting setup for IDEs (VSCode, Webstorm)
 * Testing framework
 * Helmet
+* Adding a favicon
 
