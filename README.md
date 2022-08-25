@@ -1,17 +1,28 @@
-# Getting Started with Create React App
+# NTERSOL React Starter app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+It has not been ejected (read about ejecting [here](https://create-react-app.dev/docs/available-scripts/#npm-run-eject)).
+One of the usual reasons for ejecting is to when a new feature requires a change
+to the webpack configuration.  But alternatives to ejecting should be explored first.
 
-In the project directory, you can run:
+## Installing and Running
 
-### `npm start`
+### Prerequisits
 
+* Install [nvm](https://github.com/nvm-sh/nvm)
+* Install Node 16 (`nvm install 16`)
+
+### `nvm use`
+Chooses the version of node specified in the `.nvmrc`
+
+### `npm install`
+Self-explanatory.
+### `npm run start`
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
+The page will reload if you make edits.
 You will also see any lint errors in the console.
 
 ### `npm test`
@@ -29,18 +40,24 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+One of the great things about a bundled build is you can host it on a simple AWS S3 bucket
+(or the equivalents for Azure, GCP).  Saves you money on standing up a Linux server
+on EC2 etc.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Features
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Considered for future inclusion:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* Redux
+* Router
+* Context API
+* Express server with proxy
+* REST service call with fetch examples
+* autocomplete widget
+* infinite scroll widget
+* CSS libraries (SASS, classnames package, react css modules)
+* A form library (Formik, react-hook-form)
+* A UI library (material-ui, tailwind)
+* Linting setup for IDEs (VSCode, Webstorm)
+* Testing framework
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
