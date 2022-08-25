@@ -11,7 +11,7 @@ to the webpack configuration.  But alternatives to ejecting should be explored f
 ### Prerequisits
 
 * Install [nvm](https://github.com/nvm-sh/nvm)
-* Install Node 16 (`nvm install 16`)
+* Install the correct Node Version (see the `nvmrc` file)
 
 ### `nvm use`
 Chooses the version of node specified in the `.nvmrc`
@@ -64,3 +64,29 @@ Considered for future inclusion:
 * Helmet
 * Adding a favicon
 
+BELOW HERE:  added features
+
+## Linting Setup
+These packages are added to `devDependencies`:   
+> eslint, eslint-config-standard, eslint-config-standard-jsx, 
+eslint-config-standard-react, eslint-plugin-import, eslint-plugin-json, eslint-plugin-n, eslint-plugin-node, eslint-plugin-promise, eslint-plugin-react, prettier
+
+
+### Linting IDE Setup: Webstorm
+1. Preferences -> Languages & Frameworks -> JavaScript -> Code Quality Tools -> ESLint
+2. Selecting the `Automatic ESLing Configuration` radio button should be sufficient
+3. Check the box if you want ESLint fixing on save
+
+If you would like a keystroke to fire off your ESLint fixing:
+
+1. Preferences -> Keymap -> Plugins -> Javascript and TypeScript, double-click on item "Fix ESLint Problems", select "Add Keyboard Shortcut" and type in your shortcut.  Mine is ctrl-Shift-L.
+
+### Linting IDE Setup: VSCode
+1. In the left rail, click the Extensions icon
+2. In the search field, type eslint.  The `ESLint` extension should come up.  If not installed, press the blue `Install` button
+3. Open VSCode settings (cmd-comma on a Mac).  It the left rail, Open `Extensions` and click on *ESLint*.
+4. Press the checkbox under `Eslint: Enable`
+5. Under `Eslint: Run` select the *onSave* option.
+
+
+> 
