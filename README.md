@@ -60,4 +60,5 @@ Considered for future inclusion:
 * A UI library (material-ui, tailwind)
 * Linting setup for IDEs (VSCode, Webstorm)
 * Testing framework
+* Helmet
 

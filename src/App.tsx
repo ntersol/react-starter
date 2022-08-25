@@ -1,28 +1,19 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+// @ts-ignore
+import logo from './ntersolBanner.png';
 import './App.scss';
 
 function App() {
 
-  useEffect(() => {
-    
-  })
-
   return (
     <div className="App">
       <header className="App-header">
+        <h1>
+          React Starter App
+        </h1>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <br/>
+        <i>Table of Contents coming soon...</i>
       </header>
     </div>
   );
