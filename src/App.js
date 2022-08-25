@@ -10,7 +10,7 @@ function App () {
         <h1>
           React Starter App
         </h1>
-        <img src={logo} clasasName='App-logo' alt='logo' />
+        <img src={logo} className='App-logo' alt='logo' />
         <br />
         <div className='scroll-left'><p>Table of Contents coming soon...</p></div>
       </header>
