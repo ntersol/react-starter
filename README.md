@@ -50,6 +50,7 @@ Considered for future inclusion:
 
 * &check; <del>Linting setup for IDEs (VSCode, Webstorm)</del>
 * &check; <del>Router</del>
+* &check; <del>React Helmet</del>
 * Overview in README:  React app page flow
 * Redux
 * Context API
@@ -61,7 +62,6 @@ Considered for future inclusion:
 * A form library (Formik, react-hook-form)
 * A UI library (material-ui, tailwind)
 * Testing framework
-* Helmet
 * Adding a favicon
 
 BELOW HERE:  added features
@@ -98,3 +98,6 @@ React Routing is used throughout.
 React CSS modules are used to namespace the CSS and prevent any component's styles from polluting the styles of others.  CSS files become modules when you name them `xxxx.module.css`.  See the code for the convention of declaring and referencing your styles.
 
 When you view the source, you will notice that the css class names and id's have decorated with addition characters.  Example: `App_link__xYAAD`.  
+
+## Helmet
+`react-helmet` solves the inherent problem of SPAs where all 'pages' inherit the HTML &lt;title&gt; of the main App.  Helmet allows you to set the title for each component individually.

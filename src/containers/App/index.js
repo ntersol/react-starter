@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import Tiger from '../../components/tiger'
 import Parrot from '../../components/parrot'
 import ScrollMessage from '../../components/scrollMessage'
@@ -10,6 +11,10 @@ import './links.css'
 function Index () {
   return (
     <Router>
+      <Helmet>
+        <title>NTERSOL React Starter App - Home</title>
+        <meta name='description' content="Software Developer Greg Sandell's web page" />
+      </Helmet>
       <div className={style.App}>
         <header>
           <div><img src={logo} className={style.logo} alt='logo' /></div>
