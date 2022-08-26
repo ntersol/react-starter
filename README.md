@@ -153,3 +153,6 @@ The `Shared data via Context API` demo uses the `useEffect()` and `useState()` h
 ## Container/Component composition
 &lt;App&gt; and &lt;ContextDemo&gt; are designated as *Containers* because they compose *Components* inside them.
 
+## Form Validation
+The library used for this demo is `react-hook-form`.
+

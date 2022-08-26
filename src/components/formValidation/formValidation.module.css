@@ -1,0 +1,17 @@
+.main {
+    font-family: sans-serif;
+    text-align: center;
+}
+.err {
+    font-weight: bold;
+    color: red;
+}
+label {
+    margin-right: 7px;
+}
+.field {
+    margin-bottom: 15px;
+}
+button#cancel {
+    margin-left: 15px;
+}

@@ -6,6 +6,7 @@ import Tiger from '../../components/tiger'
 import Parrot from '../../components/parrot'
 import ContextDemo from '../contextDemo'
 import ScrollMessage from '../../components/scrollMessage'
+import FormValidation from '../../components/formValidation'
 import logo from '../../image/ntersolBanner.png'
 import style from './App.module.css'
 import './links.css'
@@ -36,6 +37,9 @@ function App () {
                   <li>
                     <NavLink to='/contextDemo' exact='true' activeclassname='active'>Shared data via Context API</NavLink>
                   </li>
+                  <li>
+                    <NavLink to='/formValidation' exact='true' activeclassname='active'>Form Validation</NavLink>
+                  </li>
                 </ul>
                 <ScrollMessage mesg='More contents coming soon...' />
               </div>
@@ -46,6 +50,7 @@ function App () {
                 <Route exact='true' path='/tiger' element={<Tiger />} />
                 <Route exact='true' path='/parrot' element={<Parrot />} />
                 <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
+                <Route exact='true' path='/formValidation' element={<FormValidation />} />
               </Routes>
             </main>
           </div>
