@@ -51,14 +51,15 @@ Considered for future inclusion:
 * &check; <del>Linting setup for IDEs (VSCode, Webstorm)</del>
 * &check; <del>Router</del>
 * &check; <del>React Helmet</del>
+* &check; <del>Context API</del>
+* &check; <del>react css modules</del>
 * Overview in README:  React app page flow
 * Redux
-* Context API
 * Express server with proxy
 * REST service call with fetch examples
 * autocomplete widget
 * infinite scroll widget
-* CSS libraries (SASS, classnames package, &check; <del>react css modules</del>)
+* CSS libraries (SASS, classnames package)
 * A form library (Formik, react-hook-form)
 * A UI library (material-ui, tailwind)
 * Testing framework
@@ -92,7 +93,7 @@ If you would like a keystroke to fire off your ESLint fixing:
 5. Under `Eslint: Run` select the *onSave* option.
 
 ## React Routing
-React Routing is used throughout.  
+React Routing is used throughout for defining 'pages' and generating links to them.  It takes advantage of &lt;NavLink&gt;'s ability to style the currently selected link.
 
 ## CSS modules
 React CSS modules are used to namespace the CSS and prevent any component's styles from polluting the styles of others.  CSS files become modules when you name them `xxxx.module.css`.  See the code for the convention of declaring and referencing your styles.
@@ -100,4 +101,21 @@ React CSS modules are used to namespace the CSS and prevent any component's styl
 When you view the source, you will notice that the css class names and id's have decorated with addition characters.  Example: `App_link__xYAAD`.  
 
 ## Helmet
-`react-helmet` solves the inherent problem of SPAs where all 'pages' inherit the HTML &lt;title&gt; of the main App.  Helmet allows you to set the title for each component individually.
+`react-helmet` solves the inherent problem of SPAs where all 'pages' inherit the HTML &lt;title&gt; of the main App.  Helmet allows you to set the title for each component individually.  You would want to have a &lt;Helmet&gt; element for a component that has a route assigned to it, not to components instantiated by composition.
+
+## Naming convention for components
+This app is using the widely-used approach of:
+
+1. Creating a folder for the component beginning lower case, e.g. `myComponent`
+2. The file for the component itself is named `index.html`.  The exported Component will begin upper case, e.g. `MyComponent`
+
+This is by no means the universal approach, so considering others is certainly an option.
+
+## Context API
+The demo `Shared data via Context API` shows two unrelated components who have access to items from a Context API instance: some JSON data, and a method for rendering it.  The title prefixes used by `Helmet` are also obtained this way.
+
+Context API is simpler and lighter weight than Redux for sharing read-only contents.
+
+## Passing styles to a component via props
+The `Shared data via Context API` demonstrates this.
+
