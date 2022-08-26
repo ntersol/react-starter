@@ -48,18 +48,18 @@ on EC2 etc.
 
 Considered for future inclusion:
 
-* Overview:  React app page flow
+* &check; <del>Linting setup for IDEs (VSCode, Webstorm)</del>
+* &check; <del>Router</del>
+* Overview in README:  React app page flow
 * Redux
-* Router
 * Context API
 * Express server with proxy
 * REST service call with fetch examples
 * autocomplete widget
 * infinite scroll widget
-* CSS libraries (SASS, classnames package, react css modules)
+* CSS libraries (SASS, classnames package, &check; <del>react css modules</del>)
 * A form library (Formik, react-hook-form)
 * A UI library (material-ui, tailwind)
-* Linting setup for IDEs (VSCode, Webstorm)
 * Testing framework
 * Helmet
 * Adding a favicon

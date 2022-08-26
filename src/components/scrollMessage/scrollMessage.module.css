@@ -1,0 +1,31 @@
+.scroll-left {
+    height: 25px;
+    width: 350px;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    color: black;
+    border: 1px solid white;
+    margin-bottom: 12px;
+}
+.scroll-left p {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    line-height: 25px;
+    text-align: center;
+    /* Starting position */
+    transform:translateX(100%);
+    /* Apply animation to this element */
+    animation: scroll-left 7s linear infinite;
+}
+/* Move it (define the animation) */
+@keyframes scroll-left {
+    0%   {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
