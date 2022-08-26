@@ -90,3 +90,11 @@ If you would like a keystroke to fire off your ESLint fixing:
 3. Open VSCode settings (cmd-comma on a Mac).  It the left rail, Open `Extensions` and click on *ESLint*.
 4. Press the checkbox under `Eslint: Enable`
 5. Under `Eslint: Run` select the *onSave* option.
+
+## React Routing
+React Routing is used throughout.  
+
+## CSS modules
+React CSS modules are used to namespace the CSS and prevent any component's styles from polluting the styles of others.  CSS files become modules when you name them `xxxx.module.css`.  See the code for the convention of declaring and referencing your styles.
+
+When you view the source, you will notice that the css class names and id's have decorated with addition characters.  Example: `App_link__xYAAD`.  
