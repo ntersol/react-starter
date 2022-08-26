@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import StarterContext from '../../containers/App/StarterContext.js'
 
 import parrot from '../../image/parrot.svg'

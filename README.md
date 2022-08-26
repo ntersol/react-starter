@@ -53,10 +53,10 @@ Considered for future inclusion:
 * &check; <del>React Helmet</del>
 * &check; <del>Context API</del>
 * &check; <del>react css modules</del>
+* &check; <del>REST service call with fetch examples</del>
 * Overview in README:  React app page flow
 * Redux
 * Express server with proxy
-* REST service call with fetch examples
 * autocomplete widget
 * infinite scroll widget
 * CSS libraries (SASS, classnames package)
@@ -101,7 +101,9 @@ React CSS modules are used to namespace the CSS and prevent any component's styl
 When you view the source, you will notice that the css class names and id's have decorated with addition characters.  Example: `App_link__xYAAD`.  
 
 ## Helmet
-`react-helmet` solves the inherent problem of SPAs where all 'pages' inherit the HTML &lt;title&gt; of the main App.  Helmet allows you to set the title for each component individually.  You would want to have a &lt;Helmet&gt; element for a component that has a route assigned to it, not to components instantiated by composition.
+`react-helmet-async` solves the inherent problem of SPAs where all 'pages' inherit the HTML &lt;title&gt; of the main App.  Helmet allows you to set the title for each component individually.  You would want to have a &lt;Helmet&gt; element for a component that has a route assigned to it, not to components instantiated by composition.
+
+The original `react-helmet` is buggy.
 
 ## Naming convention for components
 This app is using the widely-used approach of:
@@ -112,10 +114,42 @@ This app is using the widely-used approach of:
 This is by no means the universal approach, so considering others is certainly an option.
 
 ## Context API
-The demo `Shared data via Context API` shows two unrelated components who have access to items from a Context API instance: some JSON data, and a method for rendering it.  The title prefixes used by `Helmet` are also obtained this way.
+The demo `Shared data via Context API` shows two unrelated components who have access to items from a Context API instance: some JSON data, and a method for rendering it.  The title prefixes used by `Helmet` are also obtained this way.  The implementation steps are:
+
+(1) Create `StarterContext.js` (src/containers/App)
+
+(2) In the App container, import it: `import { StarterProvider } from './StarterContext'
+
+(3) In App's return value, wrap the HTML output with &lt;StarterContext&lt;:
+
+```
+    <Router>
+       ...other stuff here...
+          <StarterProvider>
+             ...your HTML here...
+          </StarterProvider>
+       ...
+    </Router>
+```
+(4) Repeat sep 2 for each component that needs the provider
+
+(5) In each component retrieve the item you need: `  const { HTMLtitlePre } = useContext(StarterContext)`
+
+
 
 Context API is simpler and lighter weight than Redux for sharing read-only contents.
 
 ## Passing styles to a component via props
 The `Shared data via Context API` demonstrates this.
+
+## REST service call with fetch()
+This is now part of the `Shared data via Context API` demo.
+
+## React Hooks
+All components and containers are function based, so any of them can support hooks.
+
+The `Shared data via Context API` demo uses the `useEffect()` and `useState()` hooks.
+
+## Container/Component composition
+&lt;App&gt; and &lt;ContextDemo&gt; are designated as *Containers* because they compose *Components* inside them.
 

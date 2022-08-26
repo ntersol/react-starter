@@ -1,54 +1,58 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { StarterProvider } from './StarterContext'
 import Tiger from '../../components/tiger'
 import Parrot from '../../components/parrot'
-import ContextDemo from '../../components/contextDemo'
+import ContextDemo from '../contextDemo'
 import ScrollMessage from '../../components/scrollMessage'
 import logo from '../../image/ntersolBanner.png'
 import style from './App.module.css'
 import './links.css'
 
-function Index () {
+function App () {
   return (
     <Router>
-      <Helmet>
-        <title>NTERSOL React Starter App - Home</title>
-        <meta name='description' content='Starter Application for NTERSOL React projects' />
-      </Helmet>
-      <StarterProvider>
-        <div className={style.App}>
-          <header>
-            <div><img src={logo} className={style.logo} alt='logo' /></div>
-            <div style={{ marginTop: '7px' }}>React Starter App</div>
-          </header>
-          <nav>
-            <div className={style['centered-nav']}>
-              <ul>
-                <li>Simple Routing Demo:
-                  <NavLink to='/tiger' className={style.link} exact activeClassName='active'>Tiger</NavLink>
-                  or
-                  <NavLink to='/parrot' className={style.link} exact activeClassName='active'>Parrot</NavLink>
-                </li>
-                <li>
-                  <NavLink to='/contextDemo' exact activeClassName='active'>Shared data via Context API</NavLink>
-                </li>
-              </ul>
-              <ScrollMessage mesg='More Contents coming soon...' />
-            </div>
-          </nav>
-          <main>
-            <Routes>
-              <Route exact='true' path='/tiger' element={<Tiger />} />
-              <Route exact='true' path='/parrot' element={<Parrot />} />
-              <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
-            </Routes>
-          </main>
-        </div>
-      </StarterProvider>
+      <HelmetProvider>
+        <Helmet>
+          <title>NTERSOL React Starter App - Home</title>
+          <meta name='description' content='Starter Application for NTERSOL React projects' />
+        </Helmet>
+        <StarterProvider>
+          <div className={style.App}>
+            <header>
+              <div><img src={logo} className={style.logo} alt='logo' /></div>
+              <div style={{ marginTop: '7px' }}>React Starter App</div>
+            </header>
+            <nav>
+              <div className={style['centered-nav']}>
+                <h3>Choose a demo</h3>
+                <ul>
+                  <li>Simple Routing Demo:
+                    <NavLink to='/tiger' className={style.link} exact='true' activeclassname='active'>Tiger</NavLink>
+                    or
+                    <NavLink to='/parrot' className={style.link} exact='true' activeclassname='active'>Parrot</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/contextDemo' exact='true' activeclassname='active'>Shared data via Context API</NavLink>
+                  </li>
+                </ul>
+                <ScrollMessage mesg='More contents coming soon...' />
+              </div>
+            </nav>
+            <main>
+              <Routes>
+                <Route exact='true' path='/' element={null} />
+                <Route exact='true' path='/tiger' element={<Tiger />} />
+                <Route exact='true' path='/parrot' element={<Parrot />} />
+                <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
+              </Routes>
+            </main>
+          </div>
+        </StarterProvider>
+      </HelmetProvider>
     </Router>
   )
 }
 
-export default Index
+export default App
