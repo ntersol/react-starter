@@ -8,6 +8,20 @@
     margin: 0 25px;
     padding: 10px;
 }
+h1.red, p .red {
+    color: red;
+    font-weight: bold;
+}
+h1.green, p .green {
+    color: green;
+    font-weight: bold;
+}
+.contextPanel.red {
+    border: 2px solid red;
+}
+.contextPanel.green {
+    border: 2px solid green;
+}
 tbody td {
     padding: 5px;
 }

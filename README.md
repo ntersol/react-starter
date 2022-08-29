@@ -38,8 +38,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 One of the great things about a bundled build is you can host it on a simple AWS S3 bucket
 (or the equivalents for Azure, GCP).  Saves you money on standing up a Linux server
 on EC2 etc.
@@ -53,15 +51,16 @@ Considered for future inclusion:
 * &check; <del>React Helmet</del>
 * &check; <del>Context API</del>
 * &check; <del>react css modules</del>
+* &check; <del>CSS classnames package</del>
 * &check; <del>REST service call with fetch examples</del>
+* &check; <del>Form validation with react-hook-form</del>
+* &check; <del>Paginated tabular data with Material-UI</del>
 * Overview in README:  React app page flow
 * Redux
 * Express server with proxy
 * autocomplete widget
 * infinite scroll widget
-* CSS libraries (SASS, classnames package)
-* A form library (Formik, react-hook-form)
-* A UI library (material-ui, tailwind)
+* SASS library
 * Testing framework
 * Adding a favicon
 
@@ -99,6 +98,9 @@ React Routing is used throughout for defining 'pages' and generating links to th
 React CSS modules are used to namespace the CSS and prevent any component's styles from polluting the styles of others.  CSS files become modules when you name them `xxxx.module.css`.  See the code for the convention of declaring and referencing your styles.
 
 When you view the source, you will notice that the css class names and id's have decorated with addition characters.  Example: `App_link__xYAAD`.  
+
+## CSS classnames package
+The [classnames](https://www.npmjs.com/package/classnames) package is in use in the `Paginated, Tabular Data` demo. 
 
 ## Helmet
 `react-helmet-async` solves the inherent problem of SPAs where all 'pages' inherit the HTML &lt;title&gt; of the main App.  Helmet allows you to set the title for each component individually.  You would want to have a &lt;Helmet&gt; element for a component that has a route assigned to it, not to components instantiated by composition.
@@ -155,4 +157,10 @@ The `Shared data via Context API` demo uses the `useEffect()` and `useState()` h
 
 ## Form Validation
 The library used for this demo is `react-hook-form`.
+
+## Paginated, Tabular Data
+This example uses [material-react-table](https://www.material-react-table.com/) which is in 
+turn based on [material-ui (a.k.a. MUI)](https://mui.com/).  The packages added to `Dependencies` are:
+
+> @mui/material, @mui/icons-material, @emotion/react, @emotion/styled,  material-react-table
 

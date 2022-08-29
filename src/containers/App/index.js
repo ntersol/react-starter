@@ -7,6 +7,7 @@ import Parrot from '../../components/parrot'
 import ContextDemo from '../contextDemo'
 import ScrollMessage from '../../components/scrollMessage'
 import FormValidation from '../../components/formValidation'
+import MUITable from '../../components/mui-table'
 import logo from '../../image/ntersolBanner.png'
 import style from './App.module.css'
 import './links.css'
@@ -40,6 +41,9 @@ function App () {
                   <li>
                     <NavLink to='/formValidation' exact='true' activeclassname='active'>Form Validation</NavLink>
                   </li>
+                  <li>
+                    <NavLink to='/muiTable' exact='true' activeclassname='active'>Paginated, Tabular Data</NavLink>
+                  </li>
                 </ul>
                 <ScrollMessage mesg='More contents coming soon...' />
               </div>
@@ -51,6 +55,7 @@ function App () {
                 <Route exact='true' path='/parrot' element={<Parrot />} />
                 <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
                 <Route exact='true' path='/formValidation' element={<FormValidation />} />
+                <Route exact='true' path='/muiTable' element={<MUITable />} />
               </Routes>
             </main>
           </div>
