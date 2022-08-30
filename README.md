@@ -55,6 +55,7 @@ Considered for future inclusion:
 * &check; <del>REST service call with fetch examples</del>
 * &check; <del>Form validation with react-hook-form</del>
 * &check; <del>Paginated tabular data with Material-UI</del>
+* &check; <del>Adding a favicon</del> 
 * Overview in README:  React app page flow
 * Redux
 * Express server with proxy
@@ -62,7 +63,7 @@ Considered for future inclusion:
 * infinite scroll widget
 * SASS library
 * Testing framework
-* Adding a favicon
+
 
 BELOW HERE:  added features
 
@@ -164,3 +165,20 @@ turn based on [material-ui (a.k.a. MUI)](https://mui.com/).  The packages added 
 
 > @mui/material, @mui/icons-material, @emotion/react, @emotion/styled,  material-react-table
 
+## favicon
+An NTERSOL favicon as added, look for it in your browser tabs.
+
+The approach was to take a small logo from [Company Images](https://ntersol.atlassian.net/wiki/spaces/NTER/pages/98566145/Company+Images)
+and pass it to the online [Favicon Generator](https://favicon.io/favicon-converter/).  The images it produced
+were all copied into `public`, they are:
+
+> android-chrome-192x192.png, favicon.ico, android-chrome-512x512.png, index.html, apple-touch-icon.png		manifest.json
+favicon-16x16.png, favicon-32x32.png
+
+...and these lines were added to `public/index.html`:
+
+```
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <LINK REL="SHORTCUT ICON" HREF="%PUBLIC_URL%/favicon.ico?v=2" type="image/x-icon" />
+
+```
