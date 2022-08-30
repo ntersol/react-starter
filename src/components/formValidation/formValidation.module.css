@@ -15,6 +15,7 @@
     margin-right: 7px;
     width: 150px;
     text-align: right;
+    font-size: 1.2em;
 }
 .field {
     display: flex;
