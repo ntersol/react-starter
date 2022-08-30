@@ -51,8 +51,9 @@ export default function FormValidation () {
         <button id={style.cancel} onClick={handleCancel}>Cancel</button>
         {/* Do not use watch() to grab values, as they will change as user types in the already-submitted form */}
         {submitted && (<div className={style.submitted}>
-          <div>Submitted Name: {submittedForm.firstName} {submittedForm.lastName}</div>
-          <div>Submitted Email: {submittedForm.email}</div>
+          <div><strong>Submitted Values:</strong></div>
+          <div>Name: {submittedForm.firstName} {submittedForm.lastName}</div>
+          <div>Email: {submittedForm.email}</div>
         </div>
         )}
       </form>
