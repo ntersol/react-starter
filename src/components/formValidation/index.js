@@ -5,7 +5,7 @@ import style from './formValidation.module.css'
 export default function FormValidation () {
   const [submitted, setSubmitted] = useState(false)
   const [submittedForm, setSubmittedForm] = useState({})
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, clearError, reset, formState: { errors } } = useForm({
     email: '',
     firstName: '',
     lastName: ''
@@ -22,6 +22,7 @@ export default function FormValidation () {
     reset()
     setSubmitted(false)
     setSubmittedForm({})
+    clearError(['email', 'firstName', 'lastName'])
   }
 
   return (
@@ -31,19 +32,19 @@ export default function FormValidation () {
         <div className={style['name-requirement']}>Numbers not allowed in name fields</div>
         <div className={style.field}>
           <div className={style.label}>Email</div>
-          <input {...register('email', { required: true, pattern: emailValid })} />
+          <input name='email' required {...register('email', { pattern: emailValid })} />
         </div>
         {errors.email?.type === 'required' && <div className={style.err}>This field is required</div>}
         {errors.email?.type === 'pattern' && <div className={style.err}>Please enter a valid email address</div>}
         <div className={style.field}>
           <div className={style.label}>First name</div>
-          <input {...register('firstName', { required: true, pattern: nameValid })} />
+          <input required {...register('firstName', { pattern: nameValid })} />
         </div>
         {errors.firstName?.type === 'required' && <div className={style.err}>This field is required</div>}
         {errors.firstName?.type === 'pattern' && <div className={style.err}>Numbers are not allowed</div>}
         <div className={style.field}>
           <div className={style.label}>Last name</div>
-          <input {...register('lastName', { required: true, pattern: nameValid })} />
+          <input required {...register('lastName', { pattern: nameValid })} />
         </div>
         {errors.lastName?.type === 'required' && <div className={style.err}>This field is required</div>}
         {errors.lastName?.type === 'pattern' && <div className={style.err}>Numbers are not allowed</div>}
