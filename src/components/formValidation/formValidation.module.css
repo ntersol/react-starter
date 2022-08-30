@@ -5,13 +5,26 @@
 .err {
     font-weight: bold;
     color: red;
+    margin-left: 160px;
 }
-label {
+.name-requirement {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.label {
     margin-right: 7px;
+    width: 150px;
+    text-align: right;
 }
 .field {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 15px;
 }
 button#cancel {
     margin-left: 15px;
+}
+.submitted {
+    margin-top: 12px;
 }
