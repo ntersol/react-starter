@@ -184,33 +184,42 @@ favicon-16x16.png, favicon-32x32.png
 ```
 
 ## Redux
-This demo uses the `hooks` version of Redux.
+This demo uses the [hooks version of Redux](https://react-redux.js.org/api/hooks).
 
 The packages added are:
 
 >  react-redux, react-router-dom, redux, redux-thunk
 
-The definition of the state we are managing in Redux resides in `src/redux`.  For further information, try [Getting Started with Redux](https://redux.js.org/introduction/getting-started) and [React Hooks Redux](https://react-redux.js.org/api/hooks).
+The definition of the state we are managing in Redux resides in `src/redux`.  For further information, try [Getting Started with Redux](https://redux.js.org/introduction/getting-started).
 
 The top level `App` component needs to be wrapped with &lt;Provider&gt;:
 
 ```
-import { Provider } from 'react-redux'
-import store from './redux/store'
+    import { Provider } from 'react-redux'
+    import store from './redux/store'
     ...
     <Provider store={store}>
       <App />
     </Provider>
-    ....
 ```
 
 Clients who need to read the Redux state:
 
 ```
-import { useSelector } from 'react-redux'
+  import { useSelector } from 'react-redux'
   ...
-  const ourState = useSelector(state => state.ourReducer)
-  const ourValue = ourState
-  const { key } = nameObj.clientState
+  const ourStore = useSelector(state => state.ourReducer)
+  const { ourValue }= ourStore.state
+```
+
+Clients who need to write the state:
 
 ```
+  import { useDispatch } from 'react-redux'
+  import { setGlobalState } from '../../redux/actions'
+  ...
+  const dispatch = useDispatch()
+  const valueToSet = 'foo'
+  dispatch(setGlobalState({ state: { ourValue: valueToSet } }))
+``` 
+The names *setGlobalState*, *state*, *ourStore*, *ourValue*, etc. are all arbitrary and should be selected according to the meaning they have in your app.

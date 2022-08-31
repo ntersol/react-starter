@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async'
 
 export default function ContextDemo () {
   const globalState = useSelector(state => state.ourReducer)
-  const { ourValue } = globalState
+  const { ourValue } = globalState.state
   return (
     <div>
       <div id={style.contextDemo}>

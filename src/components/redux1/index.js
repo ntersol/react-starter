@@ -5,14 +5,14 @@ import cx from 'classnames'
 import { setGlobalState } from '../../redux/actions'
 
 export default function Redux1 ({ style }) {
-  const globalState = useSelector(state => state.ourReducer)
-  const { ourValue } = globalState
+  const ourStore = useSelector(state => state.ourReducer)
+  const { ourValue } = ourStore.state
   const [localOurValue, setLocalOurValue] = useState(ourValue)
   const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setLocalOurValue(e.target.value)
-    dispatch(setGlobalState({ ourValue: e.target.value }))
+    dispatch(setGlobalState({ state: { ourValue: e.target.value } }))
   }
 
   return (
