@@ -53,7 +53,7 @@ Considered for future inclusion:
 * &check; <del>Paginated tabular data with Material-UI</del>
 * &check; <del>Adding a favicon</del> 
 * &check; <del>Redux</del>
-* Overview in README:  React app page flow
+* &check; <del>React App Anatomy</del>
 * Express server with proxy
 * autocomplete widget
 * infinite scroll widget
@@ -87,6 +87,15 @@ If you would like a keystroke to fire off your ESLint fixing:
 3. Open VSCode settings (cmd-comma on a Mac).  It the left rail, Open `Extensions` and click on *ESLint*.
 4. Press the checkbox under `Eslint: Enable`
 5. Under `Eslint: Run` select the *onSave* option.
+
+## React App anatomy
+The sequence of events when you launch the app with `npm run start` is:
+
+1. *index.html* from the `public` folder is loaded.  It renders a single &lt;div&gt; that is the container for the rest of the app.  Webpack slighly modifies this file so that it also loads:
+2. `src/index.js`.  This will render the &lt;App&gt; component, which for us, lives in `src/containers/App/index.js`.  But first:
+3. Babel will convert it from `.jsx` to plain `.js` first, so the friendly-looking &lt;App&gt; becomes a DOM command like `React.createElement('DIV', etc. etc.)`.
+4. Rinse and repeat for all the components under &lt;App&gt;.
+
 
 ## React Routing
 React Routing is used throughout for defining 'pages' and generating links to them.  It takes advantage of &lt;NavLink&gt;'s ability to style the currently selected link.
