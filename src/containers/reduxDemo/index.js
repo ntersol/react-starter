@@ -6,8 +6,8 @@ import style from './reduxDemo.module.css'
 import { Helmet } from 'react-helmet-async'
 
 export default function ContextDemo () {
-  const nameObj = useSelector(state => state.nameReducer)
-  const { key } = nameObj.clientState
+  const globalState = useSelector(state => state.ourReducer)
+  const { ourValue } = globalState
   return (
     <div>
       <div id={style.contextDemo}>
@@ -17,7 +17,7 @@ export default function ContextDemo () {
         <Redux1 style={style} />
         <Redux2 style={style} />
       </div>
-      <p className={style.current}>ourValue is now <span className={style.highlight}>{key}</span></p>
+      <p className={style.current}>ourValue is now <span className={style.highlight}>{ourValue}</span></p>
     </div>
   )
 }

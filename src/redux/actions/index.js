@@ -1,13 +1,13 @@
-import { SET_CLIENT_STATE } from '../types'
-export const setClientState = (clientState) => (dispatch, getState) => {
+import { SET_GLOBAL_STATE } from '../types'
+export const setGlobalState = (clientState) => (dispatch, getState) => {
+  console.log(`setGlobalState invoked with ${JSON.stringify(clientState)}`)
   try {
-    console.log(`setClientState invoked with ${JSON.stringify(clientState)}`)
     dispatch({
-      type: SET_CLIENT_STATE,
+      type: SET_GLOBAL_STATE,
       payload: {
         clientState,
         message: `Update client ${// TODO remove if not used
-          getState().nameReducer.client
+          getState().ourReducer.client
         } to ${clientState} `
       }
     })

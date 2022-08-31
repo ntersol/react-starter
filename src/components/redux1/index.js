@@ -2,17 +2,17 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import cx from 'classnames'
-import { setClientState } from '../../redux/actions'
+import { setGlobalState } from '../../redux/actions'
 
 export default function Redux1 ({ style }) {
-  const nameObj = useSelector(state => state.nameReducer)
-  const { key } = nameObj.clientState
-  const [foo, setFoo] = useState(key)
+  const globalState = useSelector(state => state.ourReducer)
+  const { ourValue } = globalState
+  const [localOurValue, setLocalOurValue] = useState(ourValue)
   const dispatch = useDispatch()
 
   const handleChange = (e) => {
-    setFoo(e.target.value)
-    dispatch(setClientState({ key: e.target.value, type: 'splash' }))
+    setLocalOurValue(e.target.value)
+    dispatch(setGlobalState({ ourValue: e.target.value }))
   }
 
   return (
@@ -20,8 +20,8 @@ export default function Redux1 ({ style }) {
       <h1 className={style.red}>Component Redux1</h1>
       <p>Component <span className={style.green}>Redux2</span> is my sibling. We have shared read/write access to
         Redux variable <span className={style.highlight}>ourValue</span>.</p>
-      <p className={style.current}>ourValue is now <span className={style.highlight}>{key}</span></p>
-      Change <span className={style.highlight}>ourValue</span>: <input type='text' value={foo} onChange={handleChange} />
+      <p className={style.current}>ourValue is now <span className={style.highlight}>{ourValue}</span></p>
+      Change <span className={style.highlight}>ourValue</span>: <input type='text' value={localOurValue} onChange={handleChange} />
     </div>
   )
 }

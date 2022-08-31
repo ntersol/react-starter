@@ -1,11 +1,12 @@
-import { SET_CLIENT_STATE } from '../types'
+import { SET_GLOBAL_STATE } from '../types'
 const INITIAL_STATE = {
-  clientState: { key: 'fred', type: 'splash' } // type can be 'splash' or 'gallery'
+  ourValue: 'fred'
 }
 
 export default (state = INITIAL_STATE, action) => {
+  console.log(`reducer called with state = ${JSON.stringify(state)}`)
   switch (action.type) {
-  case SET_CLIENT_STATE:
+  case SET_GLOBAL_STATE:
     return {
       ...state,
       ...action.payload

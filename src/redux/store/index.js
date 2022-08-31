@@ -4,7 +4,7 @@ import Reducer from '../reducers'
 
 const initialState = {}
 const reducers = combineReducers({
-  nameReducer: Reducer
+  ourReducer: Reducer
 })
 const middleware = [thunk]
 
