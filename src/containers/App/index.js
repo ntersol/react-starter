@@ -29,6 +29,7 @@ function App () {
             </header>
             <nav>
               <div className={style['centered-nav']}>
+                <div>See the project <a href='https://github.com/ntersol/react-starter/blob/main/README.md'>README</a> for full details</div>
                 <h3>Choose a demo</h3>
                 <ul>
                   <li>Simple Routing Demo:

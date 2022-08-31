@@ -11,7 +11,7 @@ header {
   font-size: calc(25px + 2vmin);
 }
 header div {
-  padding: 10px 20px;
+  padding: 10px 20px 0 20px;
 }
 nav {
 }

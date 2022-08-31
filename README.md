@@ -1,17 +1,13 @@
 # NTERSOL React Starter app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-It has not been ejected (read about ejecting [here](https://create-react-app.dev/docs/available-scripts/#npm-run-eject)).
-One of the usual reasons for ejecting is to when a new feature requires a change
-to the webpack configuration.  But alternatives to ejecting should be explored first.
+This application is a series of demos of various features of React that can help jump start an application.  One can pick and choose from the features list for your apps needs.
 
 ## Installing and Running
 
-### Prerequisits
+### Prerequisites
 
 * Install [nvm](https://github.com/nvm-sh/nvm)
-* Install the correct Node Version (see the `nvmrc` file)
+* Install the Node Version given in the `.nvmrc` file.
 
 ### `nvm use`
 Chooses the version of node specified in the `.nvmrc`
@@ -19,7 +15,7 @@ Chooses the version of node specified in the `.nvmrc`
 ### `npm install`
 Self-explanatory.
 ### `npm run start`
-Runs the app in the development mode.\
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
@@ -98,7 +94,7 @@ React Routing is used throughout for defining 'pages' and generating links to th
 ## CSS modules
 React CSS modules are used to namespace the CSS and prevent any component's styles from polluting the styles of others.  CSS files become modules when you name them `xxxx.module.css`.  See the code for the convention of declaring and referencing your styles.
 
-When you view the source, you will notice that the css class names and id's have decorated with addition characters.  Example: `App_link__xYAAD`.  
+When you view the source, you will notice that the css class names and id's have been decorated with additional characters.  Example: `App_link__xYAAD`.  
 
 ## CSS classnames package
 The [classnames](https://www.npmjs.com/package/classnames) package is in use in the `Paginated, Tabular Data` demo. 
@@ -223,3 +219,11 @@ Clients who need to write the state:
   dispatch(setGlobalState({ state: { ourValue: valueToSet } }))
 ``` 
 The names *setGlobalState*, *state*, *ourStore*, *ourValue*, etc. are all arbitrary and should be selected according to the meaning they have in your app.
+
+## Misc Notes
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+It has not been ejected (read about ejecting [here](https://create-react-app.dev/docs/available-scripts/#npm-run-eject)).
+One of the usual reasons for ejecting is to when a new feature requires a change
+to the webpack configuration.  But alternatives to ejecting should be explored first.
+
