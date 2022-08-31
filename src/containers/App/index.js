@@ -9,6 +9,8 @@ import ReduxDemo from '../reduxDemo'
 import ScrollMessage from '../../components/scrollMessage'
 import FormValidation from '../../components/formValidation'
 import MUITable from '../../components/mui-table'
+import Autocomplete from '../../components/autocomplete'
+import suggestions from './autocompleteData'
 import logo from '../../image/ntersolBanner.png'
 import style from './App.module.css'
 import './links.css'
@@ -57,6 +59,9 @@ function App () {
                     <NavLink to='/muiTable' exact='true' activeclassname='active'>Paginated,
                       Tabular Data</NavLink>
                   </li>
+                  <li>
+                    <NavLink to='/autocomplete' exact='true' activeclassname='active'>UI Widget: Autocomplete</NavLink>
+                  </li>
                 </ul>
                 <ScrollMessage mesg='More contents coming soon...' />
               </div>
@@ -70,6 +75,7 @@ function App () {
                 <Route exact='true' path='/reduxDemo' element={<ReduxDemo />} />
                 <Route exact='true' path='/formValidation' element={<FormValidation />} />
                 <Route exact='true' path='/muiTable' element={<MUITable />} />
+                <Route exact='true' path='/autocomplete' element={<Autocomplete suggestions={suggestions} />} />
               </Routes>
             </main>
           </div>

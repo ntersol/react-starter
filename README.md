@@ -54,8 +54,8 @@ Considered for future inclusion:
 * &check; <del>Adding a favicon</del> 
 * &check; <del>Redux</del>
 * &check; <del>React App Anatomy</del>
+* &check; <del>UI Widget: Autocomplete</del>
 * Express server with proxy
-* autocomplete widget
 * infinite scroll widget
 * SASS library
 * Testing framework
