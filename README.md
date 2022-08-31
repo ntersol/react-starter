@@ -56,8 +56,8 @@ Considered for future inclusion:
 * &check; <del>Form validation with react-hook-form</del>
 * &check; <del>Paginated tabular data with Material-UI</del>
 * &check; <del>Adding a favicon</del> 
+* &check; <del>Redux</del>
 * Overview in README:  React app page flow
-* Redux
 * Express server with proxy
 * autocomplete widget
 * infinite scroll widget
@@ -180,5 +180,37 @@ favicon-16x16.png, favicon-32x32.png
 ```
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <LINK REL="SHORTCUT ICON" HREF="%PUBLIC_URL%/favicon.ico?v=2" type="image/x-icon" />
+
+```
+
+## Redux
+This demo uses the `hooks` version of Redux.
+
+The packages added are:
+
+>  react-redux, react-router-dom, redux, redux-thunk
+
+The definition of the state we are managing in Redux resides in `src/redux`.  For further information, try [Getting Started with Redux](https://redux.js.org/introduction/getting-started) and [React Hooks Redux](https://react-redux.js.org/api/hooks).
+
+The top level `App` component needs to be wrapped with &lt;Provider&gt;:
+
+```
+import { Provider } from 'react-redux'
+import store from './redux/store'
+    ...
+    <Provider store={store}>
+      <App />
+    </Provider>
+    ....
+```
+
+Clients who need to read the Redux state:
+
+```
+import { useSelector } from 'react-redux'
+  ...
+  const ourState = useSelector(state => state.ourReducer)
+  const ourValue = ourState
+  const { key } = nameObj.clientState
 
 ```

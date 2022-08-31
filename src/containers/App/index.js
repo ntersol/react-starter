@@ -5,6 +5,7 @@ import { StarterProvider } from './StarterContext'
 import Tiger from '../../components/tiger'
 import Parrot from '../../components/parrot'
 import ContextDemo from '../contextDemo'
+import ReduxDemo from '../reduxDemo'
 import ScrollMessage from '../../components/scrollMessage'
 import FormValidation from '../../components/formValidation'
 import MUITable from '../../components/mui-table'
@@ -31,18 +32,29 @@ function App () {
                 <h3>Choose a demo</h3>
                 <ul>
                   <li>Simple Routing Demo:
-                    <NavLink to='/tiger' className={style.link} exact='true' activeclassname='active'>Tiger</NavLink>
+                    <NavLink
+                      to='/tiger' className={style.link} exact='true'
+                      activeclassname='active'>Tiger</NavLink>
                     or
-                    <NavLink to='/parrot' className={style.link} exact='true' activeclassname='active'>Parrot</NavLink>
+                    <NavLink
+                      to='/parrot' className={style.link} exact='true'
+                      activeclassname='active'>Parrot</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/contextDemo' exact='true' activeclassname='active'>Shared data via Context API</NavLink>
+                    <NavLink to='/contextDemo' exact='true' activeclassname='active'>Shared data
+                      via Context API</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/formValidation' exact='true' activeclassname='active'>Form Validation</NavLink>
+                    <NavLink to='/reduxDemo' exact='true' activeclassname='active'>Shared global
+                      state via Redux</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/muiTable' exact='true' activeclassname='active'>Paginated, Tabular Data</NavLink>
+                    <NavLink to='/formValidation' exact='true' activeclassname='active'>Form
+                      Validation</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/muiTable' exact='true' activeclassname='active'>Paginated,
+                      Tabular Data</NavLink>
                   </li>
                 </ul>
                 <ScrollMessage mesg='More contents coming soon...' />
@@ -54,6 +66,7 @@ function App () {
                 <Route exact='true' path='/tiger' element={<Tiger />} />
                 <Route exact='true' path='/parrot' element={<Parrot />} />
                 <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
+                <Route exact='true' path='/reduxDemo' element={<ReduxDemo />} />
                 <Route exact='true' path='/formValidation' element={<FormValidation />} />
                 <Route exact='true' path='/muiTable' element={<MUITable />} />
               </Routes>
