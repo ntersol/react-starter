@@ -58,7 +58,7 @@ function App () {
                       Tabular Data</NavLink>
                   </li>
                 </ul>
-                <ScrollMessage mesg='More contents coming soon...' />
+                <ScrollMessage mesg='Conversion to TypesScript coming soon...' />
               </div>
             </nav>
             <main>
