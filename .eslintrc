@@ -8,7 +8,9 @@
   "extends": [
     "standard",
     "standard-react",
-    "standard-jsx"
+    "standard-jsx",
+    "eslint:recommended",
+    "plugin:jest/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {

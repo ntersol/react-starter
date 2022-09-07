@@ -1,0 +1,34 @@
+.main {
+    font-family: sans-serif;
+    text-align: center;
+}
+.err {
+    font-weight: bold;
+    color: red;
+    text-align: center;
+}
+.name-requirement {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.label {
+    margin-right: 7px;
+    width: 150px;
+    text-align: right;
+    font-size: 1.2em;
+}
+.field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 15px;
+}
+input[type="submit"] {
+    margin-top: 10px;
+}
+button#cancel {
+    margin-left: 15px;
+}
+.submitted {
+    margin-top: 20px;
+}

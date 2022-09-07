@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@hookform/error-message": "^2.0.0",
@@ -16,6 +17,8 @@
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
     "classnames": "^2.3.1",
+    "eslint-plugin-jest": "^27.0.1",
+    "formik": "^2.2.9",
     "material-react-table": "^0.40.8",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -28,7 +31,8 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.52.3",
     "typescript": "^4.7.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

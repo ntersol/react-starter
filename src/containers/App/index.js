@@ -9,6 +9,7 @@ import ReduxDemo from '../reduxDemo'
 import ScrollMessage from '../../components/scrollMessage'
 import FormValidation from '../../components/formValidation'
 import MUITable from '../../components/mui-table'
+import FormValidationFormik from '../../components/formValidationFormik'
 import logo from '../../image/ntersolBanner.png'
 import style from './App.module.css'
 import './links.css'
@@ -51,7 +52,11 @@ function App () {
                   </li>
                   <li>
                     <NavLink to='/formValidation' exact='true' activeclassname='active'>Form
-                      Validation</NavLink>
+                      Validation with react-hook-form</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to='/formValidationFormik' exact='true' activeclassname='active'>Form
+                      Validation with formik</NavLink>
                   </li>
                   <li>
                     <NavLink to='/muiTable' exact='true' activeclassname='active'>Paginated,
@@ -69,6 +74,7 @@ function App () {
                 <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
                 <Route exact='true' path='/reduxDemo' element={<ReduxDemo />} />
                 <Route exact='true' path='/formValidation' element={<FormValidation />} />
+                <Route exact='true' path='/formValidationFormik' element={<FormValidationFormik />} />
                 <Route exact='true' path='/muiTable' element={<MUITable />} />
               </Routes>
             </main>

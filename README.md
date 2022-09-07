@@ -12,21 +12,21 @@ This application is a series of demos of various features of React that can help
 ### `nvm use`
 Chooses the version of node specified in the `.nvmrc`
 
-### `npm install`
-Self-explanatory.
-### `npm run start`
+### `yarn`
+Installs packages.
+### `yarn start`
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
 You will also see any lint errors in the console.
 
-### `npm test`
+### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `yarn build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -50,6 +50,7 @@ Considered for future inclusion:
 * &check; <del>CSS classnames package</del>
 * &check; <del>REST service call with fetch examples</del>
 * &check; <del>Form validation with react-hook-form</del>
+* &check; <del>Form validation with formik</del>
 * &check; <del>Paginated tabular data with Material-UI</del>
 * &check; <del>Adding a favicon</del> 
 * &check; <del>Redux</del>
