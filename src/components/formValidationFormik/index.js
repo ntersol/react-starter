@@ -54,13 +54,12 @@ export default function FormValidationFormik () {
           <input
             id='lastName' type='text'
             {...formik.getFieldProps('lastName')} />
-          {formik.touched.lastName && formik.errors.lastName
-            ? (
-              <div className={style.err}>{formik.errors.lastName}</div>
-            )
-            : null}
-
         </div>
+        {formik.touched.lastName && formik.errors.lastName
+          ? (
+            <div className={style.err}>{formik.errors.lastName}</div>
+          )
+          : null}
         <div className={style.field}>
           <div className={style.label}>Email Address</div>
           <input
