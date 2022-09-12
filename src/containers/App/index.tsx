@@ -35,31 +35,31 @@ function App () {
                 <ul>
                   <li>Simple Routing Demo:
                     <NavLink
-                      to='/tiger' className={style.link} exact='true'
-                      activeclassname='active'>Tiger</NavLink>
+                      to='/tiger' className={style.link}
+                    >Tiger</NavLink>
                     or
                     <NavLink
-                      to='/parrot' className={style.link} exact='true'
-                      activeclassname='active'>Parrot</NavLink>
+                      to='/parrot' className={style.link}
+                    >Parrot</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/contextDemo' exact='true' activeclassname='active'>Shared data
+                    <NavLink to='/contextDemo'>Shared data
                       via Context API</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/reduxDemo' exact='true' activeclassname='active'>Shared global
+                    <NavLink to='/reduxDemo'>Shared global
                       state via Redux</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/formValidation' exact='true' activeclassname='active'>Form
+                    <NavLink to='/formValidation'>Form
                       Validation with react-hook-form</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/formValidationFormik' exact='true' activeclassname='active'>Form
+                    <NavLink to='/formValidationFormik'>Form
                       Validation with formik</NavLink>
                   </li>
                   <li>
-                    <NavLink to='/muiTable' exact='true' activeclassname='active'>Paginated,
+                    <NavLink to='/muiTable'>Paginated,
                       Tabular Data</NavLink>
                   </li>
                 </ul>
@@ -68,14 +68,14 @@ function App () {
             </nav>
             <main>
               <Routes>
-                <Route exact='true' path='/' element={null} />
-                <Route exact='true' path='/tiger' element={<Tiger />} />
-                <Route exact='true' path='/parrot' element={<Parrot />} />
-                <Route exact='true' path='/contextDemo' element={<ContextDemo />} />
-                <Route exact='true' path='/reduxDemo' element={<ReduxDemo />} />
-                <Route exact='true' path='/formValidation' element={<FormValidation />} />
-                <Route exact='true' path='/formValidationFormik' element={<FormValidationFormik />} />
-                <Route exact='true' path='/muiTable' element={<MUITable />} />
+                <Route path='/' element={null} />
+                <Route path='/tiger' element={<Tiger />} />
+                <Route path='/parrot' element={<Parrot />} />
+                <Route path='/contextDemo' element={<ContextDemo />} />
+                <Route path='/reduxDemo' element={<ReduxDemo />} />
+                <Route path='/formValidation' element={<FormValidation />} />
+                <Route path='/formValidationFormik' element={<FormValidationFormik />} />
+                <Route path='/muiTable' element={<MUITable />} />
               </Routes>
             </main>
           </div>

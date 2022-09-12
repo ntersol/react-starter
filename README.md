@@ -2,6 +2,8 @@
 
 This application is a series of demos of various features of React that can help jump start an application.  One can pick and choose from the features list for your apps needs.
 
+Would you really bootstrap a new client app with this code?  Probably not, you'd run [Create React App](https://create-react-app.dev/) so you can customize it according to the needs from the get-go.
+
 ## Installing and Running
 
 ### Prerequisites
@@ -92,7 +94,7 @@ If you would like a keystroke to fire off your ESLint fixing:
 The sequence of events when you launch the app with `npm run start` is:
 
 1. *index.html* from the `public` folder is loaded.  It renders a single &lt;div&gt; that is the container for the rest of the app.  Webpack slighly modifies this file so that it also loads:
-2. `src/index.js`.  This will render the &lt;App&gt; component, which for us, lives in `src/containers/App/index.js`.  But first:
+2. `src/index.tsx`.  This will render the &lt;App&gt; component, which for us, lives in `src/containers/App/index.tsx`.  But first:
 3. Babel will convert it from `.jsx` to plain `.js` first, so the friendly-looking &lt;App&gt; becomes a DOM command like `React.createElement('DIV', etc. etc.)`.
 4. Rinse and repeat for all the components under &lt;App&gt;.
 
