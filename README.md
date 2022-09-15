@@ -166,6 +166,9 @@ The `Shared data via Context API` demo uses the `useEffect()` and `useState()` h
 ## Form Validation
 The library used for this demo is `react-hook-form`.
 
+## Form Validation with Formik and Yup
+The same app above, written for the [Formik](https://formik.org/) library with [Yup](https://github.com/jquense/yup) validation.
+
 ## Paginated, Tabular Data
 This example uses [material-react-table](https://www.material-react-table.com/) which is in 
 turn based on [material-ui (a.k.a. MUI)](https://mui.com/).  The packages added to `Dependencies` are:

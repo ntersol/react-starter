@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { IFormFields } from '../../interfaces'
 import style from './formValidationFormik.module.css'
 
 export default function FormValidationFormik () {
   const [submitted, setSubmitted] = useState(false)
-  const [submittedForm, setSubmittedForm] = useState({})
+  const defaultValues:IFormFields = {
+    email: '',
+    firstName: '',
+    lastName: ''
+  }
+  const [submittedForm, setSubmittedForm] = useState(defaultValues)
   const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: ''
-    },
+    initialValues: defaultValues,
     validationSchema: Yup.object({
       firstName: Yup.string()
         .matches(/^([^0-9]*)$/, 'First name may not contain numbers')
@@ -30,7 +32,7 @@ export default function FormValidationFormik () {
     formik.resetForm()
     formik.errors = {}
     setSubmitted(false)
-    setSubmittedForm({})
+    setSubmittedForm(defaultValues)
   }
   return (
     <div className={style.main}>
