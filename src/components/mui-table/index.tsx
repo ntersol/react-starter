@@ -1,19 +1,20 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import MaterialReactTable from 'material-react-table'
 import style from './mui-table.module.css'
+import { IAdaptedMUIdata } from '../../interfaces'
+import { IResult } from '../../containers/App/IRandomUser'
 const NUM_ITEMS = 25
 
 export default function MUITable () {
-  const [JSONdata, setJSONdata] = useState([])
+  const [JSONdata, setJSONdata] = useState<IAdaptedMUIdata[] | any[]>([])
   useEffect(() => {
   }, [])
   const url = `https://randomuser.me/api?results=${NUM_ITEMS}`
-  const fetchData = async (url) => {
+  const fetchData = async (url:string) => {
     await fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        setJSONdata(adaptToFourColumns(data.results), [])
+        setJSONdata(adaptToFourColumns(data.results))
       })
       .catch((e) => console.log(`fetch error.  No network connection?  randomuser.me is down? error = ${e}`))
   }
@@ -42,7 +43,7 @@ export default function MUITable () {
     ],
     []
   )
-  const adaptToFourColumns = (data) => {
+  const adaptToFourColumns = (data:IResult[]):IAdaptedMUIdata[] => {
     return data.map((user, i) => {
       const name = `${user.name.title} ${user.name.first} ${user.name.last}`
       const address = `${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}`

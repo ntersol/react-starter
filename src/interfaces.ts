@@ -19,3 +19,9 @@ export interface IFormFields {
     firstName:string,
     lastName:string
 }
+export interface IAdaptedMUIdata {
+    name:string,
+    email:string,
+    address:string,
+    phone:string
+}
