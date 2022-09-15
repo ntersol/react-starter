@@ -3,7 +3,7 @@ import { IResult } from './containers/App/IRandomUser'
 export interface IContextProps {
     style:any
 }
-export interface IStarterProviderProps {
+export interface IChildrenProps {
     children?: React.ReactNode
 }
 interface IServiceRenderer {

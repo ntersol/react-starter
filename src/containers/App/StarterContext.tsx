@@ -1,11 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { IStarterProviderProps, IStarterContext } from '../../interfaces'
+import React, { createContext, useState, useEffect, FC } from 'react'
+import { IChildrenProps, IStarterContext } from '../../interfaces'
 import { IResult } from './IRandomUser'
 const initialStarter:IStarterContext = { HTMLtitlePre: '', JSONdata: [], serviceRenderer: () => { return (<></>) } }
 const StarterContext = createContext<IStarterContext>(initialStarter)
 const NUM_ITEMS = 6
-export function StarterProvider (props:IStarterProviderProps) {
+const StarterProvider:FC<IChildrenProps> = function ({ children }) {
   const HTMLtitlePre = 'NTERSOL React Starter App'
   const [JSONdata, setJSONdata] = useState([])
   const url:string = `https://randomuser.me/api?results=${NUM_ITEMS}`
@@ -52,11 +51,10 @@ export function StarterProvider (props:IStarterProviderProps) {
   return (
     <StarterContext.Provider
       value={initialContext}>
-      {props.children}
+      {children}
     </StarterContext.Provider>
   )
 }
-StarterProvider.propTypes = {
-  children: PropTypes.element
-}
+
 export default StarterContext
+export { StarterProvider }
