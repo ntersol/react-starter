@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
-import StarterContext from '../../containers/App/StarterContext.js'
+import StarterContext from '../../containers/App/StarterContext'
 import cx from 'classnames'
-export default function Context2 ({ style }) {
+import { IContextProps } from '../../interfaces'
+export default function Context2 (props:IContextProps) {
   const { JSONdata, serviceRenderer } = useContext(StarterContext)
+  const { style } = props
 
   return (
     <div className={cx(style.contextPanel, style.green)}>
@@ -12,7 +13,4 @@ export default function Context2 ({ style }) {
       {serviceRenderer(JSONdata)}
     </div>
   )
-}
-Context2.propTypes = {
-  style: PropTypes.object
 }

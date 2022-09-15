@@ -126,7 +126,7 @@ This is by no means the universal approach, so considering others is certainly a
 ## Context API
 The demo `Shared data via Context API` shows two unrelated components who have access to items from a Context API instance: some JSON data, and a method for rendering it.  The title prefixes used by `Helmet` are also obtained this way.  The implementation steps are:
 
-(1) Create `StarterContext.js` (src/containers/App)
+(1) Create `StarterContext.tsx` (src/containers/App)
 
 (2) In the App container, import it: `import { StarterProvider } from './StarterContext'
 

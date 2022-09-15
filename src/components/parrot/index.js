@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Helmet } from 'react-helmet-async'
-import StarterContext from '../../containers/App/StarterContext.js'
+import StarterContext from '../../containers/App/StarterContext.tsx'
 
 import parrot from '../../image/parrot.svg'
 export default function () {

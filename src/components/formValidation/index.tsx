@@ -1,27 +1,29 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import style from './formValidation.module.css'
+import { IFormFields } from '../../interfaces'
 
-export default function FormValidation (props) {
+export default function FormValidation () {
   const [submitted, setSubmitted] = useState(false)
-  const [submittedForm, setSubmittedForm] = useState({})
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const defaultValues:IFormFields = {
     email: '',
     firstName: '',
     lastName: ''
-  })
+  }
+  const [submittedForm, setSubmittedForm] = useState(defaultValues)
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues })
 
   const emailValid = /^.+@.+\..+$/ // Note, this a very simplified email pattern
   const nameValid = /^([^0-9]*)$/
 
-  const onSubmit = (data) => {
+  const onSubmit = (data:IFormFields) => {
     setSubmitted(true)
     setSubmittedForm(data)
   }
   const handleCancel = () => {
     reset()
     setSubmitted(false)
-    setSubmittedForm({})
+    setSubmittedForm(defaultValues)
   }
 
   return (
@@ -31,7 +33,7 @@ export default function FormValidation (props) {
         <div className={style['name-requirement']}>Numbers not allowed in name fields</div>
         <div className={style.field}>
           <div className={style.label}>Email</div>
-          <input name='email' {...register('email', { required: true, pattern: emailValid })} />
+          <input {...register('email', { required: true, pattern: emailValid })} />
         </div>
         {errors.email?.type === 'required' && <div className={style.err}>This field is required</div>}
         {errors.email?.type === 'pattern' && <div className={style.err}>Please enter a valid email address</div>}

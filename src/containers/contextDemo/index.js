@@ -3,7 +3,7 @@ import Context1 from '../../components/context1'
 import Context2 from '../../components/context2'
 import style from './contextDemo.module.css'
 import { Helmet } from 'react-helmet-async'
-import StarterContext from '../App/StarterContext.js'
+import StarterContext from '../App/StarterContext.tsx'
 export default function ContextDemo () {
   const { HTMLtitlePre } = useContext(StarterContext)
   return (
