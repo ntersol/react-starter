@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import StarterContext from '../../containers/App/StarterContext'
 import cx from 'classnames'
-import { IContextProps } from '../../interfaces'
-export default function Context2 (props:IContextProps) {
+import { IStyleProps } from '../../interfaces'
+export default function Context2 (props:IStyleProps) {
   const { JSONdata, serviceRenderer } = useContext(StarterContext)
   const { style } = props
 

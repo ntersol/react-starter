@@ -1,6 +1,6 @@
 import React from 'react'
 import { IResult } from './containers/App/IRandomUser'
-export interface IContextProps {
+export interface IStyleProps {
     style:any
 }
 export interface IChildrenProps {
