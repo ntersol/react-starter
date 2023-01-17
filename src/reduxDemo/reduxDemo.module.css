@@ -14,6 +14,7 @@ body {
     width: 100%;
     display: flex;
     flex-direction: row;
+    font-size: 24px;
 }
 
 .main > h1 {
@@ -115,4 +116,10 @@ body {
 }
 .article-link:last-child:after {
     content: ''
+}
+.instructions {
+    font-style: italic;
+}
+.label {
+    margin-right: 5px;
 }

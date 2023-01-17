@@ -14,7 +14,7 @@ export const Blog: React.FC = () => {
   return (
     <div>
       <div className={style.main}>
-        <div>Your List: </div>
+        <div className={style.label}>Your List: </div>
         <div>
           {articles.length > 0
             ? articles.map((article: IArticle) => (
@@ -27,7 +27,7 @@ export const Blog: React.FC = () => {
             : (<span> Empty</span>)}
         </div>
       </div>
-      {articles.length > 0 ? (<div>Click on item to delete</div>) : null}
+      {articles.length > 0 ? (<div className={style.instructions}>Click on item to delete</div>) : null}
     </div>
   )
 }
