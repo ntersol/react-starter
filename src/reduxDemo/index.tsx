@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async'
 import { Dispatch } from 'redux'
 import { useDispatch } from 'react-redux'
 import { BlogClient } from './blogClient'
-import { Blog } from './blog'
 import { IArticle } from './type'
 import { addArticle } from './store/actionCreators'
 
@@ -20,10 +19,11 @@ export default function ReduxDemo () {
         <Helmet>
           <title>NTERSOL React Starter App - Redux Demo</title>
         </Helmet>
-        <BlogClient saveArticle={saveArticle} />
-        <BlogClient saveArticle={saveArticle} />?
+        <div className={style.clients}>
+          <BlogClient saveArticle={saveArticle} position={1} />
+          <BlogClient saveArticle={saveArticle} position={2} />
+        </div>
       </div>
-      <Blog />
     </div>
   )
 }

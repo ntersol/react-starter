@@ -18,12 +18,8 @@ export const Article: React.FC<Props> = ({ article, removeArticle }) => {
   )
 
   return (
-    <div className={style.Article}>
-      <div>
-        <h1>{article.title}</h1>
-        <p>{article.body}</p>
-      </div>
-      <button onClick={() => deleteArticle(article)}>Delete</button>
-    </div>
+    <span className={style['article-link']}>
+      <a onClick={() => deleteArticle(article)}>{article.title}</a>
+    </span>
   )
 }

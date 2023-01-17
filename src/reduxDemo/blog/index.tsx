@@ -12,15 +12,22 @@ export const Blog: React.FC = () => {
   )
 
   return (
-    <div className={style.main}>
-      <h1>Blog</h1>
-      {articles.map((article: IArticle) => (
-        <Article
-          key={article.id}
-          article={article}
-          removeArticle={removeArticle}
-        />
-      ))}
+    <div>
+      <div className={style.main}>
+        <div>Your List: </div>
+        <div>
+          {articles.length > 0
+            ? articles.map((article: IArticle) => (
+              <Article
+                key={article.id}
+                article={article}
+                removeArticle={removeArticle}
+              />
+            ))
+            : (<span> Empty</span>)}
+        </div>
+      </div>
+      {articles.length > 0 ? (<div>Click on item to delete</div>) : null}
     </div>
   )
 }

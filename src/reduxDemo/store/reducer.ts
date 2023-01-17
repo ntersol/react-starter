@@ -5,13 +5,11 @@ const initialState: ArticleState = {
   articles: [
     {
       id: 1,
-      title: 'post 1',
-      body: 'Quisque cursus, metus vitae pharetra Nam libero tempore, cum soluta nobis est eligendi'
+      title: 'eggs'
     },
     {
       id: 2,
-      title: 'post 2',
-      body: 'Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint'
+      title: 'apples'
     }
   ]
 }
@@ -24,8 +22,7 @@ const reducer = (
     // eslint-disable-next-line no-case-declarations
     const newArticle: IArticle = {
       id: Math.random(), // not really unique
-      title: action.article.title,
-      body: action.article.body
+      title: action.article.title
     }
     return {
       ...state,
