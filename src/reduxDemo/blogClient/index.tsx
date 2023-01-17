@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { IArticle } from '../../type.d'
-import style from '../../containers/reduxDemo/reduxDemo.module.css'
+import { IArticle } from '../type'
+import style from '../reduxDemo.module.css'
 
 type Props = {
     saveArticle: (article: IArticle | any) => void

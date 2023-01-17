@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import style from './scrollMessage.module.css'
-export default function ScrollMessage ({ mesg }) {
+
+type Props = {
+  mesg: string
+}
+const ScrollMessage: React.FC<Props> = ({ mesg }) => {
   return (
     <div className={style['scroll-left']}><p>{mesg}</p></div>
   )
 }
-ScrollMessage.propTypes = {
-  mesg: PropTypes.string
-}
+export default ScrollMessage

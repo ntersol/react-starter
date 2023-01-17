@@ -1,9 +1,9 @@
 import React from 'react'
 import { Article } from '../article'
-import { IArticle, ArticleState } from '../../type.d'
+import { IArticle, ArticleState } from '../type'
 import { useSelector, shallowEqual } from 'react-redux'
-import { removeArticle } from '../../store/actionCreators'
-import style from '../../containers/reduxDemo/reduxDemo.module.css'
+import { removeArticle } from '../store/actionCreators'
+import style from '../reduxDemo.module.css'
 
 export const Blog: React.FC = () => {
   const articles: readonly IArticle[] = useSelector(

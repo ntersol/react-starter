@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import { ArticleState, ArticleAction, IArticle } from '../type.d'
+import { ArticleState, ArticleAction, IArticle } from '../type'
 
 const initialState: ArticleState = {
   articles: [

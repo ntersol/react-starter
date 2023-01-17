@@ -3,10 +3,10 @@ import style from './reduxDemo.module.css'
 import { Helmet } from 'react-helmet-async'
 import { Dispatch } from 'redux'
 import { useDispatch } from 'react-redux'
-import { BlogClient } from '../../components/blogClient'
-import { Blog } from '../../components/blog'
-import { IArticle } from '../../type'
-import { addArticle } from '../../store/actionCreators'
+import { BlogClient } from './blogClient'
+import { Blog } from './blog'
+import { IArticle } from './type'
+import { addArticle } from './store/actionCreators'
 
 export default function ReduxDemo () {
   const dispatch: Dispatch<any> = useDispatch()

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import { IArticle, ArticleAction, DispatchType } from '../type.d'
+import { IArticle, ArticleAction, DispatchType } from '../type'
 
 export function addArticle (article: IArticle) {
   const action: ArticleAction = {
