@@ -1,35 +1,101 @@
-#contextDemo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
 }
-.contextPanel {
-    border: 1px solid black;
-    margin: 0 25px;
-    padding: 10px;
+
+body {
+    font-family: Nunito, sans-serif;
+    background: #f5f6f7;
 }
-.current {
+
+.main {
+    max-width: 30rem;
+    margin: auto;
+    padding: 2rem 1rem;
+}
+
+.main > h1 {
     text-align: center;
-    font-size: 24px;
 }
-.highlight {
-    font-weight: bold;
-    font-style: italic;
+
+.Add-article {
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
 }
-h1.red, p .red {
-    color: red;
-    font-weight: bold;
+
+.Add-article input {
+    display: block;
+    margin: 1rem auto;
+    width: 20rem;
+    padding: 0.5rem;
+    border: 1px solid #00b8e6;
+    border-radius: 10px;
+    outline: none;
 }
-h1.green, p .green {
-    color: green;
-    font-weight: bold;
+
+.Add-article button {
+    width: 21rem;
+    padding: 0.7rem;
+    border: 1px solid #00b8e6;
+    background: #00b8e6;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
 }
-.contextPanel.red {
-    border: 2px solid red;
+
+.Add-article button:hover {
+    background: #0093b8;
 }
-.contextPanel.green {
-    border: 2px solid green;
+
+.Add-article button:disabled {
+    background: #d8d8d8;
+    border: 1px solid #d8d8d8;
+    cursor: not-allowed;
 }
-tbody td {
-    padding: 5px;
+
+.Article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.Article:not(:last-child) {
+    border-bottom: 2px solid #f5f6f7;
+}
+
+.Article h1 {
+    color: #222;
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: 1.7rem;
+}
+
+.Article p {
+    padding-right: 1rem;
+    color: #444;
+}
+.Article button {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid #d34b4b;
+    background: #d34b4b;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.Article button:hover {
+    background: #e06a6a;
 }
