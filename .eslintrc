@@ -4,15 +4,10 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "jest/globals": true
+    "jest/globals": true,
+    "jest": true
   },
-  "extends": [
-    "standard",
-    "standard-react",
-    "standard-jsx",
-    "eslint:recommended",
-    "plugin:jest/recommended"
-  ],
+  "extends": ["standard", "standard-react", "standard-jsx", "eslint:recommended", "plugin:jest/recommended", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
@@ -24,9 +19,8 @@
   "plugins": ["react", "jest"],
   "rules": {
     "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "never"],
+    "no-unused-vars": "off",
     "one-var": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-boolean-value": "off",
@@ -42,5 +36,13 @@
     "react": {
       "version": "16.13.1"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
 }

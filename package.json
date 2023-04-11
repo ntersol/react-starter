@@ -30,27 +30,34 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "sass": "^1.52.3",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-jsx": "^11.0.0",
+    "eslint-config-standard-react": "^11.0.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.0",
+    "prettier": "2.8.7",
+    "prettier-eslint": "^15.0.1",
     "@babel/preset-typescript": "^7.18.6",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-config-standard-jsx": "^11.0.0",
-    "eslint-config-standard-react": "^13.0.0",
+
     "eslint-import-resolver-typescript": "^3.5.3",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-node": "^11.1.0",
+
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.32.1",
+
     "eslint-webpack-plugin": "^3.2.0",
-    "prettier": "^2.8.3",
+
     "typescript": "^4.9.4"
   },
   "scripts": {
@@ -58,6 +65,21 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 160,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "arrowParens": "avoid"
   },
   "browserslist": {
     "production": [
@@ -71,4 +93,5 @@
       "last 1 safari version"
     ]
   }
+
 }

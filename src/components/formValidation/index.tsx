@@ -13,8 +13,8 @@ export default function FormValidation () {
   const [submittedForm, setSubmittedForm] = useState(defaultValues)
   const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues })
 
-  const emailValid = /^.+@.+\..+$/ // Note, this a very simplified email pattern
-  const nameValid = /^([^0-9]*)$/
+  const emailValid = /^.+@.+\..+$/; // Note, this a very simplified email pattern
+  const nameValid = /^([^0-9]*)$/;
 
   const onSubmit = (data:IFormFields) => {
     setSubmitted(true)
@@ -30,7 +30,7 @@ export default function FormValidation () {
     <div className={style.main}>
       <form onSubmit={handleSubmit(onSubmit)} onReset={handleCancel}>
         <h1>Please enter your name and email</h1>
-        <div className={style['name-requirement']}>Numbers not allowed in name fields</div>
+        <div className={style.nameRequirement}>Numbers not allowed in name fields</div>
         <div className={style.field}>
           <div className={style.label}>Email</div>
           <input {...register('email', { required: true, pattern: emailValid })} />
@@ -49,16 +49,22 @@ export default function FormValidation () {
         </div>
         {errors.lastName?.type === 'required' && <div className={style.err}>This field is required</div>}
         {errors.lastName?.type === 'pattern' && <div className={style.err}>Numbers are not allowed</div>}
-        <input type='submit' />
-        &nbsp;&nbsp;<input type='reset' />
+        <input type="submit" />
+
+        <input type="reset" />
         {/* Do not use watch() to grab values, as they will change as user types in the already-submitted form */}
-        {submitted && (<div className={style.submitted}>
-          <div><strong>Submitted Values:</strong></div>
-          <div>Name: {submittedForm.firstName} {submittedForm.lastName}</div>
-          <div>Email: {submittedForm.email}</div>
-        </div>
+        {submitted && (
+          <div className={style.submitted}>
+            <div>
+              <strong>Submitted Values:</strong>
+            </div>
+            <div>
+              Name: {submittedForm.firstName} {submittedForm.lastName}
+            </div>
+            <div>Email: {submittedForm.email}</div>
+          </div>
         )}
       </form>
     </div>
-  )
+  );
 }
