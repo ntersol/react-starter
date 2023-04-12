@@ -24,7 +24,8 @@
       "$models": ["./shared/models/global.models"],
       "$shared": ["./shared"],
       "$env": ["./environments/environment.ts"]
-    }
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": ["src", "./declarations.d.ts"]
 }
