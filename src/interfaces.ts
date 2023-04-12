@@ -1,27 +1,27 @@
-import React from 'react'
-import { IResult } from './containers/App/IRandomUser'
+import React from 'react';
+import { IResult } from './routes/App/IRandomUser';
 export interface IStyleProps {
-    style:any
+  style: any;
 }
 export interface IChildrenProps {
-    children?: React.ReactNode
+  children?: React.ReactNode;
 }
 interface IServiceRenderer {
-    (data:Array<IResult>): React.ReactNode;
+  (data: Array<IResult>): React.ReactNode;
 }
 export interface IStarterContext {
-    HTMLtitlePre: string,
-    JSONdata:IResult[],
-    serviceRenderer: IServiceRenderer
+  HTMLtitlePre: string;
+  JSONdata: IResult[];
+  serviceRenderer: IServiceRenderer;
 }
 export interface IFormFields {
-    email:string,
-    firstName:string,
-    lastName:string
+  email: string;
+  firstName: string;
+  lastName: string;
 }
 export interface IAdaptedMUIdata {
-    name:string,
-    email:string,
-    address:string,
-    phone:string
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
 }

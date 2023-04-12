@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
-import { Helmet } from 'react-helmet-async'
-import StarterContext from '../../containers/App/StarterContext'
+import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet-async';
+import StarterContext from '../../routes/App/StarterContext';
 
-import parrot from '../../image/parrot.svg'
+import parrot from '../../image/parrot.svg';
 export default function () {
-  const { HTMLtitlePre } = useContext(StarterContext)
+  const { HTMLtitlePre } = useContext(StarterContext);
   return (
     <div>
       <Helmet>
@@ -13,5 +13,5 @@ export default function () {
 
       <img src={parrot} style={{ margin: '0 auto', width: '500px', height: '500px' }} />
     </div>
-  )
+  );
 }
