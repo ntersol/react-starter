@@ -2,7 +2,7 @@
 
 This application is a series of demos of various features of React that can help jump start an application. One can pick and choose from the features list for your apps needs.
 
-Would you really bootstrap a new client app with this code?  Probably not, you'd run [Create React App](https://create-react-app.dev/) so you can customize it according to the needs from the get-go.
+Would you really bootstrap a new client app with this code? Probably not, you'd run [Create React App](https://create-react-app.dev/) so you can customize it according to the needs from the get-go.
 
 ## Installing and Running
 
@@ -100,8 +100,8 @@ If you would like a keystroke to fire off your ESLint fixing:
 
 The sequence of events when you launch the app with `npm run start` is:
 
-1. *index.html* from the `public` folder is loaded.  It renders a single &lt;div&gt; that is the container for the rest of the app.  Webpack slighly modifies this file so that it also loads:
-2. `src/index.tsx`.  This will render the &lt;App&gt; component, which for us, lives in `src/containers/App/index.tsx`.  But first:
+1. _index.html_ from the `public` folder is loaded. It renders a single &lt;div&gt; that is the container for the rest of the app. Webpack slighly modifies this file so that it also loads:
+2. `src/index.tsx`. This will render the &lt;App&gt; component, which for us, lives in `src/containers/App/index.tsx`. But first:
 3. Babel will convert it from `.jsx` to plain `.js` first, so the friendly-looking &lt;App&gt; becomes a DOM command like `React.createElement('DIV', etc. etc.)`.
 4. Rinse and repeat for all the components under &lt;App&gt;.
 
@@ -127,12 +127,10 @@ The original `react-helmet` is buggy.
 
 ## Naming convention for components
 
-This app is using the widely-used approach of:
-
-1. Creating a folder for the component beginning lower case, e.g. `myComponent`
-2. The file for the component itself is named `index.html`. The exported Component will begin upper case, e.g. `MyComponent`
-
-This is by no means the universal approach, so considering others is certainly an option.
+1. Files and file folders should be all lower case with hyphens, ie "my-widget/my-widget.tsx". Some environments are case sensitive and this also prevents casing errors and makes imports from NPM more consistent
+2. Function components should be pascal case, ie "MyWidget"
+3. Methods should be camelCase and be named for this function, ie "addNumbers"
+4. Function filenames should match the folder filename, ie "my-widget/my-widget.tsx". This makes it easy to look up files via file search and also prevents having hundreds of "index.tsx" in the project which are indistinguishable
 
 ## Context API
 
@@ -181,6 +179,7 @@ The `Shared data via Context API` demo uses the `useEffect()` and `useState()` h
 The library used for this demo is `react-hook-form`.
 
 ## Form Validation with Formik and Yup
+
 The same app above, written for the [Formik](https://formik.org/) library with [Yup](https://github.com/jquense/yup) validation.
 
 ## Paginated, Tabular Data
