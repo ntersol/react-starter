@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context1 from '../../components/context1';
 import Context2 from '../../components/context2';
-import style from './contextDemo.module.css';
+import style from './context-demo.module.css';
 import { Helmet } from 'react-helmet-async';
 import StarterContext from '../../StarterContext';
 export default function ContextDemo() {

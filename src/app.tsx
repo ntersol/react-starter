@@ -4,8 +4,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { StarterProvider } from './StarterContext';
 import Tiger from './components/tiger';
 import Parrot from './components/parrot';
-import ContextDemo from './routes/contextDemo';
-import ReduxDemo from './routes/redux-demo';
 import ScrollMessage from './components/scrollMessage';
 import FormValidation from './components/formValidation';
 import MUITable from './components/mui-table';
@@ -13,6 +11,7 @@ import FormValidationFormik from './components/formValidationFormik';
 import logo from './shared/images/ntersolBanner.png';
 import style from './app.module.css';
 import './links.css';
+import { ContextDemo, ReduxDemo } from './routes';
 
 function App() {
   return (
