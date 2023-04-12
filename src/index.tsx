@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import App from './routes/App';
+import App from './app';
 // import store from './reduxOld/store'
 import { ArticleState, ArticleAction, DispatchType } from './routes/redux-demo/type';
 import { createStore, applyMiddleware, Store } from 'redux';

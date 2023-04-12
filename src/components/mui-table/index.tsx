@@ -1,12 +1,11 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import style from './mui-table.module.css';
-import { IAdaptedMUIdata } from '../../interfaces';
-import { IResult } from '../../routes/App/IRandomUser';
+import { Models } from '$models';
 const NUM_ITEMS = 25;
 
 export default function MUITable() {
-  const [JSONdata, setJSONdata] = useState<IAdaptedMUIdata[] | any[]>([]);
+  const [JSONdata, setJSONdata] = useState<Models.IAdaptedMUIdata[] | any[]>([]);
   useEffect(() => {}, []);
   const url = `https://randomuser.me/api?results=${NUM_ITEMS}`;
   const fetchData = async (url: string) => {
@@ -42,7 +41,7 @@ export default function MUITable() {
     ],
     [],
   );
-  const adaptToFourColumns = (data: IResult[]): IAdaptedMUIdata[] => {
+  const adaptToFourColumns = (data: Models.IResult[]): Models.IAdaptedMUIdata[] => {
     return data.map((user, i) => {
       const name = `${user.name.title} ${user.name.first} ${user.name.last}`;
       const address = `${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}`;

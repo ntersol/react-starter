@@ -1,30 +1,35 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import style from './formValidation.module.css'
-import { IFormFields } from '../../interfaces'
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import style from './formValidation.module.css';
+import { Models } from '$models';
 
-export default function FormValidation () {
-  const [submitted, setSubmitted] = useState(false)
-  const defaultValues:IFormFields = {
+export default function FormValidation() {
+  const [submitted, setSubmitted] = useState(false);
+  const defaultValues: Models.IFormFields = {
     email: '',
     firstName: '',
-    lastName: ''
-  }
-  const [submittedForm, setSubmittedForm] = useState(defaultValues)
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues })
+    lastName: '',
+  };
+  const [submittedForm, setSubmittedForm] = useState(defaultValues);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues });
 
   const emailValid = /^.+@.+\..+$/; // Note, this a very simplified email pattern
   const nameValid = /^([^0-9]*)$/;
 
-  const onSubmit = (data:IFormFields) => {
-    setSubmitted(true)
-    setSubmittedForm(data)
-  }
+  const onSubmit = (data: Models.IFormFields) => {
+    setSubmitted(true);
+    setSubmittedForm(data);
+  };
   const handleCancel = () => {
-    reset()
-    setSubmitted(false)
-    setSubmittedForm(defaultValues)
-  }
+    reset();
+    setSubmitted(false);
+    setSubmittedForm(defaultValues);
+  };
 
   return (
     <div className={style.main}>

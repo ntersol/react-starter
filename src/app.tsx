@@ -2,16 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { StarterProvider } from './StarterContext';
-import Tiger from '../../components/tiger';
-import Parrot from '../../components/parrot';
-import ContextDemo from '../contextDemo';
-import ReduxDemo from '../../routes/redux-demo';
-import ScrollMessage from '../../components/scrollMessage';
-import FormValidation from '../../components/formValidation';
-import MUITable from '../../components/mui-table';
-import FormValidationFormik from '../../components/formValidationFormik';
-import logo from '../../shared/images/ntersolBanner.png';
-import style from './App.module.css';
+import Tiger from './components/tiger';
+import Parrot from './components/parrot';
+import ContextDemo from './routes/contextDemo';
+import ReduxDemo from './routes/redux-demo';
+import ScrollMessage from './components/scrollMessage';
+import FormValidation from './components/formValidation';
+import MUITable from './components/mui-table';
+import FormValidationFormik from './components/formValidationFormik';
+import logo from './shared/images/ntersolBanner.png';
+import style from './app.module.css';
 import './links.css';
 
 function App() {
