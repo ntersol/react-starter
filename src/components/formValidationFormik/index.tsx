@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Models } from '$models';
+import { Models } from '$shared';
 import style from './formValidationFormik.module.css';
 
 export default function FormValidationFormik() {

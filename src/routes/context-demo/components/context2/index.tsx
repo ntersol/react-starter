@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import cx from 'classnames';
-import { Models } from '$models';
-import StarterContext from '../../StarterContext';
+import { Models } from '$shared';
+import { StarterContext } from '../../../../shared';
 export default function Context2(props: Models.IStyleProps) {
   const { JSONdata, serviceRenderer } = useContext(StarterContext);
   const { style } = props;

@@ -21,9 +21,7 @@
     "jsx": "react-jsx",
     "paths": {
       "$components": ["./components"],
-      "$models": ["./shared/models/global.models"],
-      "$shared": ["./shared"],
-      "$env": ["./environments/environment.ts"]
+      "$shared": ["./shared"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },

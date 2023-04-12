@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { StarterProvider } from './StarterContext';
+import { StarterProvider } from './shared/context/starter-context';
 import Tiger from './components/tiger';
 import Parrot from './components/parrot';
 import ScrollMessage from './components/scrollMessage';

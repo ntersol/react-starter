@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, FC } from 'react';
-import { Models } from './shared/models/global.models';
+import { Models } from '../models/global.models';
 const initialStarter: Models.IStarterContext = {
   HTMLtitlePre: '',
   JSONdata: [],
@@ -7,9 +7,17 @@ const initialStarter: Models.IStarterContext = {
     return <></>;
   },
 };
-const StarterContext = createContext<Models.IStarterContext>(initialStarter);
+/**
+ * Context for starter
+ */
+export const StarterContext = createContext<Models.IStarterContext>(initialStarter);
 const NUM_ITEMS = 6;
-const StarterProvider: FC<Models.IChildrenProps> = function ({ children }) {
+/**
+ * Starter context provider
+ * @param param0
+ * @returns
+ */
+export const StarterProvider: FC<Models.IChildrenProps> = function ({ children }) {
   const HTMLtitlePre = 'NTERSOL React Starter App';
   const [JSONdata, setJSONdata] = useState([]);
   const url: string = `https://randomuser.me/api?results=${NUM_ITEMS}`;
@@ -57,5 +65,5 @@ const StarterProvider: FC<Models.IChildrenProps> = function ({ children }) {
   return <StarterContext.Provider value={initialContext}>{children}</StarterContext.Provider>;
 };
 
-export default StarterContext;
-export { StarterProvider };
+// export default StarterContext;
+// export { StarterProvider };
