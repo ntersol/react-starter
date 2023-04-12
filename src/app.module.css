@@ -30,3 +30,8 @@ nav {
 main {
   margin: 0 auto;
 }
+
+.active {
+  color: red;
+  font-weight: bold;
+}

@@ -10,7 +10,6 @@ import MUITable from './components/mui-table';
 import FormValidationFormik from './components/formValidationFormik';
 import logo from './shared/images/ntersolBanner.png';
 import style from './app.module.css';
-import './links.css';
 import { ContextDemo, ReduxDemo } from './routes';
 
 function App() {
