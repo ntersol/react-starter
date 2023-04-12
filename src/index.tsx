@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import App from './routes/App';
 // import store from './reduxOld/store'
-import { ArticleState, ArticleAction, DispatchType } from './reduxDemo/type';
+import { ArticleState, ArticleAction, DispatchType } from './routes/redux-demo/type';
 import { createStore, applyMiddleware, Store } from 'redux';
-import reducer from './reduxDemo/store/reducer';
+import reducer from './routes/redux-demo/store/reducer';
 
 import './index.scss';
 

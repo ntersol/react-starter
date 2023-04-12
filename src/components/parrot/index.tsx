@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import StarterContext from '../../routes/App/StarterContext';
 
-import parrot from '../../image/parrot.svg';
+import parrot from '../../shared/images/parrot.svg';
 export default function () {
   const { HTMLtitlePre } = useContext(StarterContext);
   return (

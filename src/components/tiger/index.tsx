@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import StarterContext from '../../routes/App/StarterContext';
-import tiger from '../../image/tiger.svg';
+import tiger from '../../shared/images/tiger.svg';
 export default function () {
   const { HTMLtitlePre } = useContext(StarterContext);
   return (
