@@ -11,7 +11,7 @@ type MasterpageProps = {
 
 export function Masterpage({ children, showNav }: MasterpageProps) {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <Header showNav={showNav} />
       <main>{children}</main>
       <Footer />

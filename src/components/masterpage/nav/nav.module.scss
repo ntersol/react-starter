@@ -1,3 +1,10 @@
+#nav-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
 .nav-menu-link {
   padding: 0.857rem;
   color: #333;
@@ -18,4 +25,7 @@
   &:hover {
     background: #eaeaea;
   }
+}
+.nav-toggler {
+  flex: 1;
 }

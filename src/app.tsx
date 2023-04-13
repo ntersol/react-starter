@@ -9,8 +9,7 @@ import MUITable from './components/mui-table';
 import FormValidationFormik from './components/formValidationFormik';
 
 import style from './app.module.css';
-import { ContextDemo, Home, ReduxDemo } from './routes';
-import { Users } from './routes/users/users';
+import { ContextDemo, Home, ReduxDemo, Users } from './routes';
 
 function App() {
   return (
