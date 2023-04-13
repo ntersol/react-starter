@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './nav.module.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
+import { FaBars } from 'react-icons/fa';
 
 export function Nav() {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
@@ -21,9 +22,11 @@ export function Nav() {
       </nav>
       <div className={classNames(styles['nav-end'], 'd-flex d-md-block')}>
         <div className="d-none d-lg-block">Utility Nav!</div>
-        <div className={styles['nav-toggler']}>
-          <div className="pt-2 float-end d-block d-lg-none">
-            <a>Toggle!</a>
+        <div>
+          <div className="d-block d-lg-none">
+            <button className={classNames(styles['nav-toggler'], 'link p-2')}>
+              <FaBars />
+            </button>
           </div>
         </div>
       </div>
