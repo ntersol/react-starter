@@ -24,7 +24,7 @@ export function Nav() {
         <div className="d-none d-lg-block">Utility Nav!</div>
         <div>
           <div className="d-block d-lg-none">
-            <button className={classNames(styles['nav-toggler'], 'link p-2')}>
+            <button className={classNames(styles['nav-toggler'], 'link p-2')} onClick={() => setMobileNavOpen(!isMobileNavOpen)}>
               <FaBars />
             </button>
           </div>

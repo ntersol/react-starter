@@ -1,10 +1,12 @@
+@import '/src/shared/styles/vars';
+
 #nav-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex: 1;
 }
-@media (max-width: 979px) {
+@media (max-width: $lg) {
   // TODO: Import breakpoints css vars
   #nav-main {
     justify-content: end;

@@ -8,6 +8,13 @@
   }
 }
 
+/**
+* Global CSS Variables
+* USAGE:
+*
+* @media (max-width: var(--nts-large)) {}
+* color: var(--nts-interact);
+*/
 :root {
   @include convert($breakpoints);
   @include convert($colors);
