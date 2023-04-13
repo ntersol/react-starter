@@ -1,3 +1,2 @@
 export * from './models/global.models';
-
-export * from './context/starter-context';
+export * from './context/';

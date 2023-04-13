@@ -9,7 +9,7 @@ import MUITable from './components/mui-table';
 import FormValidationFormik from './components/formValidationFormik';
 
 import style from './app.module.css';
-import { ContextDemo, Home, ReduxDemo, Users } from './routes';
+import { ContextDemo, Home, Login, ReduxDemo, Users } from './routes';
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/tiger" element={<Tiger />} />
                 <Route path="/parrot" element={<Parrot />} />
                 <Route path="/context-demo" element={<ContextDemo />} />

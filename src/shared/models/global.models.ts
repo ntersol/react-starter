@@ -19,6 +19,11 @@ export module Models {
   /********************************
    *  BEGIN CUSTOM GLOBAL MODELS
    ********************************/
+  export interface AuthState {
+    isLoggedIn: boolean;
+    token: string | null;
+    userInfo?: any | null;
+  }
 
   export interface IFormFields {
     email: string;
