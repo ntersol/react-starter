@@ -18,11 +18,11 @@
   },
   "plugins": ["react", "jest"],
   "rules": {
-    "indent": ["error", 2],
     "quotes": ["error", "single"],
     "no-unused-vars": "off",
     "one-var": "off",
     "dot-notation": "off",
+    "react/self-closing-comp": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-boolean-value": "off",
     "jsx-a11y/href-no-hash": "off",
