@@ -5,22 +5,30 @@ import classNames from 'classnames';
 import { FaBars } from 'react-icons/fa';
 import { Sidebar } from 'primereact/sidebar';
 
+interface NavItem {
+  label: string;
+  icon?: string;
+  url: string;
+}
+
 export function Nav() {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
+  const navItems: NavItem[] = [
+    { label: 'User Management', icon: '', url: '/users' },
+    { label: 'Context Demo', icon: '', url: '/context-demo' },
+    { label: 'Redux Demo', icon: '', url: '/redux-demo' },
+  ];
+
+  const navDom = navItems.map((nav, i) => (
+    <NavLink to={nav.url} className={styles['nav-menu-link']} key={i}>
+      {nav.label}
+    </NavLink>
+  ));
+
   return (
     <div id={styles['nav-main']}>
-      <nav className={classNames('d-none d-lg-flex')}>
-        <NavLink to="/users" className={styles['nav-menu-link']}>
-          User Management
-        </NavLink>
-        <NavLink to="/context-demo" className={styles['nav-menu-link']}>
-          Context Demo
-        </NavLink>
-        <NavLink to="/redux-demo" className={styles['nav-menu-link']}>
-          Redux Demo
-        </NavLink>
-      </nav>
+      <nav className={classNames('d-none d-lg-flex')}>{navDom}</nav>
       <div className={classNames(styles['nav-end'], 'd-flex d-md-block')}>
         <div className="d-none d-lg-block">Utility Nav!</div>
         <div>
@@ -32,11 +40,7 @@ export function Nav() {
         </div>
       </div>
       <Sidebar visible={isMobileNavOpen} onHide={() => setMobileNavOpen(false)}>
-        <h2>Sidebar</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
+        <nav className={styles['nav-sidebar']}>{navDom}</nav>
       </Sidebar>
     </div>
   );
