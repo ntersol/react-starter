@@ -14,15 +14,17 @@
 // Option 2: Import all of Bootstrap - 154k
 // @import 'bootstrap/scss/bootstrap';
 
-// Font Awesome Free 5. Use the icons.module instead unless you need them all
-// @import '@fortawesome/fontawesome-free/css/all.css'; // 57k
-
 // PrimeNG
-// @import 'primeicons/primeicons.css'; // 500k including font files
-// @import 'primeng/resources/primeng.min.css'; // 7k
-// @import 'primeflex/primeflex.css'; // 236k
-// Option 1: Pre-built PrimeNG theme
-// @import 'primeng/resources/themes/nova/theme.css'; // 134k
+// Option 1: Default theme
+// Core
+@import 'primereact/resources/primereact.min.css'; // 7k
+
+// Icons. Partially needed since some Prime components use this lib
+@import 'primeicons/primeicons.css'; // 30k including font files
+
+// Theme
+@import 'primereact/resources/themes/nova/theme.css'; // ???k
+
 // Option 2: Custom theme using PrimeNG Theme Designer
 // TODO: Update Theme Designer to support PrimeNG 11
 //@import 'styles/theme/nova-light/theme';

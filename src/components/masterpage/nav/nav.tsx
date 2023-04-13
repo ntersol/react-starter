@@ -3,6 +3,7 @@ import styles from './nav.module.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { FaBars } from 'react-icons/fa';
+import { Sidebar } from 'primereact/sidebar';
 
 export function Nav() {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
@@ -30,6 +31,13 @@ export function Nav() {
           </div>
         </div>
       </div>
+      <Sidebar visible={isMobileNavOpen} onHide={() => setMobileNavOpen(false)}>
+        <h2>Sidebar</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+      </Sidebar>
     </div>
   );
 }
