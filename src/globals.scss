@@ -26,3 +26,7 @@ button.link {
   display: inline-block;
   color: var(--nts-interact);
 }
+
+a:not([href]):not([tabindex]) {
+  color: var(--nts-interact);
+}
