@@ -5,13 +5,15 @@ import { Footer } from './footer/footer';
 
 type MasterpageProps = {
   children?: ReactNode | null;
+  /** Is the navigation visible */
+  showNav?: boolean | null;
 };
 
-export function Masterpage({ children }: MasterpageProps) {
+export function Masterpage({ children, showNav }: MasterpageProps) {
   return (
-    <div>
-      <Header />
-      {children}
+    <div className="container">
+      <Header showNav={showNav} />
+      <main>{children}</main>
       <Footer />
     </div>
   );

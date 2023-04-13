@@ -6,21 +6,24 @@ import { useDispatch } from 'react-redux';
 import { BlogClient } from './blogClient';
 import { IArticle } from './type';
 import { addArticle } from './store/actionCreators';
+import { Masterpage } from '../../components';
 
 export default function ReduxDemo() {
   const dispatch: Dispatch<any> = useDispatch();
   const saveArticle = React.useCallback((article: IArticle) => dispatch(addArticle(article)), [dispatch]);
   return (
-    <div>
-      <div id={style.contextDemo}>
-        <Helmet>
-          <title>NTERSOL React Starter App - Redux Demo</title>
-        </Helmet>
-        <div className={style.clients}>
-          <BlogClient saveArticle={saveArticle} position={1} />
-          <BlogClient saveArticle={saveArticle} position={2} />
+    <Masterpage>
+      <div>
+        <div id={style.contextDemo}>
+          <Helmet>
+            <title>NTERSOL React Starter App - Redux Demo</title>
+          </Helmet>
+          <div className={style.clients}>
+            <BlogClient saveArticle={saveArticle} position={1} />
+            <BlogClient saveArticle={saveArticle} position={2} />
+          </div>
         </div>
       </div>
-    </div>
+    </Masterpage>
   );
 }

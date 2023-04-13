@@ -8,6 +8,7 @@ import { ArticleState, ArticleAction, DispatchType } from './routes/redux-demo/t
 import { createStore, applyMiddleware, Store } from 'redux';
 import reducer from './routes/redux-demo/store/reducer';
 
+import './vendor.scss';
 import './index.scss';
 
 const store: Store<ArticleState, ArticleAction> & {

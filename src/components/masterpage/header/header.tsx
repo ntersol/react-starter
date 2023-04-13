@@ -1,12 +1,28 @@
 import React, { ReactNode } from 'react';
 import styles from './header.module.scss';
 import { NavLink } from 'react-router-dom';
-import ScrollMessage from '../../scrollMessage';
 import logo from '../../../shared/images/ntersolBanner.png';
+import { Nav } from '../nav/nav';
 
-export function Header() {
+type HeaderProps = {
+  /** Is the navigation visible */
+  showNav?: boolean | null;
+};
+
+export function Header({ showNav }: HeaderProps = { showNav: true }) {
   return (
     <header>
+      <NavLink to="/" className={styles['logo-link']}>
+        <img src={logo} className={styles['logo']} alt="Ntersol React Starter" />
+      </NavLink>
+
+      <div className={styles['nav-content']}>{showNav !== false && <Nav />}</div>
+    </header>
+  );
+}
+/**
+ *
+
       <div>
         <img src={logo} className={styles.logo} alt="Ntersol React Starter" />
       </div>
@@ -50,6 +66,5 @@ export function Header() {
           <ScrollMessage mesg="Conversion to TypesScript coming soon..." />
         </div>
       </nav>
-    </header>
-  );
-}
+
+ */

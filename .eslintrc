@@ -22,6 +22,7 @@
     "quotes": ["error", "single"],
     "no-unused-vars": "off",
     "one-var": "off",
+    "dot-notation": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-boolean-value": "off",
     "jsx-a11y/href-no-hash": "off",
