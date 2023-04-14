@@ -23,7 +23,7 @@ interface AuthContextData extends AuthState {
   logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextData>({
+const AuthContext = createContext<AuthContextData>({
   isLoggedIn: false,
   token: null,
   user: null,

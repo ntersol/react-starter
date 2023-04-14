@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { NtsState } from './api.models';
-import { apiUrlGet, is, mergeConfig } from './api.utils';
-import axios from 'axios';
+import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePayloadWithApiResponse } from './api.utils';
+import axios, { AxiosResponse } from 'axios';
 
-interface NtsApiStoreCreatorProps<T> {
-  config: NtsState.ConfigApi | NtsState.ConfigEntity;
+interface NtsApiStoreCreatorProps<t = any> {
+  config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>;
   isEntityStore?: boolean;
 }
 
 /**
- *
- * @param param0
+ * Automatically create an api store to manage interaction between a local flux store and a remote api
  */
-export function apiStoreCreator<T>({ config, isEntityStore = true }: NtsApiStoreCreatorProps<T>) {
+export function apiStoreCreator<t>({ config, isEntityStore = true }: NtsApiStoreCreatorProps<t>) {
   const [state, setState] = useState(isEntityStore ? getStateEntitySrc() : getStateSrc());
 
   // Initialize Axios with base url
@@ -29,7 +28,7 @@ export function apiStoreCreator<T>({ config, isEntityStore = true }: NtsApiStore
   /** Stuff to do on load */
   useEffect(() => {});
 
-  function getStateSrc(): NtsState.ApiState<T> {
+  function getStateSrc(): NtsState.ApiState<t> {
     return {
       loading: false,
       modifying: false,
@@ -39,7 +38,7 @@ export function apiStoreCreator<T>({ config, isEntityStore = true }: NtsApiStore
     };
   }
 
-  function getStateEntitySrc(): NtsState.EntityApiState<T> {
+  function getStateEntitySrc(): NtsState.EntityApiState<t> {
     return {
       loading: false,
       modifying: false,
@@ -53,7 +52,7 @@ export function apiStoreCreator<T>({ config, isEntityStore = true }: NtsApiStore
   /**
    *
    * @param optionsOverride
-   * @param postPayload
+   * @param postPayload - Some API requests need to use POST instead of GET to return data. Providing a payload will use POST to load the store
    * @returns
    */
   function _get(optionsOverride: NtsState.Options = {}, postPayload?: unknown) {
@@ -68,9 +67,9 @@ export function apiStoreCreator<T>({ config, isEntityStore = true }: NtsApiStore
 
       httpRequest
         .then(r => {
-          const result = config.map && config.map.get ? config.map.get(r) : r;
+          const result = config.map && config.map.get ? config.map.get(r.data) : r.data;
           const state: Partial<NtsState.ApiState> = { loading: false, data: result, errorModify: null };
-          let entities: Record<string, T> | null = null;
+          let entities: Record<string, t> | null = null;
 
           if (isEntityStore && is.entityConfig(config) && config.uniqueId && Array.isArray(result)) {
             entities = result.reduce(
@@ -96,13 +95,124 @@ export function apiStoreCreator<T>({ config, isEntityStore = true }: NtsApiStore
     return Promise.resolve();
   }
 
+  /**
+   * Perform a get request to load data into the store
+   * @param optionsSrct
+   */
   function get(optionsOverride: NtsState.Options = {}) {
     return _get(optionsOverride);
   }
 
+  /**
+   * Request is a POST operation that functions a GET. A payload body is passed and the response is loaded into the store
+   *
+   * Useful for things like search requests that need parameters not in a query string
+   * @param payload
+   * @param optionsOverride
+   */
   function request<p = unknown>(payload: p, optionsOverride?: NtsState.Options) {
     return _get({ refresh: true, ...optionsOverride }, payload);
   }
 
-  return { get, request };
+  function upsert(apiRequest: Promise<AxiosResponse<t, any>>, data: Partial<t>, mapFn?: <t>(x: t | null) => unknown) {
+    setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
+    return apiRequest
+      .then(r => {
+        // If a map function was provided, modify the data before executing anything else
+        const resMapped = mapFn ? mapFn(r.data) : r.data;
+        // Merge the api response with the payload
+        const resMerged = mergePayloadWithApiResponse(data, resMapped) as t;
+        // If this is an entity store
+        if (isEntityStore && is.entityConfig(config) && !!state?.data && Array.isArray(state.data)) {
+          // TODO: Fix any
+          const delta = mergeDedupeArrays(state.data as any, resMerged, config.uniqueId as keyof t);
+          setState(stateSrc => ({ ...stateSrc, modifying: false, ...delta }));
+          // stateChange({ modifying: false, ...delta });
+        } else {
+          setState(stateSrc => ({ ...stateSrc, modifying: false, resMerged }));
+          //  stateChange({ modifying: false, resMerged });
+        }
+      })
+      .catch(error => {
+        setState(stateSrc => ({ ...stateSrc, modifying: false, error }));
+      });
+  }
+
+  /**
+   * Perform a POST request
+   * @param data
+   * @param optionsOverride
+   * @returns
+   */
+  function post(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    const options = mergeConfig(config, optionsOverride);
+    const url = apiUrlGet(options, 'post', null);
+    return upsert(axios.post(url, data), data, config.map?.post);
+  }
+
+  /**
+   * Perform a PUT request
+   * @param data
+   * @param optionsOverride
+   * @returns
+   */
+  function put(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    const options = mergeConfig(config, optionsOverride);
+    const url = apiUrlGet(options, 'put', data);
+    return upsert(axios.put(url, data), data, config.map?.put);
+  }
+
+  /**
+   * Perform a PATCH request
+   * @param data
+   * @param optionsOverride
+   * @returns
+   */
+  function patch(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    const options = mergeConfig(config, optionsOverride);
+    const url = apiUrlGet(options, 'patch', data);
+    return upsert(axios.patch(url, data), data, config.map?.patch);
+  }
+
+  /**
+   * Perform a DELETE request
+   * @param data
+   * @param optionsOverride
+   * @returns
+   */
+  function deleted(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    const options = mergeConfig(config, optionsOverride);
+    const url = apiUrlGet(options, 'delete', data);
+    setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
+    return axios
+      .delete<t>(url)
+      .then(r => {
+        // Check if this is an entity store
+        if (isEntityStore && is.entityConfig(config) && !!state?.data && Array.isArray(state.data)) {
+          // Delete entities from store
+          const updated = deleteEntities<t>(state.data, data, config.uniqueId as keyof t);
+          setState(stateSrc => ({ ...stateSrc, modifying: false, ...updated }));
+        } else {
+          // Delete on a non entity format
+          setState(stateSrc => ({ ...stateSrc, modifying: false, data: r.data || null }));
+        }
+      })
+      .catch(error => setState(stateSrc => ({ ...stateSrc, modifying: false, error })));
+  }
+
+  /**
+   * Refresh the data in the store
+   */
+  function refresh(optionsOverride: NtsState.Options = {}) {
+    return get({ ...optionsOverride, refresh: true });
+  }
+
+  /**
+   * Reset store to its initial state
+   */
+  function reset() {
+    setState(isEntityStore ? getStateEntitySrc : getStateSrc);
+  }
+
+  return { state, data: state.data, get, request, post, put, patch, delete: deleted, refresh, reset };
 }
