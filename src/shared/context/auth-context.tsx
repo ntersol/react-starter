@@ -1,76 +1,88 @@
-import React, { createContext, useState, useEffect, FC } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Models } from '../models/global.models';
+import React, { useState, createContext, useContext, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-type LogoutReason = 'sessionExpired' | 'manualLogOut' | null;
+interface UserInfo {
+  id: number;
+  name: string;
+  email: string;
+}
 
-export interface AuthState {
-  isLoggedIn: boolean;
-  loggedOutReason: LogoutReason;
-  error: string | null;
+interface AuthContextData {
   token: string | null;
-  userInfo?: any | null;
+  /** Errors from log in/log out requests */
+  error: string | null;
+  /** Waiting for an API request to complete */
+  waiting: boolean;
+  user: UserInfo | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
 }
 
-export interface AuthStore {
-  logIn: any;
-  logOut: any;
-  tokenRefresh: any;
-  children?: any | null;
-  state: AuthState;
-}
+export const AuthContext = createContext<AuthContextData>({
+  token: null,
+  user: null,
+  error: null,
+  waiting: false,
+  login: async () => {},
+  logout: () => {},
+});
 
-export interface LogIn {
-  username: string;
-  password: string;
-}
+export const useAuth = () => useContext(AuthContext);
 
-export interface AuthSuccess {
-  token: string;
-  user: any;
-}
+export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<UserInfo | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [waiting, setWaiting] = useState<boolean>(false);
 
-const initialAuthState: AuthState = { loggedOutReason: null, error: null, isLoggedIn: false, token: null, userInfo: null };
-const initialState: AuthStore = { tokenRefresh: null, logIn: null, logOut: null, state: initialAuthState };
-/**
- * Context for starter
- */
-export const AuthContext = createContext<AuthStore>(initialState);
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
-/**
- * Starter context provider
- * @param param0
- * @returns
- */
-export const AuthProvider: FC<AuthStore> = function ({ children }) {
-  const [authState, setAuthState] = useState({ ...initialAuthState });
-  const store: AuthStore = {
-    logIn: (userLogin: LogIn) => {
-      axios
-        .post<AuthSuccess>('', userLogin)
-        .then(response => {
-          setAuthState(stateOld => ({ ...stateOld, ...response }));
-        })
-        .catch(error => {
-          setAuthState(stateOld => ({ ...stateOld, error }));
-        });
-    },
-    logOut: (reason?: LogoutReason) => {
-      axios
-        .post('')
-        .then(() => {
-          setAuthState(stateOld => ({ ...stateOld, token: null, userInfo: null, loggedOutReason: reason ?? null }));
-          const navigate = useNavigate();
-          navigate('/login');
-        })
-        .catch(error => {
-          setAuthState(stateOld => ({ ...stateOld, error }));
-        });
-    },
-    tokenRefresh: () => {},
-    state: authState,
+  const login = (username: string, password: string) => {
+    setError(null);
+    setWaiting(true);
+    return axios
+      .post('/api/login', { username, password })
+      .then(response => {
+        const { token, user } = response.data;
+        setToken(token);
+        setUser(user);
+        setWaiting(false);
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+      })
+      .catch(error => {
+        setError(error);
+        setWaiting(false);
+        throw new Error('Login failed');
+      });
   };
 
-  return <AuthContext.Provider value={store}>{children}</AuthContext.Provider>;
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    setError(null);
+    setWaiting(true);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    axios
+      .post('/api/login', {})
+      .then(() => {
+        setWaiting(false);
+      })
+      .catch(error => {
+        setError(error);
+        setWaiting(false);
+        throw new Error('Login failed');
+      });
+  };
+
+  return <AuthContext.Provider value={{ token, user, login, logout, error, waiting }}>{children}</AuthContext.Provider>;
 };
