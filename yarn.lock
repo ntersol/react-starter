@@ -8093,6 +8093,11 @@
   dependencies:
     "performance-now" "^2.1.0"
 
+"ramda@^0.29.0":
+  "integrity" "sha512-BBea6L67bYLtdbOqfp8f58fPMqEwx0doL+pAi8TZyp2YWz8R9G8z9x75CZI8W+ftqhFHCpEX2cRnUUXK130iKA=="
+  "resolved" "https://registry.npmjs.org/ramda/-/ramda-0.29.0.tgz"
+  "version" "0.29.0"
+
 "randombytes@^2.1.0":
   "integrity" "sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ=="
   "resolved" "https://registry.npmjs.org/randombytes/-/randombytes-2.1.0.tgz"

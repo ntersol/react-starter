@@ -1,3 +1,5 @@
+import { Masterpage } from '../../components';
+
 export function Login() {
-  return <div>Login Page</div>;
+  return <Masterpage>User page coming soon!</Masterpage>;
 }
