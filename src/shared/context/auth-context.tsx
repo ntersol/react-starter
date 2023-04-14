@@ -7,14 +7,18 @@ interface UserInfo {
   email: string;
 }
 
-interface AuthContextData {
+interface AuthState {
   isLoggedIn: boolean;
-  token: string | null;
-  /** Errors from log in/log out requests */
+
   error: string | null;
   /** Waiting for an API request to complete */
   waiting: boolean;
+}
+
+interface AuthContextData extends AuthState {
   user: UserInfo | null;
+  token: string | null;
+  /** Errors from log in/log out requests */
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -32,11 +36,14 @@ export const AuthContext = createContext<AuthContextData>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [authState, setAuthState] = useState<AuthState>({
+    isLoggedIn: false,
+    error: null,
+    waiting: false,
+  });
+
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<UserInfo | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [waiting, setWaiting] = useState<boolean>(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -48,46 +55,45 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   }, []);
 
   const login = (username: string, password: string) => {
-    setError(null);
-    setWaiting(true);
+    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true }));
     return axios
       .post('/api/login', { username, password })
       .then(response => {
         const { token, user } = response.data;
-        setIsLoggedIn(true);
+        setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true, waiting: false }));
         setToken(token);
         setUser(user);
-        setWaiting(false);
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
       })
       .catch(error => {
-        setError(error);
-        setWaiting(false);
+        setAuthState(stateSrc => ({ ...stateSrc, error, waiting: false }));
         throw new Error('Login failed');
       });
   };
 
   const logout = () => {
+    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true }));
     setToken(null);
     setUser(null);
-    setError(null);
-    setWaiting(true);
-    setIsLoggedIn(false);
+    setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: false }));
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
     axios
       .post('/api/login', {})
       .then(() => {
-        setWaiting(false);
+        setAuthState(stateSrc => ({ ...stateSrc, waiting: false }));
       })
       .catch(error => {
-        setError(error);
-        setWaiting(false);
+        setAuthState(stateSrc => ({ ...stateSrc, error, waiting: false }));
         throw new Error('Login failed');
       });
   };
 
-  return <AuthContext.Provider value={{ isLoggedIn, token, user, login, logout, error, waiting }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isLoggedIn: authState.isLoggedIn, error: authState.error, waiting: authState.waiting, token, user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

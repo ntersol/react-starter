@@ -11,7 +11,7 @@ import { useAuth } from '../context';
  */
 export const PrivateRoute = (props: { children: React.ReactNode }) => {
   const { children } = props;
-  const { token } = useAuth();
+  const { isLoggedIn } = useAuth();
   const loc = useLocation();
-  return token ? <>{children}</> : <Navigate replace={true} to="/login" state={{ from: `${loc.pathname}${loc.search}` }} />;
+  return isLoggedIn ? <>{children}</> : <Navigate replace={true} to="/login" state={{ from: `${loc.pathname}${loc.search}` }} />;
 };
