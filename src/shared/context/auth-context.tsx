@@ -8,6 +8,7 @@ interface UserInfo {
 }
 
 interface AuthContextData {
+  isLoggedIn: boolean;
   token: string | null;
   /** Errors from log in/log out requests */
   error: string | null;
@@ -19,6 +20,7 @@ interface AuthContextData {
 }
 
 export const AuthContext = createContext<AuthContextData>({
+  isLoggedIn: false,
   token: null,
   user: null,
   error: null,
@@ -30,6 +32,7 @@ export const AuthContext = createContext<AuthContextData>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<UserInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +54,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
       .post('/api/login', { username, password })
       .then(response => {
         const { token, user } = response.data;
+        setIsLoggedIn(true);
         setToken(token);
         setUser(user);
         setWaiting(false);
@@ -69,6 +73,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
     setUser(null);
     setError(null);
     setWaiting(true);
+    setIsLoggedIn(false);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
 
@@ -84,5 +89,5 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
       });
   };
 
-  return <AuthContext.Provider value={{ token, user, login, logout, error, waiting }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isLoggedIn, token, user, login, logout, error, waiting }}>{children}</AuthContext.Provider>;
 };

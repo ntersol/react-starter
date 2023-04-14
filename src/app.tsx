@@ -10,6 +10,7 @@ import FormValidationFormik from './components/formValidationFormik';
 
 import style from './app.module.css';
 import { ContextDemo, Home, Login, ReduxDemo, Users } from './routes';
+import { PrivateRoute } from './shared';
 
 function App() {
   return (
@@ -24,7 +25,14 @@ function App() {
             <main>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/users" element={<Users />} />
+                <Route
+                  path="/users"
+                  element={
+                    <PrivateRoute>
+                      <Users />
+                    </PrivateRoute>
+                  }
+                />
                 <Route path="/login" element={<Login />} />
                 <Route path="/tiger" element={<Tiger />} />
                 <Route path="/parrot" element={<Parrot />} />
