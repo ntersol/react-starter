@@ -18,7 +18,7 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
   const localStorageKey = 'uiGlobalState';
 
   /** Global UI State Context */
-  const useUiContext = useContext(Context);
+  const useUiContext = () => useContext(Context);
 
   /** Global UI State Provider */
   const Provider = ({ children }: { children?: ReactNode | null }) => {

@@ -4,11 +4,13 @@ import { UserList } from './components/user-list';
 import { Models, useUiStore } from '../../shared';
 
 export function Users() {
+  /**
   const uiState = useUiStore<Models.User>({
     id: 1,
     username: 'Test',
   });
   console.log(uiState);
+   */
   /**
   const uiState2 = useUiGlobal;
 
@@ -21,7 +23,8 @@ export function Users() {
    */
 
   // const uiState = useUiGlobal();
-  const [name, setName] = useState(uiState.Context.state.name);
+  // const [name, setName] = useState(uiState.Context.state.name);
+  const [name, setName] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -29,14 +32,12 @@ export function Users() {
   };
 
   return (
-    <uiState.Provider>
-      <Masterpage>
-        <form onSubmit={handleSubmit}>
-          <input value={name || ''} onChange={e => setName(e.target.value)} />
-          <button type="submit">Update Name</button>
-        </form>
-        <UserList></UserList>
-      </Masterpage>
-    </uiState.Provider>
+    <Masterpage>
+      <form onSubmit={handleSubmit}>
+        <input value={name || ''} onChange={e => setName(e.target.value)} />
+        <button type="submit">Update Name</button>
+      </form>
+      <UserList></UserList>
+    </Masterpage>
   );
 }
