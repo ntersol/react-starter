@@ -35,7 +35,10 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
     }, [uiState]);
 
     /** Change global UI state. Accepts a partial of the UI state object */
-    const update = (state: Partial<t>) => setUiState(stateSrc => ({ ...stateSrc, ...state }));
+    const update = (state: Partial<t>) => {
+      console.log('Updating', update);
+      setUiState(stateSrc => ({ ...stateSrc, ...state }));
+    };
     /** Reset state */
     const reset = () => setUiState(initialState);
     return <Context.Provider value={{ state: uiState, update, reset }}>{children}</Context.Provider>;
