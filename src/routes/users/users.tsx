@@ -9,7 +9,7 @@ export function Users() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    uiState.stateChange({ name });
+    uiState.update({ name });
   };
 
   return (
