@@ -1,6 +1,12 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { NtsState } from '../context/api/api.models';
 
+interface UiState<t> {
+  state: t;
+  update: (state: Partial<t>) => void;
+  reset: () => void;
+}
+
 /**
  *
  * @param initialState
@@ -8,11 +14,11 @@ import { NtsState } from '../context/api/api.models';
  * @returns
  */
 export const useUiStore = <t extends object>(initialState: t, options?: NtsState.UIStoreOptions) => {
-  const Context = createContext(initialState);
+  const Context = createContext<UiState<t>>({ state: initialState, update: () => {}, reset: () => {} });
   const localStorageKey = 'uiGlobalState';
 
   /** Global UI State Context */
-  const useUiContext = () => useContext(Context);
+  const useUiContext = useContext(Context);
 
   /** Global UI State Provider */
   const Provider = ({ children }: { children?: ReactNode | null }) => {
@@ -32,11 +38,11 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
     const update = (state: Partial<t>) => setUiState(stateSrc => ({ ...stateSrc, ...state }));
     /** Reset state */
     const reset = () => setUiState(initialState);
-    return <Context.Provider value={{ ...initialState, update, reset }}>{children}</Context.Provider>;
+    return <Context.Provider value={{ state: uiState, update, reset }}>{children}</Context.Provider>;
   };
 
   return {
-    useContext: useUiContext,
+    Context: useUiContext,
     Provider,
   };
 };

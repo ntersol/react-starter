@@ -16,7 +16,7 @@ const UiGlobalContext = createContext(uiStateInitial);
 const localStorageKey = 'uiGlobalState';
 
 /** Global UI State Context */
-export const useUiGlobal = () => useContext(UiGlobalContext);
+export const useUiGlobal = useContext(UiGlobalContext);
 
 /** Global UI State Provider */
 export const UiGlobalProvider = ({ children }: { children?: ReactNode | null }) => {
