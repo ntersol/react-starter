@@ -10,7 +10,7 @@ import reducer from './routes/redux-demo/store/reducer';
 
 import './vendor.scss';
 import './globals.scss';
-import { AuthProvider } from './shared';
+import { AuthProvider, UiGlobalProvider } from './shared';
 
 const store: Store<ArticleState, ArticleAction> & {
   dispatch: DispatchType;
@@ -20,10 +20,11 @@ const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <UiGlobalProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </UiGlobalProvider>
     </AuthProvider>
-    ,
   </React.StrictMode>,
 );

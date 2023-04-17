@@ -1,25 +1,25 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Masterpage } from '../../components';
-import { createApiContext } from '../../shared';
-
-interface User {
-  name?: string | null;
-  setName: (name: string) => void;
-}
+import { UserList } from './components/user-list';
+import { useUiGlobal } from '../../shared';
 
 export function Users() {
-  const users = createApiContext<User>(() => {
-    const [name, setUserName] = useState<string | null>();
-    return {
-      name,
-      setName: name => setUserName(name),
-    };
-  });
-  console.log(users);
+  const uiState = useUiGlobal();
+  const [name, setName] = useState(uiState.name);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    uiState.stateChange({ name });
+  };
 
   return (
-    <users.provider>
-      <Masterpage>User page coming soon!</Masterpage>
-    </users.provider>
+    <Masterpage>
+      {uiState.name}
+      <form onSubmit={handleSubmit}>
+        <input value={name || ''} onChange={e => setName(e.target.value)} />
+        <button type="submit">Update Name</button>
+      </form>
+      <UserList></UserList>
+    </Masterpage>
   );
 }
