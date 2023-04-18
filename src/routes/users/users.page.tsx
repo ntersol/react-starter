@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { UserList } from './components/user-list';
 import { routeUiStore } from './shared/stores/ui.store';
+import styles from './users.module.scss';
 
 export function Users() {
   const { state, update } = routeUiStore.useContext();

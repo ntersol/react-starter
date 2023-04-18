@@ -15,7 +15,7 @@ export function UsersRoutes() {
         <hr />
         <Routes>
           <Route path="modify-users" element={<ModifyUsers />} />
-          <Route path="/" element={<Users />} />
+          <Route path="" element={<Users />} />
         </Routes>
       </Masterpage>
     </routeUiStore.Provider>
