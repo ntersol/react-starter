@@ -4,7 +4,7 @@ import { ModifyUsers } from './routes/modify-users.page';
 import { Masterpage } from '../../components';
 import { routeUiStore } from './shared/stores/ui.store';
 
-export function UsersRoute() {
+export function UsersRoutes() {
   return (
     <routeUiStore.Provider>
       <Masterpage>

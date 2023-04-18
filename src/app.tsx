@@ -8,7 +8,7 @@ import MUITable from './components/mui-table';
 import FormValidationFormik from './components/formValidationFormik';
 
 import style from './app.module.css';
-import { ContextDemo, Home, Login, ReduxDemo, UsersRoute } from './routes';
+import { ContextDemo, HomeRoutes, LoginPage, NoContentPage, ReduxDemo, UsersRoutes } from './routes';
 import { AuthenticatedRoute } from './shared';
 import { globalUiStore } from './shared/stores';
 
@@ -17,7 +17,7 @@ function App() {
     <Router>
       <HelmetProvider>
         <Helmet>
-          <title>NTERSOL React Starter App - Home</title>
+          <title>NTERSOL React Starter App - HomePage</title>
           <meta name="description" content="Starter Application for NTERSOL React projects" />
         </Helmet>
         <globalUiStore.Provider>
@@ -25,17 +25,17 @@ function App() {
             <div className={style.App}>
               <main>
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/users/*" element={<UsersRoute />} />
+                  <Route path="/" element={<HomeRoutes />} />
+                  <Route path="/users/*" element={<UsersRoutes />} />
                   <Route
                     path="/users2"
                     element={
                       <AuthenticatedRoute>
-                        <UsersRoute />
+                        <UsersRoutes />
                       </AuthenticatedRoute>
                     }
                   />
-                  <Route path="/login" element={<Login />} />
+                  <Route path="/login" element={<LoginPage />} />
                   <Route path="/tiger" element={<Tiger />} />
                   <Route path="/parrot" element={<Parrot />} />
                   <Route path="/context-demo" element={<ContextDemo />} />
@@ -43,6 +43,7 @@ function App() {
                   <Route path="/formValidation" element={<FormValidation />} />
                   <Route path="/formValidationFormik" element={<FormValidationFormik />} />
                   <Route path="/muiTable" element={<MUITable />} />
+                  <Route path="*" element={<NoContentPage />} />
                 </Routes>
               </main>
             </div>
