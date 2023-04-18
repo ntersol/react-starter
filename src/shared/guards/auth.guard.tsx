@@ -9,7 +9,7 @@ import { useAuth } from '../context';
  * <Route path="/users" element={ <PrivateRoute> <Users /> </PrivateRoute> }  />
  * @returns
  */
-export const PrivateRoute = (props: { children: React.ReactNode }) => {
+export const AuthenticatedRoute = (props: { children: React.ReactNode }) => {
   const { children } = props;
   const { isLoggedIn } = useAuth();
   const loc = useLocation();

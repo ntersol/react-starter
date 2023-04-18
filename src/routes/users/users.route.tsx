@@ -1,20 +1,23 @@
-import { Routes, Route } from 'react-router-dom';
-import { Models, useUiStore } from '../../shared';
-import { Users } from './users';
-import { ModifyUsers } from './routes/modify-users';
+import { Routes, Route, Link } from 'react-router-dom';
+import { Users } from './users.page';
+import { ModifyUsers } from './routes/modify-users.page';
 import { Masterpage } from '../../components';
-
-export const usersUiStore = useUiStore<Models.User>({ username: 'test@test.com' }, { persistId: 'usersUiStore' });
+import { routeUiStore } from './shared/stores/ui.store';
 
 export function UsersRoute() {
   return (
-    <usersUiStore.Provider>
+    <routeUiStore.Provider>
       <Masterpage>
+        <Link className="mr-2" to="/users">
+          Users List
+        </Link>{' '}
+        | <Link to="modify-users">Modify Users</Link>
+        <hr />
         <Routes>
           <Route path="modify-users" element={<ModifyUsers />} />
           <Route path="/" element={<Users />} />
         </Routes>
       </Masterpage>
-    </usersUiStore.Provider>
+    </routeUiStore.Provider>
   );
 }

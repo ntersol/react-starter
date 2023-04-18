@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
 import { UserList } from './components/user-list';
-import { usersUiStore } from './users.route';
+import { routeUiStore } from './shared/stores/ui.store';
 
 export function Users() {
-  const { state, update } = usersUiStore.useContext();
+  const { state, update } = routeUiStore.useContext();
 
   const [username, setUsername] = useState(state.username);
   const handleSubmit = (e: FormEvent) => {

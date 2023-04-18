@@ -8,9 +8,8 @@ import MUITable from './components/mui-table';
 import FormValidationFormik from './components/formValidationFormik';
 
 import style from './app.module.css';
-import { ContextDemo, Home, Login, ReduxDemo, Users } from './routes';
-import { PrivateRoute } from './shared';
-import { UsersRoute } from './routes/users/users.route';
+import { ContextDemo, Home, Login, ReduxDemo, UsersRoute } from './routes';
+import { AuthenticatedRoute } from './shared';
 
 function App() {
   return (
@@ -29,9 +28,9 @@ function App() {
                 <Route
                   path="/users2"
                   element={
-                    <PrivateRoute>
-                      <Users />
-                    </PrivateRoute>
+                    <AuthenticatedRoute>
+                      <UsersRoute />
+                    </AuthenticatedRoute>
                   }
                 />
                 <Route path="/login" element={<Login />} />
