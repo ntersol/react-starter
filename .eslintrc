@@ -20,6 +20,7 @@
   "rules": {
     "quotes": ["error", "single"],
     "no-unused-vars": "off",
+    "spaced-comment": "off",
     "one-var": "off",
     "dot-notation": "off",
     "react/self-closing-comp": "off",

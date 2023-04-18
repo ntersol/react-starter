@@ -7,6 +7,8 @@ interface UiState<t> {
   reset: () => void;
 }
 
+export const uiContext = createContext<UiState<any> | null>(null);
+export const uiProvider = ({ children }: { children?: ReactNode | null }) => {};
 /**
  *
  * @param initialState
@@ -14,8 +16,16 @@ interface UiState<t> {
  * @returns
  */
 export const useUiStore = <t extends object>(initialState: t, options?: NtsState.UIStoreOptions) => {
-  const Context = createContext<UiState<t>>({ state: initialState, update: () => {}, reset: () => {} });
-  const localStorageKey = 'uiGlobalState';
+  console.log('Initializing useUiStore');
+  const Context = createContext<UiState<t> | null>(null);
+  /**{
+    state: initialState,
+    update: () => {
+      console.log('Derp');
+    },
+    reset: () => {},
+  } */
+  const localStorageKey = 'uiState';
 
   /** Global UI State Context */
   const useUiContext = () => useContext(Context);
@@ -36,7 +46,7 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
 
     /** Change global UI state. Accepts a partial of the UI state object */
     const update = (state: Partial<t>) => {
-      console.log('Updating', update);
+      console.warn('Updating', update);
       setUiState(stateSrc => ({ ...stateSrc, ...state }));
     };
     /** Reset state */
@@ -45,7 +55,8 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
   };
 
   return {
-    Context: useUiContext,
+    useContext: useUiContext,
+    Context,
     Provider,
   };
 };
