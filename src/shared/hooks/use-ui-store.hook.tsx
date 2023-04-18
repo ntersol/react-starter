@@ -6,17 +6,37 @@ interface UiState<t> {
   update: (state: Partial<t>) => void;
   reset: () => void;
 }
-// State Initial is fed initially do the createContext hook even tho null is standard
-// This will allow strict null checks to work. Without this if the context API hook is implemented wrong
-// It will cause a nil error
+// State Initial is fed initially do the createContext hook even though null is standard
+// This will allow strict null checks to work.
+// Without this if the context API hook is implemented wrong it will cause a nil error on runtime
 const stateInitial = <t,>(state: t): UiState<t> => ({ state, update: _state => {}, reset: () => {} });
 
 /**
- *
- * @param initialState
- * @param options
- * @returns
- */
+*  Hook to generate a UI store which is used to manage UI state
+*  @template t The type of the state.
+*  @param {t} initialState The initial state of the hook.
+*  @param {NtsState.UIStoreOptions} [options] Optional options to configure the hook.
+*  @returns {Object} Returns an object containing the UI context and provider.
+*  @example
+import { Models, useUiStore } from '../../shared';
+import { Users } from './users';
+
+export const usersUiStore = useUiStore<Models.User>({ username: 'test@test.com' }, { persistId: 'usersUiStore' });
+
+export function UsersRoute() {
+  return (
+    <usersUiStore.Provider>
+      <Users></Users>
+    </usersUiStore.Provider>
+  );
+}
+// In a lower order component:
+import { usersUiStore } from './users.route';
+
+export function Users() {
+  const { state, update, reset } = usersUiStore.useContext();
+}
+*/
 export const useUiStore = <t extends object>(initialState: t, options?: NtsState.UIStoreOptions) => {
   const Context = createContext<UiState<t>>(stateInitial(initialState));
 
