@@ -1,27 +1,21 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Masterpage } from '../../components';
 import { UserList } from './components/user-list';
-import { Models, useUiStore } from '../../shared';
-import TodoProvider, { TodoContext, TodoContextType } from '../../shared/hooks/use-todo.hook';
+import { usersUiStore } from './users.route';
 
 export function Users() {
-  /**
-  const uiState = useUiStore<Models.User>({
-    id: 1,
-    username: 'test@test.com',
-  });
- */
-  const { saveTodo } = useContext(TodoContext) as TodoContextType;
-  console.log(saveTodo);
-  const [username, setUsername] = useState('');
+  const { state, update } = usersUiStore.useContext();
+
+  const [username, setUsername] = useState(state.username);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    update({ username });
   };
 
   return (
     <Masterpage>
       <form onSubmit={handleSubmit}>
-        <h1>{username}</h1>
+        <h1>{state.username}</h1>
         <input value={username || ''} onChange={e => setUsername(e.target.value)} />
         <button type="submit">Update Name</button>
       </form>

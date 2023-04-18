@@ -6,9 +6,11 @@ interface UiState<t> {
   update: (state: Partial<t>) => void;
   reset: () => void;
 }
+// State Initial is fed initially do the createContext hook even tho null is standard
+// This will allow strict null checks to work. Without this if the context API hook is implemented wrong
+// It will cause a nil error
+const stateInitial = <t,>(state: t): UiState<t> => ({ state, update: _state => {}, reset: () => {} });
 
-export const uiContext = createContext<UiState<any> | null>(null);
-export const uiProvider = ({ children }: { children?: ReactNode | null }) => {};
 /**
  *
  * @param initialState
@@ -16,16 +18,7 @@ export const uiProvider = ({ children }: { children?: ReactNode | null }) => {};
  * @returns
  */
 export const useUiStore = <t extends object>(initialState: t, options?: NtsState.UIStoreOptions) => {
-  console.log('Initializing useUiStore');
-  const Context = createContext<UiState<t> | null>(null);
-  /**{
-    state: initialState,
-    update: () => {
-      console.log('Derp');
-    },
-    reset: () => {},
-  } */
-  const localStorageKey = 'uiState';
+  const Context = createContext<UiState<t>>(stateInitial(initialState));
 
   /** Global UI State Context */
   const useUiContext = () => useContext(Context);
@@ -34,21 +27,23 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
   const Provider = ({ children }: { children?: ReactNode | null }) => {
     // Global UI State defaults
     const [uiState, setUiState] = useState<t>(() => {
+      if (!options?.persistId) {
+        return initialState;
+      }
       // Check localStorage for any saved state first
-      const savedState = localStorage.getItem(localStorageKey);
+      const savedState = localStorage.getItem(options.persistId);
       return savedState ? JSON.parse(savedState) : initialState;
     });
 
     // On Changes to uiState, update localstorage
     useEffect(() => {
-      window.localStorage.setItem(localStorageKey, JSON.stringify(uiState));
+      if (options?.persistId) {
+        window.localStorage.setItem(options?.persistId, JSON.stringify(uiState));
+      }
     }, [uiState]);
 
     /** Change global UI state. Accepts a partial of the UI state object */
-    const update = (state: Partial<t>) => {
-      console.warn('Updating', update);
-      setUiState(stateSrc => ({ ...stateSrc, ...state }));
-    };
+    const update = (state: Partial<t>) => setUiState(stateSrc => ({ ...stateSrc, ...state }));
     /** Reset state */
     const reset = () => setUiState(initialState);
     return <Context.Provider value={{ state: uiState, update, reset }}>{children}</Context.Provider>;
@@ -56,7 +51,6 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
 
   return {
     useContext: useUiContext,
-    Context,
     Provider,
   };
 };

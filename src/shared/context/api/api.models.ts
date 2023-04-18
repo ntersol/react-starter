@@ -109,9 +109,6 @@ export namespace NtsState {
   }
 
   export interface UIStoreOptions {
-    /** By default, distinctUntilChanged is enabled for all selectors.
-     * Set this to true to receive every emission regardless of whether or not it is unique */
-    disableDistinct?: boolean;
     /** A unique ID for this store that if set, will save and reload it's contents from localstorage */
     persistId?: string;
   }

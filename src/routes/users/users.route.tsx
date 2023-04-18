@@ -1,14 +1,19 @@
-import { ReactNode } from 'react';
 import { Models, useUiStore } from '../../shared';
 import { Users } from './users';
 
-export function UsersRoute() {
-  const uiState = useUiStore<Models.User>({
+export const usersUiStore = useUiStore<Models.User>(
+  {
     username: 'test@test.com',
-  });
+  },
+  {
+    persistId: 'usersUiStore',
+  },
+);
+
+export function UsersRoute() {
   return (
-    <uiState.Provider>
+    <usersUiStore.Provider>
       <Users></Users>
-    </uiState.Provider>
+    </usersUiStore.Provider>
   );
 }

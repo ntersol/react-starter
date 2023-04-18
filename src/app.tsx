@@ -23,32 +23,30 @@ function App() {
           <meta name="description" content="Starter Application for NTERSOL React projects" />
         </Helmet>
         <StarterProvider>
-          <TodoProvider>
-            <div className={style.App}>
-              <main>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/users" element={<UsersRoute />} />
-                  <Route
-                    path="/users2"
-                    element={
-                      <PrivateRoute>
-                        <Users />
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/tiger" element={<Tiger />} />
-                  <Route path="/parrot" element={<Parrot />} />
-                  <Route path="/context-demo" element={<ContextDemo />} />
-                  <Route path="/redux-demo" element={<ReduxDemo />} />
-                  <Route path="/formValidation" element={<FormValidation />} />
-                  <Route path="/formValidationFormik" element={<FormValidationFormik />} />
-                  <Route path="/muiTable" element={<MUITable />} />
-                </Routes>
-              </main>
-            </div>
-          </TodoProvider>
+          <div className={style.App}>
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/users" element={<UsersRoute />} />
+                <Route
+                  path="/users2"
+                  element={
+                    <PrivateRoute>
+                      <Users />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/tiger" element={<Tiger />} />
+                <Route path="/parrot" element={<Parrot />} />
+                <Route path="/context-demo" element={<ContextDemo />} />
+                <Route path="/redux-demo" element={<ReduxDemo />} />
+                <Route path="/formValidation" element={<FormValidation />} />
+                <Route path="/formValidationFormik" element={<FormValidationFormik />} />
+                <Route path="/muiTable" element={<MUITable />} />
+              </Routes>
+            </main>
+          </div>
         </StarterProvider>
       </HelmetProvider>
     </Router>
