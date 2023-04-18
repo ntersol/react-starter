@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { StarterProvider } from './shared/context/starter-context';
@@ -11,7 +10,6 @@ import FormValidationFormik from './components/formValidationFormik';
 import style from './app.module.css';
 import { ContextDemo, Home, Login, ReduxDemo, Users } from './routes';
 import { PrivateRoute } from './shared';
-import TodoProvider from './shared/hooks/use-todo.hook';
 import { UsersRoute } from './routes/users/users.route';
 
 function App() {
@@ -27,7 +25,7 @@ function App() {
             <main>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/users" element={<UsersRoute />} />
+                <Route path="/users/*" element={<UsersRoute />} />
                 <Route
                   path="/users2"
                   element={

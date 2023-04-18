@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { NtsState } from '../context/api/api.models';
 
+/** Default UI state */
 interface UiState<t> {
   state: t;
   update: (state: Partial<t>) => void;
