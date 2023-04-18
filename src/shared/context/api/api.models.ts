@@ -110,7 +110,7 @@ export namespace NtsState {
 
   export interface UIStoreOptions {
     /** A unique ID for this store that if set, will save and reload it's contents from localstorage */
-    persistId?: string;
+    localStorageId?: string;
   }
 
   /** Select model for UI store */

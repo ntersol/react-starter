@@ -1,5 +1,8 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { NtsState } from '../context/api/api.models';
+import { NtsState } from './api/api.models';
+
+/** Keeps track of stores that use persistent IDs for localstorage to prevent collisions */
+let storeIds: string[] = [];
 
 /** Default UI state */
 interface UiState<t> {
@@ -22,7 +25,7 @@ const stateInitial = <t,>(state: t): UiState<t> => ({ state, update: _state => {
 import { Models, useUiStore } from '../../shared';
 import { Users } from './users';
 
-export const usersUiStore = useUiStore<Models.User>({ username: 'test@test.com' }, { persistId: 'usersUiStore' });
+export const usersUiStore = useUiStore<Models.User>({ username: 'test@test.com' }, { localStorageId: 'usersUiStore' });
 
 export function UsersRoute() {
   return (
@@ -39,6 +42,15 @@ export function Users() {
 }
 */
 export const useUiStore = <t extends object>(initialState: t, options?: NtsState.UIStoreOptions) => {
+  // If store ID specified
+  if (options?.localStorageId) {
+    // Throw an error if the store ID has already been used, otherwise put in the storeIds array for future checking
+    // This will prevent collisions with localStorage
+    storeIds.includes(options?.localStorageId)
+      ? console.error(`A store ID of ${options?.localStorageId} is already in use by another store. Please use another ID to avoid collisions in localStorage.`)
+      : (storeIds = [...storeIds, options?.localStorageId]);
+  }
+
   const Context = createContext<UiState<t>>(stateInitial(initialState));
 
   /** Global UI State Context */
@@ -48,18 +60,18 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
   const Provider = ({ children }: { children?: ReactNode | null }) => {
     // Global UI State defaults
     const [uiState, setUiState] = useState<t>(() => {
-      if (!options?.persistId) {
+      if (!options?.localStorageId) {
         return initialState;
       }
       // Check localStorage for any saved state first
-      const savedState = localStorage.getItem(options.persistId);
+      const savedState = localStorage.getItem(options.localStorageId);
       return savedState ? JSON.parse(savedState) : initialState;
     });
 
     // On Changes to uiState, update localstorage
     useEffect(() => {
-      if (options?.persistId) {
-        window.localStorage.setItem(options?.persistId, JSON.stringify(uiState));
+      if (options?.localStorageId) {
+        window.localStorage.setItem(options?.localStorageId, JSON.stringify(uiState));
       }
     }, [uiState]);
 

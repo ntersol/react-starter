@@ -1,1 +1,1 @@
-export * from './use-ui-store.hook';
+export * from '../context/use-ui-store.context';

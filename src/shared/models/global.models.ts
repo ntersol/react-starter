@@ -16,6 +16,13 @@
   - Remove redundent " | undefined" from each one
  */
 export module Models {
+  export interface GlobalUIState {
+    name?: string | null;
+  }
+
+  /********************************
+   *  BEGIN CUSTOM GLOBAL MODELS
+   ********************************/
   export interface User {
     id?: number;
     name?: string;
@@ -39,10 +46,6 @@ export module Models {
       bs?: string;
     };
   }
-  /********************************
-   *  BEGIN CUSTOM GLOBAL MODELS
-   ********************************/
-
   export interface AuthState {
     isLoggedIn: boolean;
     token: string | null;
