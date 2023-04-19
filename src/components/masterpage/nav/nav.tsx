@@ -1,10 +1,9 @@
-import { BrowserRouter, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './nav.module.scss';
 import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
 import { FaBars, FaCaretDown, FaComments, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
 import { Sidebar } from 'primereact/sidebar';
-import { IconType } from 'react-icons';
 import { useAuth } from '../../../shared';
 
 interface NavBaseItem {
