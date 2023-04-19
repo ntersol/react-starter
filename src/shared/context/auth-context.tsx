@@ -1,5 +1,7 @@
 import React, { useState, createContext, useContext, useEffect, ReactNode } from 'react';
+
 import axios from 'axios';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 interface UserInfo {
   id: number;
@@ -44,7 +46,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
 
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<UserInfo | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
@@ -72,16 +74,21 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
       });
   };
 
+  /**
+   * Log the user out
+   */
   const logout = () => {
-    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true }));
     setToken(null);
     setUser(null);
-    setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: false }));
+    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true, isLoggedIn: false }));
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // const loc = useLocation();
 
+    navigate('/login');
+    // Need redirect
     axios
-      .post('/api/login', {})
+      .post('/api/logout', {})
       .then(() => {
         setAuthState(stateSrc => ({ ...stateSrc, waiting: false }));
       })
@@ -89,6 +96,8 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
         setAuthState(stateSrc => ({ ...stateSrc, error, waiting: false }));
         throw new Error('Login failed');
       });
+
+    // return <Navigate replace={true} to="/login" />;
   };
 
   return (

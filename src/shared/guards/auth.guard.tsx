@@ -11,7 +11,9 @@ import { useAuth } from '../context';
  */
 export const AuthenticatedRoute = (props: { children: React.ReactNode }) => {
   const { children } = props;
-  const { isLoggedIn } = useAuth();
-  const loc = useLocation();
-  return isLoggedIn ? <>{children}</> : <Navigate replace={true} to="/login" state={{ from: `${loc.pathname}${loc.search}` }} />;
+  const { isLoggedIn, logout } = useAuth();
+  if (!isLoggedIn) {
+    logout();
+  }
+  return <>{children}</>;
 };

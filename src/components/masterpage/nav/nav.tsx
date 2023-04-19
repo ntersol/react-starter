@@ -1,10 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { BrowserRouter, NavLink } from 'react-router-dom';
 import styles from './nav.module.scss';
 import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
 import { FaBars, FaCaretDown, FaComments, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
 import { Sidebar } from 'primereact/sidebar';
 import { IconType } from 'react-icons';
+import { useAuth } from '../../../shared';
 
 interface NavBaseItem {
   label: string;
@@ -25,6 +26,8 @@ type NavItem = NavLinkItem | NavItemClick;
 
 export function Nav() {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const auth = useAuth();
 
   /** Typeguard for navLink Item */
   const isNavLinkItem = (item: NavBaseItem): item is NavLinkItem => (item as NavLinkItem).url !== undefined;
@@ -52,7 +55,7 @@ export function Nav() {
   const navItemsDom = navItemsGenerate(navItems);
 
   /** Util nav items */
-  const navUtils: NavItem[] = [{ label: 'Sign Out', icon: <FaPowerOff />, onClick: () => console.log('Log out logic needed') }];
+  const navUtils: NavItem[] = [{ label: 'Sign Out', icon: <FaPowerOff />, onClick: () => auth.logout() }];
   const navUtilsDom = navItemsGenerate(navUtils, true);
 
   return (

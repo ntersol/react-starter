@@ -11,6 +11,7 @@ import reducer from './routes/redux-demo/store/reducer';
 import './vendor.scss';
 import './globals.scss';
 import { AuthProvider, UiGlobalProvider } from './shared';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const store: Store<ArticleState, ArticleAction> & {
   dispatch: DispatchType;
@@ -19,12 +20,14 @@ const store: Store<ArticleState, ArticleAction> & {
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <UiGlobalProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </UiGlobalProvider>
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <UiGlobalProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </UiGlobalProvider>
+      </AuthProvider>
+    </Router>
   </React.StrictMode>,
 );

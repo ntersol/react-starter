@@ -1,5 +1,5 @@
 import { Masterpage } from '../../components';
 
 export function LoginPage() {
-  return <Masterpage>User page coming soon!</Masterpage>;
+  return <Masterpage>Login page coming soon!</Masterpage>;
 }
