@@ -1,5 +1,14 @@
-import styles from './home.module.scss';
+import { Helmet } from 'react-helmet-async';
+import './home.page.scss';
 
 export function HomePage() {
-  return <div>Home</div>;
+  return (
+    <div id="home-page">
+      <Helmet>
+        <title>Home Page</title>
+        <meta name="description" content="Starter Application for NTERSOL React projects" />
+      </Helmet>
+      <div className="page-content">Home Page</div>
+    </div>
+  );
 }
