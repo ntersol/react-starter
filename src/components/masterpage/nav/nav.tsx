@@ -55,7 +55,7 @@ export function Nav() {
   const navItemsDom = navItemsGenerate(navItems);
 
   /** Util nav items */
-  const navUtils: NavItem[] = [{ label: 'Sign Out', icon: <FaPowerOff />, onClick: () => auth.logout() }];
+  const navUtils: NavItem[] = [{ label: 'Sign Out', icon: <FaPowerOff />, onClick: () => auth.logout('userInitiated') }];
   const navUtilsDom = navItemsGenerate(navUtils, true);
 
   return (

@@ -9,9 +9,11 @@ interface UserInfo {
   email: string;
 }
 
+type LogOutReason = 'sessionExpired' | 'userInitiated';
+
 interface AuthState {
   isLoggedIn: boolean;
-
+  loggedOutReason: LogOutReason | null;
   error: string | null;
   /** Waiting for an API request to complete */
   waiting: boolean;
@@ -22,11 +24,12 @@ interface AuthContextData extends AuthState {
   token: string | null;
   /** Errors from log in/log out requests */
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: (logOutReason?: LogOutReason | null) => void;
 }
 
 const AuthContext = createContext<AuthContextData>({
   isLoggedIn: false,
+  loggedOutReason: null,
   token: null,
   user: null,
   error: null,
@@ -40,6 +43,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   const [authState, setAuthState] = useState<AuthState>({
     isLoggedIn: false,
+    loggedOutReason: null,
     error: null,
     waiting: false,
   });
@@ -77,10 +81,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   /**
    * Log the user out
    */
-  const logout = () => {
+  const logout = (logOutReason?: LogOutReason | null) => {
     setToken(null);
     setUser(null);
-    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true, isLoggedIn: false }));
+    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true, isLoggedIn: false, loggedOutReason: logOutReason || null }));
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     // const loc = useLocation();
@@ -101,7 +105,18 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: authState.isLoggedIn, error: authState.error, waiting: authState.waiting, token, user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: authState.isLoggedIn,
+        error: authState.error,
+        loggedOutReason: authState.loggedOutReason,
+        waiting: authState.waiting,
+        token,
+        user,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
