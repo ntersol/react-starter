@@ -1,7 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 
 import { AppRoutes } from './app.routes';
+import { Masterpage } from './components';
 
+/**
+ * Main app component
+ * - If Masterpage is not on this component, page components flicker when it is rerendered
+ * @returns
+ */
 function App() {
   return (
     <div id="app">
@@ -9,9 +15,11 @@ function App() {
         <title>NTERSOL React Starter App - HomePage</title>
         <meta name="description" content="Starter Application for NTERSOL React projects" />
       </Helmet>
-      <main>
-        <AppRoutes></AppRoutes>
-      </main>
+      <Masterpage>
+        <main>
+          <AppRoutes></AppRoutes>
+        </main>
+      </Masterpage>
     </div>
   );
 }

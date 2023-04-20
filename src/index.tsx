@@ -21,8 +21,8 @@ const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <StarterProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <StarterProvider>
           <AuthProvider>
             <GlobalUiStore.Provider>
               <Provider store={store}>
@@ -30,8 +30,8 @@ root.render(
               </Provider>
             </GlobalUiStore.Provider>
           </AuthProvider>
-        </BrowserRouter>
-      </StarterProvider>
+        </StarterProvider>
+      </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,
 );
