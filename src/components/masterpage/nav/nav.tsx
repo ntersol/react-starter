@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './nav.module.scss';
 import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
-import { FaBars, FaCaretDown, FaComments, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
+import { FaBars, FaCaretDown, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
 import { Sidebar } from 'primereact/sidebar';
 import { useAuth } from '../../../shared';
 
@@ -48,8 +48,7 @@ export function Nav() {
   /** Main nav items */
   const navItems: NavItem[] = [
     { label: 'User Management', icon: <FaUsers />, url: '/users' },
-    { label: 'Context Demo', icon: <FaComments />, url: '/context-demo' },
-    { label: 'Redux Demo', icon: <FaRegClone />, url: '/redux-demo' },
+    { label: 'Demos', icon: <FaRegClone />, url: '/demos' },
   ];
   const navItemsDom = navItemsGenerate(navItems);
 

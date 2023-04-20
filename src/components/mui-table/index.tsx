@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import style from './mui-table.module.css';
-import { Models } from '$shared';
+import { Models } from '../../shared';
 const NUM_ITEMS = 25;
 
 export default function MUITable() {

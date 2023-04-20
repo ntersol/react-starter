@@ -4,7 +4,6 @@ import FormValidationFormik from './components/formValidationFormik';
 import MUITable from './components/mui-table';
 import Parrot from './components/parrot';
 import Tiger from './components/tiger';
-import { ContextDemo, ReduxDemo } from './routes';
 import { AuthenticatedRoute } from './shared';
 import { Suspense, lazy } from 'react';
 
@@ -13,6 +12,7 @@ const HomeRoutes = lazy(() => import('./routes/home/home.routes'));
 const UsersRoute = lazy(() => import('./routes/users/users.routes'));
 const LoginPage = lazy(() => import('./routes/login/login.page'));
 const NoContentPage = lazy(() => import('./routes/no-content/no-content.page'));
+const DemosRoutes = lazy(() => import('./routes/demos/demos.routes'));
 
 // Load element to use when a lazy loaded route is loading
 const loader = <></>;
@@ -46,6 +46,15 @@ export function AppRoutes() {
         }
       />
       <Route
+        path="/demos"
+        element={
+          <Suspense fallback={loader}>
+            <DemosRoutes />
+          </Suspense>
+        }
+      />
+
+      <Route
         path="/login"
         element={
           <Suspense fallback={loader}>
@@ -55,8 +64,7 @@ export function AppRoutes() {
       />
       <Route path="/tiger" element={<Tiger />} />
       <Route path="/parrot" element={<Parrot />} />
-      <Route path="/context-demo" element={<ContextDemo />} />
-      <Route path="/redux-demo" element={<ReduxDemo />} />
+
       <Route path="/formValidation" element={<FormValidation />} />
       <Route path="/formValidationFormik" element={<FormValidationFormik />} />
       <Route path="/muiTable" element={<MUITable />} />

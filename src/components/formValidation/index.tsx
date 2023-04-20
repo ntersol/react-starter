@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import style from './formValidation.module.css';
-import { Models } from '$shared';
+import { Models } from '../../shared';
 
 export default function FormValidation() {
   const [submitted, setSubmitted] = useState(false);

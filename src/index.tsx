@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import App from './app';
-import { ArticleState, ArticleAction, DispatchType } from './routes/redux-demo/type';
+import { ArticleState, ArticleAction, DispatchType } from './routes/demos/routes//redux-demo/type';
 import { createStore, applyMiddleware, Store } from 'redux';
-import reducer from './routes/redux-demo/store/reducer';
+import reducer from './routes/demos/routes/redux-demo/store/reducer';
 
 import './vendor.scss';
 import './globals.scss';
