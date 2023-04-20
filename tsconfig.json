@@ -20,7 +20,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
+      "$components": ["./components"],
       "$components/*": ["./components/*"],
+      "$shared": ["./shared"],
       "$shared/*": ["./shared/*"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
