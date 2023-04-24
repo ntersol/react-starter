@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import FormValidation from './components/formValidation';
-import FormValidationFormik from './components/formValidationFormik';
-import MUITable from './components/mui-table';
-import Parrot from './components/parrot';
-import Tiger from './components/tiger';
-import { AuthenticatedRoute } from './shared';
+import FormValidation from 'components/formValidation';
+import FormValidationFormik from 'components/formValidationFormik';
+import MUITable from 'components/mui-table';
+import Parrot from 'components/parrot';
+import Tiger from 'components/tiger';
+import { AuthenticatedRoute } from 'shared';
 import { Suspense, lazy } from 'react';
 
 // Top level routes. Child routes should be in a route file on a route/root level

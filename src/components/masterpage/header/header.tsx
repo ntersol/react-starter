@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import styles from './header.module.scss';
 import { NavLink } from 'react-router-dom';
-import logo from '../../../shared/images/ntersolBanner.png';
+import logo from 'shared/images/ntersolBanner.png';
 import { Nav } from '../nav/nav';
 
 type HeaderProps = {

@@ -22,7 +22,7 @@ const stateInitial = <t,>(state: t): UiState<t> => ({ state, update: _state => {
 *  @param {NtsState.UIStoreOptions} [options] Optional options to configure the hook.
 *  @returns {Object} Returns an object containing the UI context and provider.
 *  @example
-import { Models, useUiStore } from '../../shared';
+import { Models, useUiStore } from 'shared';
 import { Users } from './users';
 
 export const usersUiStore = useUiStore<Models.User>({ username: 'test@test.com' }, { localStorageId: 'usersUiStore' });

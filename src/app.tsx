@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 import { AppRoutes } from './app.routes';
-import { Masterpage } from './components';
+import { Masterpage } from 'components';
 
 /**
  * Main app component

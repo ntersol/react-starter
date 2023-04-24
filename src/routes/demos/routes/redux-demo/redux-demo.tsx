@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { BlogClient } from './blogClient';
 import { IArticle } from './type';
 import { addArticle } from './store/actionCreators';
-import { Masterpage } from '../../../../components';
+import { Masterpage } from 'components';
 
 export default function ReduxDemo() {
   const dispatch: Dispatch<any> = useDispatch();

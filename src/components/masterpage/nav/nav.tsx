@@ -4,7 +4,7 @@ import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
 import { FaBars, FaCaretDown, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
 import { Sidebar } from 'primereact/sidebar';
-import { useAuth } from '../../../shared';
+import { useAuth } from 'shared';
 
 interface NavBaseItem {
   label: string;

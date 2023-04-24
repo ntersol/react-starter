@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { createBaseStore } from '../../../../shared/context/api/api-store';
+import { createBaseStore } from 'shared/context/api/api-store';
 
 const baseApiCreator = axios.create({
   baseURL: 'https://example.com/api',

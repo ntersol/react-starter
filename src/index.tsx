@@ -9,7 +9,7 @@ import reducer from './routes/demos/routes/redux-demo/store/reducer';
 
 import './vendor.scss';
 import './globals.scss';
-import { AuthProvider, GlobalUiStore, StarterProvider } from './shared';
+import { AuthProvider, GlobalUiStore, StarterProvider } from 'shared';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
