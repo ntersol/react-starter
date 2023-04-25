@@ -3,17 +3,10 @@ import { NtsState } from './api.models';
 import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePayloadWithApiResponse } from './api.utils';
 import axios, { AxiosResponse } from 'axios';
 
-interface NtsApiStoreCreatorProps<t = any> {
-  config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>;
-  isEntityStore?: boolean;
-}
-
 /**
  * Automatically create an api store to manage interaction between a local flux store and a remote api
  */
-export function apiStoreCreator<t>({ config, isEntityStore = true }: NtsApiStoreCreatorProps<t>) {
-  const [state, setState] = useState(isEntityStore ? getStateEntitySrc() : getStateSrc());
-
+export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>, isEntityStore: boolean) {
   // Initialize Axios with base url
   const baseApiSvc = axios.create({ baseURL: config.apiUrlBase });
   // Get interceptor
@@ -24,9 +17,6 @@ export function apiStoreCreator<t>({ config, isEntityStore = true }: NtsApiStore
     }
     return config;
   });
-
-  /** Stuff to do on load */
-  useEffect(() => {});
 
   function getStateSrc(): NtsState.ApiState<t> {
     return {
@@ -56,6 +46,11 @@ export function apiStoreCreator<t>({ config, isEntityStore = true }: NtsApiStore
 
   /** Global UI State Provider */
   const Provider = ({ children }: { children?: ReactNode | null }) => {
+    const [state, setState] = useState(isEntityStore ? getStateEntitySrc() : getStateSrc());
+
+    /** Stuff to do on load */
+    useEffect(() => {});
+
     /**
      *
      * @param optionsOverride
@@ -221,7 +216,7 @@ export function apiStoreCreator<t>({ config, isEntityStore = true }: NtsApiStore
       setState(isEntityStore ? getStateEntitySrc : getStateSrc);
     }
 
-    return <Context.Provider value={{ state, refresh, reset }}>{children}</Context.Provider>;
+    return <Context.Provider value={{ state, data: state.data, get, post, patch, put, request, refresh, reset, delete: deleted }}>{children}</Context.Provider>;
   };
 
   return {

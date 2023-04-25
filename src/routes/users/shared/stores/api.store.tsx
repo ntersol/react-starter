@@ -1,7 +1,6 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { createBaseStore } from 'shared/context/api/api-store';
+import { createBaseStore } from 'shared';
 
+/**
 const baseApiCreator = axios.create({
   baseURL: 'https://example.com/api',
 });
@@ -13,7 +12,7 @@ baseApiCreator.interceptors.request.use(config => {
   }
   return config;
 });
-
+ */
 const storeCreator = createBaseStore({ apiUrlBase: 'https://jsonplaceholder.typicode.com' });
 
-const usersStore = storeCreator({ apiUrl: '/users', uniqueId: 'id' });
+export const usersStore = storeCreator({ apiUrl: '/users', uniqueId: 'id' });

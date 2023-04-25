@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { NtsState } from './api.models';
 import { is, mergeConfig } from './api.utils';
+import { apiStoreCreator } from './api-store-creator.context';
 
 const baseApiCreator = axios.create({
   baseURL: 'https://example.com/api',
@@ -39,11 +40,15 @@ export const createBaseStore =
  * @param config Configuration for this store
  * @returns
  */
-const createApiStore = <t,>(config: NtsState.ConfigApi<t>) => {};
+const createApiStore = <t,>(config: NtsState.ConfigApi<t>) => {
+  return apiStoreCreator(config, false);
+};
 
 /**
  * Create an entity based api store
  * @param config Configuration for this store
  * @returns
  */
-const createEntityStore = <t,>(config: NtsState.ConfigEntity<t>) => {};
+const createEntityStore = <t,>(config: NtsState.ConfigEntity<t>) => {
+  return apiStoreCreator(config, true);
+};
