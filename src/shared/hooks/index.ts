@@ -1,1 +1,1 @@
-export * from '../context/use-ui-store.context';
+export * from '../context/ui-store.context';
