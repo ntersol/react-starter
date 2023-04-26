@@ -38,15 +38,31 @@ export function UserForm({ user, userUpdated }: UserFormProps) {
     setUser({ ...defaultUser, ...user }); // On input, update user in form
   }, [user]);
 
+  /**
+   * Reset form state
+   * @returns
+   */
+  const reset = () => setUser({ ...defaultUser });
+
+  /**
+   * Handle form submit
+   * @param e
+   */
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     userUpdated && userUpdated(removeNils(userForm));
-    setUser({ ...defaultUser });
+    reset();
   };
 
   return (
     <div>
-      <h3>Create User</h3>
+      {userForm?.id && (
+        <a style={{ float: 'right' }} onClick={() => reset()}>
+          Cancel
+        </a>
+      )}
+
+      <h3>{userForm?.id ? 'Update User' : ' Create User'}</h3>
       <form onSubmit={handleSubmit}>
         <p>
           <label>Username</label>
@@ -58,8 +74,8 @@ export function UserForm({ user, userUpdated }: UserFormProps) {
           <br />
           <InputText value={userForm.email} onChange={e => setUser(userSrc => ({ ...userSrc, email: e.target.value }))} />
         </p>
-        <p>
-          <button type="submit">Submit</button>
+        <p className="mb-0">
+          <button type="submit">{userForm?.id ? 'Update User' : ' Create User'}</button>
         </p>
       </form>
     </div>

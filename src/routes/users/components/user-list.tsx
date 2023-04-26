@@ -2,6 +2,7 @@ import { Models } from 'shared';
 
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
+import { Link } from 'react-router-dom';
 
 interface UserListProps {
   users?: Models.User[] | null;
@@ -12,23 +13,27 @@ interface UserListProps {
 export function UserList({ users, editUser, deleteUser }: UserListProps) {
   return (
     <div>
-      <DataTable value={users || []} tableStyle={{ minWidth: '50rem' }}>
-        <Column field="id" header="ID"></Column>
-        <Column field="name" header="Name"></Column>
-        <Column field="email" header="Email"></Column>
-        <Column field="phone" header="Phone"></Column>
-        <Column
-          field=""
-          header="Actions"
-          body={user => (
-            <div>
-              <a onClick={() => editUser && editUser(user)}>Edit User</a>
-              <br />
-              <a onClick={() => deleteUser && deleteUser(user)}>Delete User</a>
-            </div>
-          )}
-        ></Column>
-      </DataTable>
+      {users?.length ? (
+        <DataTable value={users || []} tableStyle={{ minWidth: '50rem' }}>
+          <Column field="id" header="ID"></Column>
+          <Column field="name" header="Name" body={user => <Link to={'users/view/' + user.id}>{user.name}</Link>}></Column>
+          <Column field="email" header="Email"></Column>
+          <Column field="phone" header="Phone"></Column>
+          <Column
+            field=""
+            header="Actions"
+            body={user => (
+              <div>
+                <a onClick={() => editUser && editUser(user)}>Edit User</a>
+                <br />
+                <a onClick={() => deleteUser && deleteUser(user)}>Delete User</a>
+              </div>
+            )}
+          ></Column>
+        </DataTable>
+      ) : (
+        <div>No users found</div>
+      )}
     </div>
   );
 }

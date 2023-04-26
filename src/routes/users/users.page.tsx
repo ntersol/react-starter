@@ -46,6 +46,10 @@ export function Users() {
       </Helmet>
       <div className="page-content">
         <div className="container-fluid">
+          <div style={{ float: 'right' }}>
+            <button onClick={() => refresh()}>Refresh</button> <button onClick={() => reset()}>Reset</button>
+          </div>
+          <h1>Current Users</h1>
           {/**
           <form onSubmit={handleSubmit}>
             <h1>{state.username}</h1>
@@ -63,13 +67,6 @@ export function Users() {
             <div className="col col-12 col-md-4">
               <Card>
                 <UserForm user={user} userUpdated={upsertUser}></UserForm>
-                <hr />
-                <p>
-                  <button onClick={() => refresh()}>Refresh</button>
-                </p>
-                <p>
-                  <button onClick={() => reset()}>Reset</button>
-                </p>
               </Card>
             </div>
           </div>
