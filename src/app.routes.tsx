@@ -46,7 +46,7 @@ export function AppRoutes() {
         }
       />
       <Route
-        path="/demos"
+        path="/demos/*"
         element={
           <Suspense fallback={loader}>
             <DemosRoutes />

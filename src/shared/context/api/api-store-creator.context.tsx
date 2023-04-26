@@ -5,13 +5,19 @@ import axios, { AxiosResponse } from 'axios';
 
 /**
  * Automatically create an api store to manage interaction between a local flux store and a remote api
+ * @example
+ * // How to rename props with object destructuring
+ * const { get, data: usersData, state: usersState } = users;
  */
 export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>, isEntityStore: boolean) {
+  const token = localStorage.getItem('token');
+  console.log(token);
   // Initialize Axios with base url
-  const baseApiSvc = axios.create({ baseURL: config.apiUrlBase });
+  const baseApiSvc = axios.create({ baseURL: config.apiUrlBase, headers: { Authorization: 'Bearer ' + token } });
   // Get interceptor
   baseApiSvc.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
+    console.log('token???');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -39,6 +45,8 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
     };
   }
 
+  let loading = false;
+
   const Context = createContext<any>({});
 
   /** Global UI State Context */
@@ -48,8 +56,18 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
   const Provider = ({ children }: { children?: ReactNode | null }) => {
     const [state, setState] = useState(isEntityStore ? getStateEntitySrc() : getStateSrc());
 
-    /** Stuff to do on load */
-    useEffect(() => {});
+    /** On load */
+    useEffect(() => {
+      if (!config.autoLoad && state.data === null && !state.loading && !loading) {
+        loading = true;
+        get();
+      }
+      return () => {
+        setTimeout(() => {
+          loading = false;
+        }, 1);
+      };
+    }, []);
 
     /**
      *
@@ -182,7 +200,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * @param optionsOverride
      * @returns
      */
-    function deleted(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    function remove(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'delete', data);
       setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
@@ -216,7 +234,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
       setState(isEntityStore ? getStateEntitySrc : getStateSrc);
     }
 
-    return <Context.Provider value={{ state, data: state.data, get, post, patch, put, request, refresh, reset, delete: deleted }}>{children}</Context.Provider>;
+    return <Context.Provider value={{ state, data: state.data, get, post, patch, put, request, refresh, reset, remove }}>{children}</Context.Provider>;
   };
 
   return {
