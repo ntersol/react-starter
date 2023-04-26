@@ -1,25 +1,42 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { UserList } from './components/user-list';
-import { routeUiStore } from './shared/stores/ui.store';
-import { ApiState, Models } from 'shared';
-import { Helmet } from 'react-helmet-async';
-import './users.page.scss';
-import { usersStore } from './shared/stores/api.store';
 import { Card } from 'primereact/card';
-import { InputText } from 'primereact/inputtext';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { ApiState, Models } from 'shared';
 import { UserForm } from './components/user-form';
+import { UserList } from './components/user-list';
+import { usersStore } from './shared/stores/api.store';
+import './users.page.scss';
 
 export function Users() {
-  const users = usersStore.useContext();
-  const { data: usersData, state: usersState, refresh, reset, get, post, put, patch, remove } = users;
+  const { data: usersData, state: usersState, refresh, reset, get, post, put, patch, remove } = usersStore.useContext();
 
   /** Stuff to do on load */
   useEffect(() => {}, []);
 
+  const [user, setUser] = useState<Models.User | null>(null);
+
+  /**
+   * Delete a user
+   * @param user
+   */
+  const deleteUser = (user: Models.User) => {
+    const c = confirm(`Are you sure you want to remove ${user.name}?`);
+    if (c) {
+      remove(user);
+    }
+  };
+
+  /**
+   * Add/update a user
+   * @param userUpdated
+   */
+  const upsertUser = (userUpdated: Models.User) => {
+    userUpdated.id ? put(userUpdated) : post(userUpdated);
+  };
+
   // UI Store
   // const { state, update } = routeUiStore.useContext();
   // const [username, setUsername] = useState(state.username);
-  const [user, setUser] = useState<Models.User>({ name: '' });
 
   return (
     <div id="users-page">
@@ -40,34 +57,18 @@ export function Users() {
           <div className="row">
             <div className="col col-12 col-md-8">
               <ApiState state={usersState}>
-                <UserList users={usersData}></UserList>
+                <UserList users={usersData} editUser={setUser} deleteUser={deleteUser}></UserList>
               </ApiState>
             </div>
             <div className="col col-12 col-md-4">
               <Card>
-                <UserForm></UserForm>
+                <UserForm user={user} userUpdated={upsertUser}></UserForm>
                 <hr />
                 <p>
                   <button onClick={() => refresh()}>Refresh</button>
                 </p>
                 <p>
-                  <button onClick={() => refresh()}>Refresh</button>
-                </p>
-                <p>
                   <button onClick={() => reset()}>Reset</button>
-                </p>
-                <p>
-                  <button
-                    onClick={() =>
-                      post({
-                        name: 'Jane Doe',
-                        username: 'Jane',
-                        email: 'Jane@Jane.biz',
-                      })
-                    }
-                  >
-                    Create User
-                  </button>
                 </p>
               </Card>
             </div>

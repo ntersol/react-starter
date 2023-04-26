@@ -1,9 +1,15 @@
 import { Models } from 'shared';
 
-import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
 
-export function UserList({ users }: { users?: Models.User[] | null }) {
+interface UserListProps {
+  users?: Models.User[] | null;
+  editUser?: (user: Models.User) => void;
+  deleteUser?: (user: Models.User) => void;
+}
+
+export function UserList({ users, editUser, deleteUser }: UserListProps) {
   return (
     <div>
       <DataTable value={users || []} tableStyle={{ minWidth: '50rem' }}>
@@ -11,7 +17,17 @@ export function UserList({ users }: { users?: Models.User[] | null }) {
         <Column field="name" header="Name"></Column>
         <Column field="email" header="Email"></Column>
         <Column field="phone" header="Phone"></Column>
-        <Column field="" header="Actions"></Column>
+        <Column
+          field=""
+          header="Actions"
+          body={user => (
+            <div>
+              <a onClick={() => editUser && editUser(user)}>Edit User</a>
+              <br />
+              <a onClick={() => deleteUser && deleteUser(user)}>Delete User</a>
+            </div>
+          )}
+        ></Column>
       </DataTable>
     </div>
   );

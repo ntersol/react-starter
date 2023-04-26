@@ -1,7 +1,7 @@
+import axios, { AxiosResponse } from 'axios';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { NtsState } from './api.models';
 import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePayloadWithApiResponse } from './api.utils';
-import axios, { AxiosResponse } from 'axios';
 
 /**
  * Automatically create an api store to manage interaction between a local flux store and a remote api

@@ -1,11 +1,10 @@
 import { InputText } from 'primereact/inputtext';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Models, removeNils } from 'shared';
 
 interface UserFormProps {
-  user?: Models.User;
-  createUser?: (user: Models.User) => void;
-  updateUser?: (user: Models.User) => void;
+  user?: Models.User | null;
+  userUpdated?: (user: Models.User) => void;
 }
 
 const defaultUser: Models.User = {
@@ -32,12 +31,17 @@ const defaultUser: Models.User = {
   },
 };
 
-export function UserForm({ user, createUser, updateUser }: UserFormProps) {
-  const [userForm, setUser] = useState<Models.User>(user || defaultUser);
+export function UserForm({ user, userUpdated }: UserFormProps) {
+  const [userForm, setUser] = useState<Models.User>({ ...defaultUser });
+
+  useEffect(() => {
+    setUser({ ...defaultUser, ...user }); // On input, update user in form
+  }, [user]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('user', removeNils(userForm));
+    userUpdated && userUpdated(removeNils(userForm));
+    setUser({ ...defaultUser });
   };
 
   return (
