@@ -1,19 +1,6 @@
-import axios from 'axios';
+import { apiStoreCreator } from './api-store-creator.context';
 import { NtsState } from './api.models';
 import { is, mergeConfig } from './api.utils';
-import { apiStoreCreator } from './api-store-creator.context';
-
-const baseApiCreator = axios.create({
-  baseURL: 'https://example.com/api',
-});
-
-baseApiCreator.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
 /**
  * Create a curried instance of the api store creator

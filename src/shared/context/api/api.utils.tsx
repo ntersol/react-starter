@@ -1,5 +1,5 @@
-import { NtsState } from './api.models';
 import { mergeDeepRight } from 'ramda';
+import { NtsState } from './api.models';
 
 /**
  * Merge api store configs
@@ -8,20 +8,22 @@ import { mergeDeepRight } from 'ramda';
  */
 export function mergeConfig<t>(
   c1: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>,
-  c2: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>,
+  c2?: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>,
 ): NtsState.ConfigApi<t> | NtsState.ConfigEntity<t> {
-  return {
-    disableAppendId: {
-      ...c1.disableAppendId,
-      ...c2.disableAppendId,
-    },
-    map: {
-      ...c1.map,
-      ...c2.map,
-    } as any, // TODO: Figure out how to overload properly without any
-    ...c1,
-    ...c2,
-  };
+  return c2
+    ? {
+        disableAppendId: {
+          ...c1.disableAppendId,
+          ...c2.disableAppendId,
+        },
+        map: {
+          ...c1.map,
+          ...c2.map,
+        } as any, // TODO: Figure out how to overload properly without any
+        ...c1,
+        ...c2,
+      }
+    : { ...c1 };
 }
 
 /**

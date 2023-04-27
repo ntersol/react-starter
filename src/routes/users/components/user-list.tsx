@@ -16,7 +16,7 @@ export function UserList({ users, editUser, deleteUser }: UserListProps) {
       {users?.length ? (
         <DataTable value={users || []} tableStyle={{ minWidth: '50rem' }}>
           <Column field="id" header="ID"></Column>
-          <Column field="name" header="Name" body={user => <Link to={'users/view/' + user.id}>{user.name}</Link>}></Column>
+          <Column field="name" header="Name" body={user => <Link to={'view/' + user.id}>{user.name}</Link>}></Column>
           <Column field="email" header="Email"></Column>
           <Column field="phone" header="Phone"></Column>
           <Column

@@ -1,17 +1,18 @@
 import axios, { AxiosResponse } from 'axios';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { contextDefault } from './api-store.defaults';
 import { NtsState } from './api.models';
 import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePayloadWithApiResponse } from './api.utils';
 
 /**
- * Automatically create an api store to manage interaction between a local flux store and a remote api
+ * Automatically create an api store to manage interaction between a local store and a remote api
  * @example
  * // How to rename props with object destructuring
  * const { get, data: usersData, state: usersState } = users;
  */
 export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>, isEntityStore: boolean) {
   const token = localStorage.getItem('token');
-  console.log(token);
+
   // Initialize Axios with base url
   const baseApiSvc = axios.create({ baseURL: config.apiUrlBase, headers: { Authorization: 'Bearer ' + token } });
   // Get interceptor
@@ -47,7 +48,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
 
   let loading = false;
 
-  const Context = createContext<any>({});
+  const Context = createContext<NtsState.Context<t>>(contextDefault());
 
   /** Global UI State Context */
   const useApiContext = () => useContext(Context);
@@ -75,7 +76,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * @param postPayload - Some API requests need to use POST instead of GET to return data. Providing a payload will use POST to load the store
      * @returns
      */
-    function _get(optionsOverride: NtsState.Options = {}, postPayload?: unknown) {
+    function _get(optionsOverride?: NtsState.Options, postPayload?: unknown) {
       const options = mergeConfig(config, optionsOverride);
 
       if ((state.data === null || options.refresh) && !state.loading) {
@@ -108,8 +109,8 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
           });
         // We do not want users returning data directly from the request which violates unidirection data flow
         // Return empty promise instead so that the app still knows when it completed
-        return new Promise((resolve, reject) => {
-          httpRequest.then(() => resolve(null)).catch(error => reject(error));
+        return new Promise<void>((resolve, reject) => {
+          httpRequest.then(() => resolve()).catch(error => reject(error));
         });
       }
       return Promise.resolve();
@@ -119,7 +120,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * Perform a get request to load data into the store
      * @param optionsSrct
      */
-    function get(optionsOverride: NtsState.Options = {}) {
+    function get(optionsOverride?: NtsState.Options) {
       return _get(optionsOverride);
     }
 
@@ -164,7 +165,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * @param optionsOverride
      * @returns
      */
-    function post(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    function post(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'post', null);
       return upsert(axios.post(url, data), data, config.map?.post);
@@ -176,7 +177,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * @param optionsOverride
      * @returns
      */
-    function put(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    function put(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'put', data);
       return upsert(axios.put(url, data), data, config.map?.put);
@@ -188,7 +189,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * @param optionsOverride
      * @returns
      */
-    function patch(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    function patch(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'patch', data);
       return upsert(axios.patch(url, data), data, config.map?.patch);
@@ -200,7 +201,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
      * @param optionsOverride
      * @returns
      */
-    function remove(data: Partial<t>, optionsOverride: NtsState.Options = {}) {
+    function remove(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'delete', data);
       setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
@@ -223,7 +224,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
     /**
      * Refresh the data in the store
      */
-    function refresh(optionsOverride: NtsState.Options = {}) {
+    function refresh(optionsOverride?: NtsState.Options) {
       return get({ ...optionsOverride, refresh: true });
     }
 

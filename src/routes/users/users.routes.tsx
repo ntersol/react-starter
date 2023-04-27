@@ -9,9 +9,9 @@ export default function UsersRoutes() {
     <routeUiStore.Provider>
       <usersStore.Provider>
         <Routes>
-          <Route path="modify-users/:userId" element={<ViewUsers />} />
-          <Route path="modify-users" element={<ViewUsers />} />
-          <Route path="" element={<Users />} />
+          <Route path="view/:userId" element={<ViewUsers />} />
+          <Route path="view" element={<ViewUsers />} />
+          <Route path="/" element={<Users />} />
         </Routes>
       </usersStore.Provider>
     </routeUiStore.Provider>

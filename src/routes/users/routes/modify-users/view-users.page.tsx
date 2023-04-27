@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 export function ViewUsers() {
-  const temp = useParams();
-  console.log(temp);
+  const { userId } = useParams();
+  console.log(userId);
   return <div>Test</div>;
 }

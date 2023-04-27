@@ -152,4 +152,17 @@ export namespace NtsState {
   }
 
   export type StoreType = 'api' | 'ui' | 'all';
+
+  export interface Context<t> {
+    get: (optionsOverride?: Options, postPayload?: unknown) => Promise<void>;
+    request: (payload: unknown, optionsOverride?: Options) => Promise<void>;
+    post: (data: Partial<t>, optionsOverride?: Options) => Promise<void>;
+    put: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
+    patch: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
+    remove: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
+    refresh: () => Promise<void>;
+    reset: () => void;
+    state: any;
+    data: any;
+  }
 }
