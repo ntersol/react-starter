@@ -1,3 +1,7 @@
+import { useParams } from 'react-router-dom';
+
 export function ViewUsers() {
-  return <div>Modify users works!!!</div>;
+  const temp = useParams();
+  console.log(temp);
+  return <div>Test</div>;
 }
