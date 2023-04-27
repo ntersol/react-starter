@@ -1,3 +1,4 @@
+import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useEffect, useState } from 'react';
 import { Models, removeNils } from 'shared';
@@ -75,7 +76,7 @@ export function UserForm({ user, userUpdated }: UserFormProps) {
           <InputText value={userForm.email} onChange={e => setUser(userSrc => ({ ...userSrc, email: e.target.value }))} />
         </p>
         <p className="mb-0">
-          <button type="submit">{userForm?.id ? 'Update User' : ' Create User'}</button>
+          <Button type="submit">{userForm?.id ? 'Update User' : ' Create User'}</Button>
         </p>
       </form>
     </div>

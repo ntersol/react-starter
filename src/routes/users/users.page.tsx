@@ -1,3 +1,4 @@
+import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -47,7 +48,7 @@ export function Users() {
       <div className="page-content">
         <div className="container-fluid">
           <div style={{ float: 'right' }}>
-            <button onClick={() => refresh()}>Refresh</button> <button onClick={() => reset()}>Reset</button>
+            <Button onClick={() => refresh()}>Refresh</Button> <Button onClick={() => reset()}>Reset</Button>
           </div>
           <h1>Current Users</h1>
           {/**
