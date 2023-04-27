@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import { Models, StarterContext } from '$shared';
 import cx from 'classnames';
-import { Models, StarterContext } from 'shared';
+import { useContext } from 'react';
 export default function Context2(props: Models.IStyleProps) {
   const { JSONdata, serviceRenderer } = useContext(StarterContext);
   const { style } = props;

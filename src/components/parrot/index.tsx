@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import parrot from 'shared/images/parrot.svg';
-import { StarterContext } from 'shared';
+import { StarterContext } from '$shared';
+import parrot from '$shared/images/parrot.svg';
 
 export default function () {
   const { HTMLtitlePre } = useContext(StarterContext);

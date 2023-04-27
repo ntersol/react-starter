@@ -1,8 +1,8 @@
+import { ApiState, Models } from '$shared';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ApiState, Models } from 'shared';
 import { UserForm } from './components/user-form';
 import { UserList } from './components/user-list';
 import { usersStore } from './shared/stores/api.store';

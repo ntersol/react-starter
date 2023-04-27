@@ -1,12 +1,12 @@
+import { Masterpage } from '$components';
 import React from 'react';
-import style from './redux-demo.module.css';
 import { Helmet } from 'react-helmet-async';
-import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { BlogClient } from './blogClient';
-import { IArticle } from './type';
+import style from './redux-demo.module.css';
 import { addArticle } from './store/actionCreators';
-import { Masterpage } from 'components';
+import { IArticle } from './type';
 
 export default function ReduxDemo() {
   const dispatch: Dispatch<any> = useDispatch();

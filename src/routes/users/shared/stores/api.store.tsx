@@ -1,4 +1,4 @@
-import { createBaseStore } from 'shared';
+import { createBaseStore } from '$shared';
 
 const storeCreator = createBaseStore({ apiUrlBase: 'https://jsonplaceholder.typicode.com' });
 

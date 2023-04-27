@@ -1,7 +1,7 @@
+import { Models, removeNils } from '$shared';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { FormEvent, useEffect, useState } from 'react';
-import { Models, removeNils } from 'shared';
 
 interface UserFormProps {
   user?: Models.User | null;

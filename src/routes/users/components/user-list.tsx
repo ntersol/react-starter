@@ -1,4 +1,4 @@
-import { Models } from 'shared';
+import { Models } from '$shared';
 
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import { Masterpage } from '$components';
+import { StarterContext } from '$shared';
+import { useContext } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Context1 from './components/context1';
 import Context2 from './components/context2';
 import style from './context-demo.module.css';
-import { Helmet } from 'react-helmet-async';
-import { Masterpage } from 'components';
-import { StarterContext } from 'shared';
 
 /**
  * Route for context api demo

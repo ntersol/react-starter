@@ -1,8 +1,7 @@
-import React, { ReactNode } from 'react';
-import styles from './header.module.scss';
+import logo from '$shared/images/ntersolBanner.png';
 import { NavLink } from 'react-router-dom';
-import logo from 'shared/images/ntersolBanner.png';
 import { Nav } from '../nav/nav';
+import styles from './header.module.scss';
 
 type HeaderProps = {
   /** Is the navigation visible */

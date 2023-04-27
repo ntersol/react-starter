@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { Models } from '$shared';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import style from './formValidationFormik.module.css';
-import { Models } from 'shared';
 
 export default function FormValidationFormik() {
   const [submitted, setSubmitted] = useState(false);

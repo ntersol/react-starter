@@ -3,9 +3,7 @@
     "baseUrl": "./src",
     "paths": {
       "$components": ["./components"],
-      "$components/*": ["./components/*"],
-      "$shared": ["./shared"],
-      "$shared/*": ["./shared/*"]
+      "$shared": ["./shared"]
     }
   }
 }

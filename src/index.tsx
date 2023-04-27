@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { Store, applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import App from './app';
-import { ArticleState, ArticleAction, DispatchType } from './routes/demos/routes//redux-demo/type';
-import { createStore, applyMiddleware, Store } from 'redux';
+import { ArticleAction, ArticleState, DispatchType } from './routes/demos/routes//redux-demo/type';
 import reducer from './routes/demos/routes/redux-demo/store/reducer';
 
-import './vendor.scss';
-import './globals.scss';
-import { AuthProvider, GlobalUiStore, StarterProvider } from 'shared';
-import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider, GlobalUiStore, StarterProvider } from '$shared';
 import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter } from 'react-router-dom';
+import './globals.scss';
+import './vendor.scss';
 
 const store: Store<ArticleState, ArticleAction> & {
   dispatch: DispatchType;

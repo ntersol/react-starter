@@ -1,10 +1,10 @@
+import { useAuth } from '$shared';
+import classNames from 'classnames';
+import { Sidebar } from 'primereact/sidebar';
+import { ReactElement, useState } from 'react';
+import { FaBars, FaCaretDown, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import styles from './nav.module.scss';
-import { ReactElement, useState } from 'react';
-import classNames from 'classnames';
-import { FaBars, FaCaretDown, FaPowerOff, FaRegClone, FaUserCircle, FaUsers } from 'react-icons/fa';
-import { Sidebar } from 'primereact/sidebar';
-import { useAuth } from 'shared';
 
 interface NavBaseItem {
   label: string;
