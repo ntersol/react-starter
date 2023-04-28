@@ -11,14 +11,12 @@ import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePay
  * const { get, data: usersData, state: usersState } = users;
  */
 export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>, isEntityStore: boolean) {
-  const token = localStorage.getItem('token');
-
   // Initialize Axios with base url
-  const baseApiSvc = axios.create({ baseURL: config.apiUrlBase, headers: { Authorization: 'Bearer ' + token } });
+  const api = axios.create({ baseURL: config.apiUrlBase });
+
   // Get interceptor
-  baseApiSvc.interceptors.request.use(config => {
+  api.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
-    console.log('token???');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -82,13 +80,12 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
      */
     function _get(optionsOverride?: NtsState.Options, postPayload?: unknown) {
       const options = mergeConfig(config, optionsOverride);
-
       if ((state.data === null || options.refresh) && !state.loading) {
         const url = apiUrlGet(options, 'get', null);
 
         setState(stateSrc => ({ ...stateSrc, loading: true, error: null }));
 
-        const httpRequest = postPayload ? axios.post<unknown>(url, postPayload) : axios.get(url);
+        const httpRequest = postPayload ? api.post<unknown>(url, postPayload) : api.get(url);
 
         httpRequest
           .then(r => {
@@ -176,7 +173,7 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
     function post(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'post', null);
-      return upsert(axios.post(url, data), data, config.map?.post);
+      return upsert(api.post(url, data), data, config.map?.post);
     }
 
     /**
@@ -188,7 +185,7 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
     function put(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'put', data);
-      return upsert(axios.put(url, data), data, config.map?.put);
+      return upsert(api.put(url, data), data, config.map?.put);
     }
 
     /**
@@ -200,7 +197,7 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
     function patch(data: Partial<t>, optionsOverride?: NtsState.Options) {
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'patch', data);
-      return upsert(axios.patch(url, data), data, config.map?.patch);
+      return upsert(api.patch(url, data), data, config.map?.patch);
     }
 
     /**
@@ -213,7 +210,7 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
       const options = mergeConfig(config, optionsOverride);
       const url = apiUrlGet(options, 'delete', data);
       setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
-      return axios
+      return api
         .delete<t>(url)
         .then(r => {
           // Check if this is an entity store
