@@ -34,7 +34,7 @@ export const apiStoreCreator =
   <t,>(config: NtsState.ConfigApi<t>) => {
     // Merge base config with specific store config
     const c = deepMergeObjects(configBase, config);
-    return createApiStore(c);
+    return createApiStore<t>(c);
   };
 
 /**

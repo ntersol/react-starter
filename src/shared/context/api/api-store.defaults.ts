@@ -9,7 +9,10 @@ const ApiState: NtsState.EitherState = {
 };
 
 export const contextDefault = <t>(): NtsState.Context<t> => ({
-  get: () => Promise.resolve(),
+  get: (optionsOverride?: NtsState.Options, postPayload?: unknown) => {
+    console.error('If you are seeing this error then you forgot to wrap a parent component with the provider');
+    return Promise.resolve();
+  },
   post: () => Promise.resolve(),
   put: () => Promise.resolve(),
   patch: () => Promise.resolve(),
@@ -22,7 +25,10 @@ export const contextDefault = <t>(): NtsState.Context<t> => ({
 });
 
 export const contextEntities = <t>(): NtsState.ContextEntities<t> => ({
-  get: () => Promise.resolve(),
+  get: (optionsOverride?: NtsState.Options, postPayload?: unknown) => {
+    console.error('If you are seeing this error then you forgot to wrap a parent component with the provider');
+    return Promise.resolve();
+  },
   post: () => Promise.resolve(),
   put: () => Promise.resolve(),
   patch: () => Promise.resolve(),
