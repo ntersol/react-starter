@@ -48,6 +48,7 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
 
   let loading = false;
 
+  // TODO: Fix any
   // NtsState.Context<t> | NtsState.ContextEntities<t>
   const contextSrc: any = isEntityStore ? contextEntities<t>() : contextDefault<t>();
 
