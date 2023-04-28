@@ -1,5 +1,13 @@
 import { NtsState } from './api.models';
 
+const ApiState: NtsState.EitherState = {
+  loading: false,
+  modifying: false,
+  error: null,
+  errorModify: null,
+  data: null,
+};
+
 export const contextDefault = <t>(): NtsState.Context<t> => ({
   get: () => Promise.resolve(),
   post: () => Promise.resolve(),
@@ -9,6 +17,6 @@ export const contextDefault = <t>(): NtsState.Context<t> => ({
   request: () => Promise.resolve(),
   refresh: () => Promise.resolve(),
   reset: () => {},
-  state: null,
+  state: ApiState,
   data: null,
 });

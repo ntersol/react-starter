@@ -2,6 +2,38 @@ import { mergeDeepRight } from 'ramda';
 import { NtsState } from './api.models';
 
 /**
+ * Deeply merges two identical objects and returns the merged result.
+ * Nested objects are recursively merged.
+ *
+ * @template T - The type of the objects being merged.
+ * @param {T} obj1 - The first object to merge.
+ * @param {T} obj2 - The second object to merge.
+ * @returns {T} - The merged object.
+ */
+export const deepMergeObjects = <T,>(obj1: T, obj2: T): T => {
+  const merged = { ...obj1 };
+
+  for (const key in obj2) {
+    if (Object.prototype.hasOwnProperty.call(obj2, key)) {
+      const value1 = obj1[key];
+      const value2 = obj2[key];
+
+      if (value2 !== null && typeof value2 === 'object') {
+        if (value1 !== null && typeof value1 === 'object') {
+          merged[key] = deepMergeObjects(value1, value2) as T[Extract<keyof T, string>];
+        } else {
+          merged[key] = deepMergeObjects({}, value2) as T[Extract<keyof T, string>];
+        }
+      } else {
+        merged[key] = value2;
+      }
+    }
+  }
+
+  return merged;
+};
+
+/**
  * Merge api store configs
  * @param c1
  * @param c2

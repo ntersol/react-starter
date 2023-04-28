@@ -84,7 +84,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
 
         setState(stateSrc => ({ ...stateSrc, loading: true, error: null }));
 
-        const httpRequest = postPayload ? axios.post<any>(url, postPayload) : axios.get(url);
+        const httpRequest = postPayload ? axios.post<unknown>(url, postPayload) : axios.get(url);
 
         httpRequest
           .then(r => {
@@ -104,7 +104,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
             }
             setState(stateSrc => ({ ...stateSrc, ...state }));
           })
-          .catch((error: any) => {
+          .catch((error: unknown) => {
             setState(stateSrc => ({ ...stateSrc, loading: false, error }));
           });
         // We do not want users returning data directly from the request which violates unidirection data flow
@@ -135,7 +135,7 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
       return _get({ refresh: true, ...optionsOverride }, payload);
     }
 
-    function upsert(apiRequest: Promise<AxiosResponse<t, any>>, data: Partial<t>, mapFn?: <t>(x: t | null) => unknown) {
+    function upsert(apiRequest: Promise<AxiosResponse<t, unknown>>, data: Partial<t>, mapFn?: <t>(x: t | null) => unknown) {
       setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
       return apiRequest
         .then(r => {
@@ -145,13 +145,10 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
           const resMerged = mergePayloadWithApiResponse(data, resMapped) as t;
           // If this is an entity store
           if (isEntityStore && is.entityConfig(config) && !!state?.data && Array.isArray(state.data)) {
-            // TODO: Fix any
-            const delta = mergeDedupeArrays(state.data as any, resMerged, config.uniqueId as keyof t);
+            const delta = mergeDedupeArrays(state.data, resMerged, config.uniqueId as keyof t);
             setState(stateSrc => ({ ...stateSrc, modifying: false, ...delta }));
-            // stateChange({ modifying: false, ...delta });
           } else {
             setState(stateSrc => ({ ...stateSrc, modifying: false, resMerged }));
-            //  stateChange({ modifying: false, resMerged });
           }
         })
         .catch(error => {
@@ -235,7 +232,8 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
       setState(isEntityStore ? getStateEntitySrc : getStateSrc);
     }
 
-    return <Context.Provider value={{ state, data: state.data, get, post, patch, put, request, refresh, reset, remove }}>{children}</Context.Provider>;
+    const temp: any = state.data;
+    return <Context.Provider value={{ state, data: temp, get, post, patch, put, request, refresh, reset, remove }}>{children}</Context.Provider>;
   };
 
   return {

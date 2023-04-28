@@ -20,6 +20,8 @@ export namespace NtsState {
     data: null | t;
   }
 
+  export type EitherState<t = any, e = any> = EntityApiState<t, e> | ApiState<t, e>;
+
   export type ApiUrlCallback = <t>(x: t) => string;
 
   /** Different methods to pass the api url string to the store */
@@ -162,7 +164,36 @@ export namespace NtsState {
     remove: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
     refresh: () => Promise<void>;
     reset: () => void;
-    state: any;
-    data: any;
+    state: EitherState<t>;
+    data: t | null;
   }
+
+  export interface ContextEntities<t> {
+    get: (optionsOverride?: Options, postPayload?: unknown) => Promise<void>;
+    request: (payload: unknown, optionsOverride?: Options) => Promise<void>;
+    post: (data: Partial<t>, optionsOverride?: Options) => Promise<void>;
+    put: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
+    patch: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
+    remove: (data: Partial<t>, optionsOverride?: NtsState.Options) => Promise<void>;
+    refresh: () => Promise<void>;
+    reset: () => void;
+    entities: Record<string, t>;
+    state: EitherState<t>;
+    data: t | null;
+  }
+
+  /**
+  export interface NtsApiStoreCreator<t> {
+    new (config: NtsState.ConfigApi | NtsState.ConfigEntity, isEntityStore?: boolean): {
+      get(optionsOverride?: NtsState.Options): Observable<any>;
+      request<p = unknown>(payload: p, optionsOverride?: NtsState.Options): Observable<any>;
+      post(data: Partial<t>, optionsOverride?: NtsState.Options): Observable<Partial<t>>;
+      put(data: Partial<t>, optionsOverride?: NtsState.Options): Observable<Partial<t>>;
+      patch(data: Partial<t>, optionsOverride?: NtsState.Options): Observable<Partial<t>>;
+      delete(data: Partial<t>, optionsOverride?: NtsState.Options): Observable<any>;
+      refresh(optionsOverride?: NtsState.Options): Observable<any>;
+      reset(): void;
+    };
+  }
+   */
 }
