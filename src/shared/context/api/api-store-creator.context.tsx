@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { contextDefault } from './api-store.defaults';
+import { contextDefault, contextEntities } from './api-store.defaults';
 import { NtsState } from './api.models';
 import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePayloadWithApiResponse } from './api.utils';
 
@@ -10,7 +10,7 @@ import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePay
  * // How to rename props with object destructuring
  * const { get, data: usersData, state: usersState } = users;
  */
-export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>, isEntityStore: boolean) {
+export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | NtsState.ConfigEntity<t>, isEntityStore: boolean) {
   const token = localStorage.getItem('token');
 
   // Initialize Axios with base url
@@ -48,7 +48,10 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
 
   let loading = false;
 
-  const Context = createContext<NtsState.Context<t>>(contextDefault());
+  // NtsState.Context<t> | NtsState.ContextEntities<t>
+  const contextSrc: any = isEntityStore ? contextEntities<t>() : contextDefault<t>();
+
+  const Context = createContext<contextType>(contextSrc);
 
   /** Global UI State Context */
   const useApiContext = () => useContext(Context);
@@ -135,6 +138,13 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
       return _get({ refresh: true, ...optionsOverride }, payload);
     }
 
+    /**
+     * Consolidates all POST/PUT/PATCH requests into a single UPSERT function
+     * @param apiRequest
+     * @param data
+     * @param mapFn
+     * @returns
+     */
     function upsert(apiRequest: Promise<AxiosResponse<t, unknown>>, data: Partial<t>, mapFn?: <t>(x: t | null) => unknown) {
       setState(stateSrc => ({ ...stateSrc, modifying: true, errorModify: null }));
       return apiRequest
@@ -232,8 +242,21 @@ export function apiStoreCreator<t>(config: NtsState.ConfigApi<t> | NtsState.Conf
       setState(isEntityStore ? getStateEntitySrc : getStateSrc);
     }
 
-    const temp: any = state.data;
-    return <Context.Provider value={{ state, data: temp, get, post, patch, put, request, refresh, reset, remove }}>{children}</Context.Provider>;
+    // TODO: Figure out how to type this so that the provider does not throw an error
+    const value: any = {
+      state,
+      data: state.data,
+      get,
+      post,
+      patch,
+      put,
+      request,
+      refresh,
+      reset,
+      remove,
+    };
+
+    return <Context.Provider value={value}>{children}</Context.Provider>;
   };
 
   return {

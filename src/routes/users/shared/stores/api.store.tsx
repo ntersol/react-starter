@@ -1,15 +1,11 @@
-import { Models, entityStoreCreator } from '$shared';
-
-const storeCreator = entityStoreCreator({ apiUrlBase: 'https://jsonplaceholder.typicode.com', uniqueId: 'id' });
+import { Models, appApiStoreCreator, appEntityStoreCreator } from '$shared';
 
 /**
  * Get list of users
  */
-export const usersStore = storeCreator<Models.User>({ apiUrl: '/users', uniqueId: 'id' });
-
-export const temp = storeCreator<Models.User>({ apiUrl: '/users', uniqueId: 'id' });
+export const usersStore = appEntityStoreCreator<Models.User>({ apiUrl: '/users', uniqueId: 'id' });
 
 /**
  * Get user details
  */
-// export const userDetailsStore = storeCreator({ apiUrl: '/users' });
+export const userDetailsStore = appApiStoreCreator<Models.User>({ apiUrl: '/users' });

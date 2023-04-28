@@ -9,7 +9,7 @@ import { usersStore } from './shared/stores/api.store';
 import './users.page.scss';
 
 export function Users() {
-  const { data: usersData, state: usersState, refresh, reset, post, put, remove } = usersStore.useContext() as any;
+  const { data: usersData, state: usersState, refresh, reset, post, put, remove } = usersStore.useContext();
 
   /** Stuff to do on load */
   useEffect(() => {}, []);

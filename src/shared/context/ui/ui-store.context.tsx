@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { NtsState } from './api/api.models';
+import { NtsState } from '../api/api.models';
 
 /** Keeps track of stores that use persistent IDs for localstorage to prevent collisions */
 let storeIds: string[] = [];

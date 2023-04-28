@@ -20,3 +20,17 @@ export const contextDefault = <t>(): NtsState.Context<t> => ({
   state: ApiState,
   data: null,
 });
+
+export const contextEntities = <t>(): NtsState.ContextEntities<t> => ({
+  get: () => Promise.resolve(),
+  post: () => Promise.resolve(),
+  put: () => Promise.resolve(),
+  patch: () => Promise.resolve(),
+  remove: () => Promise.resolve(),
+  request: () => Promise.resolve(),
+  refresh: () => Promise.resolve(),
+  reset: () => {},
+  entities: {},
+  state: ApiState,
+  data: null,
+});
