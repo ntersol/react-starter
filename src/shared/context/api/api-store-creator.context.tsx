@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { useStorage } from '../../hooks';
 import { contextDefault, contextEntities } from './api-store.defaults';
 import { NtsState } from './api.models';
 import { apiUrlGet, deleteEntities, is, mergeConfig, mergeDedupeArrays, mergePayloadWithApiResponse } from './api.utils';
@@ -16,7 +17,8 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
 
   // Get interceptor
   api.interceptors.request.use(config => {
-    const token = localStorage.getItem('token');
+    const { getItem } = useStorage();
+    const token = getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
