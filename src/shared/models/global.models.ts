@@ -49,7 +49,7 @@ export module Models {
   export interface AuthState {
     isLoggedIn: boolean;
     token: string | null;
-    userInfo?: any | null;
+    user?: User | null;
   }
 
   export interface IFormFields {

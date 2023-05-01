@@ -2,8 +2,11 @@
 
 import { Models } from '../models/global.models';
 
+/** Allowable keys for localStorage typing */
+type keys = 'user' | 'token';
+
 /** Keys added to this array will tell the hook that the payload is JSON and will be automatcally de/serialized when getting/setting */
-const jsonKeys = ['token'];
+const jsonKeys: keys[] = ['token'];
 
 /**
  * Wraps localStorage and provides typesafety and automatic JSON de/serialization
@@ -19,8 +22,8 @@ export const useStorage = () => {
    */
   function getItem(key: 'user'): Models.User | null;
   function getItem(key: 'token'): string | null;
-  function getItem(key: string): string | null;
-  function getItem(key: string): Models.User | string | null {
+  function getItem(key: keys): string | null;
+  function getItem(key: keys): Models.User | string | null {
     let item = localStorage.getItem(key);
     if (item && jsonKeys.includes(key)) {
       item = JSON.parse(item);
@@ -39,16 +42,26 @@ export const useStorage = () => {
    */
   function setItem(key: 'user', value: Models.User | null): void;
   function setItem(key: 'token', value: string | null): void;
-  function setItem(key: string, value: string | null): void;
-  function setItem(key: string, value: any | null): void {
+  function setItem(key: keys, value: string | null): void;
+  function setItem(key: keys, value: any | null): void {
     if (value && jsonKeys.includes(key)) {
       value = JSON.stringify(value);
     }
     localStorage.setItem(key, value);
   }
 
+  function removeItem(key: keys) {
+    localStorage.removeItem(key);
+  }
+
+  function clear() {
+    localStorage.clear();
+  }
+
   return {
     setItem,
     getItem,
+    removeItem,
+    clear,
   };
 };
