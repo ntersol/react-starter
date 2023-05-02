@@ -9,10 +9,11 @@ import { FormEvent, useEffect, useState } from 'react';
 import { FaPowerOff, FaUsers } from 'react-icons/fa';
 
 export default function LoginPage() {
-  const [userName, setUserName] = useState('juser');
-  const [password, setPassword] = useState('password');
-  const [remember, setRemember] = useState(false);
   const { error, loggedOutReason, waiting, login } = useAuth();
+  const [userName, setUserName] = useState('juser');
+  const [password, setPassword] = useState('password-' + Math.floor(Math.random() * 1000000000) + 'dltrjew');
+  const [remember, setRemember] = useState(false);
+
   const { getItem, setItem, removeItem } = useStorage();
 
   useEffect(() => {

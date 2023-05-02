@@ -76,6 +76,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
           return;
         }
         const { token, user } = response.data;
+
         setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true, waiting: false }));
         setToken(token);
         setUser(user || null);
@@ -95,24 +96,20 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   const logout = (logOutReason?: LogOutReason | null) => {
     setToken(null);
     setUser(null);
-    setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true, isLoggedIn: false, loggedOutReason: logOutReason || null }));
+    setAuthState(stateSrc => ({ ...stateSrc, error: null, isLoggedIn: false, loggedOutReason: logOutReason || null }));
     removeItem('token');
     removeItem('user');
 
     navigate('/login');
-
+    // Support devmode/mocked logout request
     const apiRequest = devMode ? fakeLogout() : axios.post('/api/logout', {});
 
     apiRequest
-      .then(() => {
-        setAuthState(stateSrc => ({ ...stateSrc, waiting: false }));
-      })
+      .then(() => setAuthState(stateSrc => ({ ...stateSrc })))
       .catch(error => {
-        setAuthState(stateSrc => ({ ...stateSrc, error, waiting: false }));
+        setAuthState(stateSrc => ({ ...stateSrc, error }));
         throw new Error('Login failed');
       });
-
-    // return <Navigate replace={true} to="/login" />;
   };
 
   return (
@@ -179,6 +176,6 @@ function fakeLogin(): Promise<Partial<AxiosResponse<Models.AuthState>>> {
       };
 
       resolve(response);
-    }, 1000); // Simulating a delay of 1 second
+    }, 2000); // Simulating a delay of 1 second
   });
 }
