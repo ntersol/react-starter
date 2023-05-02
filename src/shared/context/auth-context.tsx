@@ -1,9 +1,12 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useStorage } from '../hooks';
 import { Models } from '../models/global.models';
+
+/** Set to true if no login or logout APIs are available, those will be mocked */
+const devMode = true;
 
 type LogOutReason = 'sessionExpired' | 'userInitiated';
 
@@ -65,15 +68,20 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
    */
   const login = (username: string, password: string) => {
     setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true }));
-    return axios
-      .post<Models.AuthState>('/api/login', { username, password }) // TODO: Type auth response
+    const apiRequest = devMode ? fakeLogin() : axios.post<Models.AuthState>('/api/login', { username, password });
+    return apiRequest
       .then(response => {
+        if (!response?.data) {
+          console.error('API response malformed');
+          return;
+        }
         const { token, user } = response.data;
         setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true, waiting: false }));
         setToken(token);
         setUser(user || null);
         setItem('token', token);
         setItem('user', user || null);
+        navigate('/');
       })
       .catch(error => {
         setAuthState(stateSrc => ({ ...stateSrc, error, waiting: false }));
@@ -90,12 +98,12 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
     setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true, isLoggedIn: false, loggedOutReason: logOutReason || null }));
     removeItem('token');
     removeItem('user');
-    // const loc = useLocation();
 
     navigate('/login');
-    // Need redirect
-    axios
-      .post('/api/logout', {})
+
+    const apiRequest = devMode ? fakeLogout() : axios.post('/api/logout', {});
+
+    apiRequest
       .then(() => {
         setAuthState(stateSrc => ({ ...stateSrc, waiting: false }));
       })
@@ -124,3 +132,53 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
     </AuthContext.Provider>
   );
 };
+
+function fakeLogout(): Promise<AxiosResponse<void>> {
+  return new Promise(resolve => {
+    return resolve;
+  });
+}
+
+/** Used to create a fake login response for when a login API is not possible */
+function fakeLogin(): Promise<Partial<AxiosResponse<Models.AuthState>>> {
+  return new Promise<Partial<AxiosResponse<Models.AuthState>>>(resolve => {
+    // Simulating an asynchronous operation to fetch the AuthState
+    setTimeout(() => {
+      const authState: Models.AuthState = {
+        isLoggedIn: true,
+        token: 'my-auth-token',
+        user: {
+          id: 1,
+          name: 'John Doe',
+          username: 'johndoe',
+          email: 'johndoe@example.com',
+          address: {
+            street: '123 Main St',
+            suite: 'Apt 4B',
+            city: 'New York',
+            zipcode: '12345',
+            geo: {
+              lat: '40.7128',
+              lng: '-74.0060',
+            },
+          },
+          phone: '555-1234',
+          website: 'example.com',
+          company: {
+            name: 'ABC Company',
+            catchPhrase: 'Lorem ipsum dolor sit amet',
+            bs: 'Lorem ipsum',
+          },
+        },
+      };
+
+      const response: Partial<AxiosResponse<Models.AuthState>> = {
+        data: authState,
+        status: 200,
+        statusText: 'OK',
+      };
+
+      resolve(response);
+    }, 1000); // Simulating a delay of 1 second
+  });
+}

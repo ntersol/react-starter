@@ -3,7 +3,7 @@
 import { Models } from '../models/global.models';
 
 /** Allowable keys for localStorage typing */
-type keys = 'user' | 'token';
+type keys = 'user' | 'token' | 'savedUserName';
 
 /** Keys added to this array will tell the hook that the payload is JSON and will be automatcally de/serialized when getting/setting */
 const jsonKeys: keys[] = ['token'];
