@@ -74,7 +74,7 @@ export default function LoginPage() {
             </div>
 
             <label className="form-check-label">
-              <Checkbox className="form-check-input remember me-2" checked={remember} />
+              <Checkbox className="form-check-input remember me-2" checked={remember} onChange={event => setRemember(event.checked || false)} />
               Remember my username
             </label>
 

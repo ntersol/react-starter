@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 import axios, { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useStorage } from '../hooks';
 import { Models } from '../models/global.models';
 
@@ -23,7 +23,7 @@ interface AuthContextData extends AuthState {
   token: string | null;
   /** Errors from log in/log out requests */
   login: (email: string, password: string) => Promise<void>;
-  logout: (logOutReason?: LogOutReason | null) => void;
+  logout: (logOutReason?: LogOutReason | null, previousUrl?: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextData>({
@@ -40,17 +40,29 @@ const AuthContext = createContext<AuthContextData>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
+  /**
+   * Hooks
+   */
+  const { getItem, setItem, removeItem } = useStorage();
+  const { search } = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  /**
+   * State
+   */
   const [authState, setAuthState] = useState<AuthState>({
     isLoggedIn: false,
     loggedOutReason: null,
     error: null,
     waiting: false,
   });
-  const { getItem, setItem, removeItem } = useStorage();
-
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<Models.User | null>(null);
-  const navigate = useNavigate();
+
+  /**
+   * On Init
+   */
   useEffect(() => {
     const storedToken = getItem('token');
     const storedUser = getItem('user');
@@ -61,6 +73,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   }, []);
 
   /**
+   * Methods
+   */
+
+  /**
    * Log into the application
    * @param username
    * @param password
@@ -68,6 +84,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
    */
   const login = (username: string, password: string) => {
     setAuthState(stateSrc => ({ ...stateSrc, error: null, waiting: true }));
+
+    const queryParams = new URLSearchParams(search);
+    const previousUrl = queryParams.get('previousUrl');
+    // Support devmode/mocked api request
     const apiRequest = devMode ? fakeLogin() : axios.post<Models.AuthState>('/api/login', { username, password });
     return apiRequest
       .then(response => {
@@ -82,7 +102,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
         setUser(user || null);
         setItem('token', token);
         setItem('user', user || null);
-        navigate('/');
+        navigate(previousUrl || '/');
       })
       .catch(error => {
         setAuthState(stateSrc => ({ ...stateSrc, error, waiting: false }));
@@ -100,8 +120,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
     removeItem('token');
     removeItem('user');
 
-    navigate('/login');
-    // Support devmode/mocked logout request
+    const queryString = `?previousUrl=${encodeURIComponent(location.pathname)}`;
+    const loginUrl = '/login' + queryString;
+
+    navigate(loginUrl);
+    // Support devmode/mocked api request
     const apiRequest = devMode ? fakeLogout() : axios.post('/api/logout', {});
 
     apiRequest

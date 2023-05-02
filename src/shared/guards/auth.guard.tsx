@@ -11,10 +11,12 @@ import { useAuth } from '../context';
 export const AuthenticatedRoute = (props: { children: React.ReactNode }) => {
   const { children } = props;
   const { isLoggedIn, logout } = useAuth();
+
   useEffect(() => {
     if (!isLoggedIn) {
       logout('notLoggedIn');
     }
-  }, [isLoggedIn, logout]);
+  }, [isLoggedIn, logout, location]);
+
   return <>{children}</>;
 };
