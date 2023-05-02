@@ -8,7 +8,7 @@ import { Models } from '../models/global.models';
 /** Set to true if no login or logout APIs are available, those will be mocked */
 const devMode = true;
 
-type LogOutReason = 'sessionExpired' | 'userInitiated';
+type LogOutReason = 'sessionExpired' | 'userInitiated' | 'notLoggedIn';
 
 interface AuthState {
   isLoggedIn: boolean;

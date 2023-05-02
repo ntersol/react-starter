@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../context';
 
 /**
@@ -11,8 +11,10 @@ import { useAuth } from '../context';
 export const AuthenticatedRoute = (props: { children: React.ReactNode }) => {
   const { children } = props;
   const { isLoggedIn, logout } = useAuth();
-  if (!isLoggedIn) {
-    logout('sessionExpired');
-  }
+  useEffect(() => {
+    if (!isLoggedIn) {
+      logout('notLoggedIn');
+    }
+  }, [isLoggedIn, logout]);
   return <>{children}</>;
 };

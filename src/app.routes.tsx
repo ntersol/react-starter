@@ -33,16 +33,10 @@ export function AppRoutes() {
         path="/users/*"
         element={
           <Suspense fallback={loader}>
-            <UsersRoute />
+            <AuthenticatedRoute>
+              <UsersRoute />
+            </AuthenticatedRoute>
           </Suspense>
-        }
-      />
-      <Route
-        path="/users2"
-        element={
-          <AuthenticatedRoute>
-            <UsersRoute />
-          </AuthenticatedRoute>
         }
       />
       <Route

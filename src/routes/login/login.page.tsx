@@ -55,6 +55,7 @@ export default function LoginPage() {
         <Card>
           <form onSubmit={handleSubmit}>
             {/* Logout and session expired messages */}
+            {loggedOutReason === 'notLoggedIn' && <Message severity="warn" className="w-100 mb-3" text="Please log in to continue" />}
             {loggedOutReason === 'sessionExpired' && <Message severity="warn" className="w-100 mb-3" text="Session expired, please log in again" />}
             {loggedOutReason === 'userInitiated' && <Message severity="success" className="w-100 mb-3" text="You have successfully logged out" />}
             {/* Login failure */}
