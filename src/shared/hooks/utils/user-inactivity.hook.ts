@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useThrottledFunction } from './throttle-function.hook';
 
 /**
  * Hook that checks for user inactivity and runs a function after a set period
@@ -8,24 +9,22 @@ import { useEffect, useRef } from 'react';
 export function useInactivity(timeout: number, callback: () => void) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const handleThrottledActivity = useThrottledFunction(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(callback, timeout);
+  }, timeout);
+
+  const handleClearTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
+
   useEffect(() => {
-    const handleActivity = () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(callback, timeout);
-    };
-
-    const handleClearTimeout = () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
-
-    const handleThrottledActivity = handleActivity; // Adjust this line to use your own throttle function
-
     window.addEventListener('mousemove', handleThrottledActivity);
     window.addEventListener('keydown', handleThrottledActivity);
 

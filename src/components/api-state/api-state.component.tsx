@@ -1,7 +1,7 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { ProgressBar } from 'primereact/progressbar';
-import { NtsState } from '../context/api/api.models';
 import { Messages } from 'primereact/messages';
+import { ProgressBar } from 'primereact/progressbar';
+import { ReactNode, useEffect, useState } from 'react';
+import { NtsState } from '../../shared/context/api/api.models';
 
 interface ApiStateProps {
   state: NtsState.ApiState | NtsState.EntityApiState | undefined | null;

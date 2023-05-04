@@ -1,5 +1,6 @@
 @import '$shared/styles/vars';
 @import '$shared/styles/mixins';
+@import '$shared/styles/_misc';
 
 // Usage: .class{color: var(--nts-primary);}
 @mixin convert($list) {

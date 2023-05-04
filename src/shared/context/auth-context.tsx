@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   const [user, setUser] = useState<Models.User | null>(null);
 
   // If user is inactive for this period of time AND logged in, log them out
-  useInactivity(3000, () => {
+  useInactivity(5 * 60 * 1000, () => {
     if (authState.isLoggedIn) {
       logout('sessionExpired');
     }
