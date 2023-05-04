@@ -1,8 +1,6 @@
 import FormValidation from '$components/formValidation';
 import FormValidationFormik from '$components/formValidationFormik';
 import MUITable from '$components/mui-table';
-import Parrot from '$components/parrot';
-import Tiger from '$components/tiger';
 import { AuthenticatedRoute } from '$shared';
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -56,8 +54,6 @@ export function AppRoutes() {
           </Suspense>
         }
       />
-      <Route path="/tiger" element={<Tiger />} />
-      <Route path="/parrot" element={<Parrot />} />
 
       <Route path="/formValidation" element={<FormValidation />} />
       <Route path="/formValidationFormik" element={<FormValidationFormik />} />
