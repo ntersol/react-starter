@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 
 import axios, { AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useStorage, useThrottledFunction } from '../hooks';
+import { useInactivity, useStorage } from '../hooks';
 import { Models } from '../models/global.models';
 
 /** Set to true if no login or logout APIs are available, those will be mocked */
@@ -47,8 +47,6 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   const { search } = useLocation();
   const navigate = useNavigate();
   const location = useLocation();
-  // Number of milliseconds for inactivity timeout (5 minutes in this case)
-  const INACTIVITY_TIMEOUT = 3000; //5 * 60 * 1000;
 
   /**
    * State
@@ -62,15 +60,12 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<Models.User | null>(null);
 
-  // Timeout ID for inactivity timer
-  let inactivityTimeout: number;
-
-  // Debounce the handleSearch function with a delay of 300 milliseconds
-  const throttleHandleSearch = useThrottledFunction(() => {
-    console.log('handleUserActivity');
-    clearTimeout(inactivityTimeout);
-    startInactivityTimer();
-  }, 1000);
+  // If user is inactive for this period of time AND logged in, log them out
+  useInactivity(3000, () => {
+    if (authState.isLoggedIn) {
+      logout('sessionExpired');
+    }
+  });
 
   /**
    * On Init
@@ -82,39 +77,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
       setToken(storedToken);
       setUser(storedUser);
     }
-
-    // Attach event listeners for user activity events
-    document.addEventListener('mousemove', throttleHandleSearch);
-    document.addEventListener('keydown', throttleHandleSearch);
-
-    // Start the initial inactivity timer
-    startInactivityTimer();
-
-    // Cleanup the event listeners when the component is unmounted
-    return () => {
-      document.removeEventListener('mousemove', throttleHandleSearch);
-      document.removeEventListener('keydown', throttleHandleSearch);
-      clearTimeout(inactivityTimeout);
-    };
   }, []);
 
   /**
    * Methods
    */
-
-  /**
-   * Start the inactivity timer
-   */
-  const startInactivityTimer = () => {
-    // Clear the previous timeout, if any
-    clearTimeout(inactivityTimeout);
-
-    // Set a new timeout for the specified inactivity duration
-    inactivityTimeout = window.setTimeout(() => {
-      // Perform the logout action after the inactivity duration
-      logout('sessionExpired');
-    }, INACTIVITY_TIMEOUT);
-  };
 
   /**
    * Log into the application
