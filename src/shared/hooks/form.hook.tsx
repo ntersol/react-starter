@@ -1,18 +1,30 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-interface FormValues {
-  name: string;
-  email: string;
-  message: string;
+interface UseFormProps<T> {
+  initialValues: T;
+  onSubmitFn: (values: T) => void;
 }
 
 /**
  * Custom hook for handling form state and submission.
- * @param {FormValues} initialValues - The initial values for the form fields.
+ * @param {UseFormProps<T>} props - The hook props containing the initial values and submit function.
  * @returns {object} - An object containing the form values, change handler, and submit handler.
+ * @example
+ *
+ * const { values, handleChange, handleSubmit } = useForm<FormValues>({
+    initialValues: {
+      name: '',
+      email: '',
+      message: '',
+    },
+    onSubmitFn: (formValues) => {
+      console.log('Form submitted with values:', formValues);
+      // Perform form submission logic here, e.g., send data to server
+    },
+  });
  */
-export function useForm(initialValues: FormValues, onSubmitFn: () => void) {
-  const [values, setValues] = useState<FormValues>(initialValues);
+export function useForm<T>({ initialValues, onSubmitFn }: UseFormProps<T>) {
+  const [values, setValues] = useState<T>(initialValues);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -24,8 +36,7 @@ export function useForm(initialValues: FormValues, onSubmitFn: () => void) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Perform form submission logic here, e.g., send data to server
-    console.log('Form submitted with values:', values);
+    onSubmitFn(values);
   };
 
   return {
