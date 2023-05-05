@@ -7,7 +7,7 @@ import App from './app';
 import { ArticleAction, ArticleState, DispatchType } from './routes/demos/routes//redux-demo/type';
 import reducer from './routes/demos/routes/redux-demo/store/reducer';
 
-import { AuthProvider, GlobalUiStore, StarterProvider } from '$shared';
+import { AuthProvider, ErrorBoundary, GlobalUiStore, StarterProvider } from '$shared';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import './globals.scss';
@@ -20,18 +20,20 @@ const store: Store<ArticleState, ArticleAction> & {
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <StarterProvider>
-          <AuthProvider>
-            <GlobalUiStore.Provider>
-              <Provider store={store}>
-                <App />
-              </Provider>
-            </GlobalUiStore.Provider>
-          </AuthProvider>
-        </StarterProvider>
-      </BrowserRouter>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <BrowserRouter>
+          <StarterProvider>
+            <AuthProvider>
+              <GlobalUiStore.Provider>
+                <Provider store={store}>
+                  <App />
+                </Provider>
+              </GlobalUiStore.Provider>
+            </AuthProvider>
+          </StarterProvider>
+        </BrowserRouter>
+      </HelmetProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
 );
