@@ -7,7 +7,7 @@ import App from './app';
 import { ArticleAction, ArticleState, DispatchType } from './routes/demos/routes//redux-demo/type';
 import reducer from './routes/demos/routes/redux-demo/store/reducer';
 
-import { AuthProvider, ErrorBoundary, GlobalUiStore, StarterProvider } from '$shared';
+import { AuthProvider, ErrorBoundary, StarterProvider } from '$shared';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import './globals.scss';
@@ -25,11 +25,9 @@ root.render(
         <BrowserRouter>
           <StarterProvider>
             <AuthProvider>
-              <GlobalUiStore.Provider>
-                <Provider store={store}>
-                  <App />
-                </Provider>
-              </GlobalUiStore.Provider>
+              <Provider store={store}>
+                <App />
+              </Provider>
             </AuthProvider>
           </StarterProvider>
         </BrowserRouter>

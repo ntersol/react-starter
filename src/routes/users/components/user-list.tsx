@@ -24,9 +24,13 @@ export function UserList({ users, editUser, deleteUser }: UserListProps) {
             header="Actions"
             body={user => (
               <div>
-                <a onClick={() => editUser && editUser(user)}>Edit User</a>
+                <button className="link" onClick={() => editUser && editUser(user)}>
+                  Edit User
+                </button>
                 <br />
-                <a onClick={() => deleteUser && deleteUser(user)}>Delete User</a>
+                <button className="link" onClick={() => deleteUser && deleteUser(user)}>
+                  Delete User
+                </button>
               </div>
             )}
           ></Column>

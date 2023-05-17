@@ -34,16 +34,17 @@ const defaultUser: Models.User = {
 };
 
 export function UserForm({ user, userUpdated }: UserFormProps) {
-  // const [userForm, setUser] = useState<Models.User>({ ...defaultUser });
-
+  const values = user;
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
     reset,
   } = useForm<Models.User>({
     defaultValues: { ...defaultUser, ...user },
+    // values,
   });
 
   const userForm = watch();
@@ -52,7 +53,8 @@ export function UserForm({ user, userUpdated }: UserFormProps) {
 
   /***/
   useEffect(() => {
-    // setUser({ ...defaultUser, ...user }); // On input, update user in form
+    // setValue(user);
+    console.warn(user);
   }, [user]);
 
   /**

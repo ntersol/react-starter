@@ -16,6 +16,11 @@ export function Users() {
 
   const [user, setUser] = useState<Models.User | null>(null);
 
+  const editUser = (user: Models.User) => {
+    console.log(user);
+    setUser(user);
+  };
+
   /**
    * Delete a user
    * @param user
@@ -51,18 +56,10 @@ export function Users() {
             <Button onClick={() => refresh()}>Refresh</Button> <Button onClick={() => reset()}>Reset</Button>
           </div>
           <h1>Current Users</h1>
-          {/**
-          <form onSubmit={handleSubmit}>
-            <h1>{state.username}</h1>
-            <input value={username || ''} onChange={e => setUsername(e.target.value)} />
-            <button type="submit">Update Name</button>
-          </form>
-          <hr />
-           */}
           <div className="row">
             <div className="col col-12 col-md-8">
               <ApiState state={usersState}>
-                <UserList users={usersData} editUser={setUser} deleteUser={deleteUser}></UserList>
+                <UserList users={usersData} editUser={editUser} deleteUser={deleteUser}></UserList>
               </ApiState>
             </div>
             <div className="col col-12 col-md-4">
