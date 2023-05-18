@@ -18,5 +18,5 @@ export const AuthenticatedRoute = (props: { children: React.ReactNode }) => {
     }
   }, [isLoggedIn, logout]);
 
-  return <>{children}</>;
+  return <>{isLoggedIn ? children : <></>}</>;
 };
