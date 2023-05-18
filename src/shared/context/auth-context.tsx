@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import axios, { AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   });
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<Models.User | null>(null);
+  const get = useCallback(getItem, [getItem]);
 
   // If user is inactive for this period of time AND logged in, log them out
   useInactivity(5 * 60 * 1000, () => {
@@ -71,13 +72,14 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
    * On Init
    */
   useEffect(() => {
-    const storedToken = getItem('token');
-    const storedUser = getItem('user');
+    const storedToken = get('token');
+    const storedUser = get('user');
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(storedUser);
+      setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true }));
     }
-  }, [getItem]);
+  }, [get]);
 
   /**
    * Methods
@@ -160,13 +162,14 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   );
 };
 
+/** Fake logout method for when API is not available */
 function fakeLogout(): Promise<AxiosResponse<void>> {
   return new Promise(resolve => {
     return resolve;
   });
 }
 
-/** Used to create a fake login response for when a login API is not possible */
+/** Used to create a fake login response for when a login API is not available */
 function fakeLogin(): Promise<Partial<AxiosResponse<Models.AuthState>>> {
   return new Promise<Partial<AxiosResponse<Models.AuthState>>>(resolve => {
     // Simulating an asynchronous operation to fetch the AuthState

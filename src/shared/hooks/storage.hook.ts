@@ -50,10 +50,17 @@ export const useStorage = () => {
     localStorage.setItem(key, value);
   }
 
+  /**
+   * Remove an item from localStorage
+   * @param key
+   */
   function removeItem(key: keys) {
     localStorage.removeItem(key);
   }
 
+  /**
+   * Clear localStorage
+   */
   function clear() {
     localStorage.clear();
   }
