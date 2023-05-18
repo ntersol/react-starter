@@ -1,7 +1,6 @@
 import { Models, removeNils } from '$shared';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface UserFormProps {
@@ -34,34 +33,20 @@ const defaultUser: Models.User = {
 };
 
 export function UserForm({ user, userUpdated }: UserFormProps) {
-  const values = user;
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-    setValue,
     reset,
   } = useForm<Models.User>({
     defaultValues: { ...defaultUser, ...user },
-    // values,
+    values: user ?? undefined, // Update user in form if passed in by parent
   });
 
   const userForm = watch();
 
-  console.log(watch()); // watch input value by passing the name of it
-
-  /***/
-  useEffect(() => {
-    // setValue(user);
-    console.warn(user);
-  }, [user]);
-
-  /**
-   * Reset form state
-   * @returns
-   */
-  // const reset = () => setValue({ ...defaultUser });
+  // console.log(watch()); // watch input value by passing the name of it
 
   /**
    * Handle form submit
@@ -69,15 +54,15 @@ export function UserForm({ user, userUpdated }: UserFormProps) {
    */
   const onSubmit = (data: Models.User) => {
     userUpdated && userUpdated(removeNils(data));
-    reset();
+    reset({ ...defaultUser });
   };
 
   return (
     <div>
       {userForm?.id && (
-        <a style={{ float: 'right' }} onClick={() => reset()}>
+        <button className="link" style={{ float: 'right' }} onClick={() => reset({ ...defaultUser })}>
           Cancel
-        </a>
+        </button>
       )}
 
       <h3>{userForm?.id ? 'Update User' : ' Create User'}</h3>

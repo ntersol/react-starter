@@ -22,7 +22,7 @@ export default function LoginPage() {
       setUserName(username);
       setRemember(true);
     }
-  }, []);
+  }, [getItem]);
 
   /**
    * Submit the login form

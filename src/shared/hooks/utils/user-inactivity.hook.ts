@@ -33,5 +33,5 @@ export function useInactivity(timeout: number, callback: () => void) {
       window.removeEventListener('mousemove', handleThrottledActivity);
       window.removeEventListener('keydown', handleThrottledActivity);
     };
-  }, [timeout, callback]);
+  }, [timeout, callback, handleThrottledActivity]);
 }

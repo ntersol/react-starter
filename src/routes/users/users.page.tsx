@@ -1,7 +1,7 @@
 import { ApiState, Models } from '$shared';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { UserForm } from './components/user-form';
 import { UserList } from './components/user-list';
@@ -12,7 +12,7 @@ export function Users() {
   const { data: usersData, state: usersState, refresh, reset, post, put, remove } = usersStore.useContext();
 
   /** Stuff to do on load */
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   const [user, setUser] = useState<Models.User | null>(null);
 

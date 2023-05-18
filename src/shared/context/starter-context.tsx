@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, FC } from 'react';
+import React, { FC, createContext, useEffect, useState } from 'react';
 import { Models } from '../models/global.models';
 const initialStarter: Models.IStarterContext = {
   HTMLtitlePre: '',
@@ -32,7 +32,7 @@ export const StarterProvider: FC<Models.IChildrenProps> = function ({ children }
   };
   useEffect(() => {
     fetchData(url);
-  }, []); // Empty array for 2nd arg means this will be called once in component lifecycle
+  }, [url]); // Empty array for 2nd arg means this will be called once in component lifecycle
 
   const serviceRenderer = (data: Array<Models.IResult>): React.ReactNode => (
     <table border={1}>

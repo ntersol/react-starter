@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useStorage } from '../../hooks';
 import { contextDefault, contextEntities } from './api-store.defaults';
 import { NtsState } from './api.models';
@@ -61,71 +61,73 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
   const Provider = ({ children }: { children?: ReactNode | null }) => {
     const [state, setState] = useState(isEntityStore ? getStateEntitySrc() : getStateSrc());
 
-    /** On load */
-    useEffect(() => {
-      if (!config.autoLoad && state.data === null && !state.loading && !loading) {
-        loading = true;
-        get();
-      }
-      return () => {
-        setTimeout(() => {
-          loading = false;
-        }, 1);
-      };
-    }, []);
-
     /**
      *
      * @param optionsOverride
      * @param postPayload - Some API requests need to use POST instead of GET to return data. Providing a payload will use POST to load the store
      * @returns
      */
-    function _get(optionsOverride?: NtsState.Options, postPayload?: unknown) {
-      const options = mergeConfig(config, optionsOverride);
-      if ((state.data === null || options.refresh) && !state.loading) {
-        const url = apiUrlGet(options, 'get', null);
+    const _get = useCallback(
+      (optionsOverride?: NtsState.Options, postPayload?: unknown) => {
+        const options = mergeConfig(config, optionsOverride);
+        if ((state.data === null || options.refresh) && !state.loading) {
+          const url = apiUrlGet(options, 'get', null);
 
-        setState(stateSrc => ({ ...stateSrc, loading: true, error: null }));
+          setState(stateSrc => ({ ...stateSrc, loading: true, error: null }));
 
-        const httpRequest = postPayload ? api.post<unknown>(url, postPayload) : api.get(url);
+          const httpRequest = postPayload ? api.post<unknown>(url, postPayload) : api.get(url);
 
-        httpRequest
-          .then(r => {
-            const result = config.map && config.map.get ? config.map.get(r.data) : r.data;
-            const state: Partial<NtsState.ApiState> = { loading: false, data: result, errorModify: null };
-            let entities: Record<string, t> | null = null;
+          httpRequest
+            .then(r => {
+              const result = config.map && config.map.get ? config.map.get(r.data) : r.data;
+              const state: Partial<NtsState.ApiState> = { loading: false, data: result, errorModify: null };
+              let entities: Record<string, t> | null = null;
 
-            if (isEntityStore && is.entityConfig(config) && config.uniqueId && Array.isArray(result)) {
-              entities = result.reduce(
-                (a, b) => ({
-                  ...a,
-                  [b[String(config.uniqueId)]]: b,
-                }),
-                {},
-              );
-              state.entities = entities;
-            }
-            setState(stateSrc => ({ ...stateSrc, ...state }));
-          })
-          .catch((error: unknown) => {
-            setState(stateSrc => ({ ...stateSrc, loading: false, error }));
+              if (isEntityStore && is.entityConfig(config) && config.uniqueId && Array.isArray(result)) {
+                entities = result.reduce(
+                  (a, b) => ({
+                    ...a,
+                    [b[String(config.uniqueId)]]: b,
+                  }),
+                  {},
+                );
+                state.entities = entities;
+              }
+              setState(stateSrc => ({ ...stateSrc, ...state }));
+            })
+            .catch((error: unknown) => {
+              setState(stateSrc => ({ ...stateSrc, loading: false, error }));
+            });
+          // We do not want users returning data directly from the request which violates unidirection data flow
+          // Return empty promise instead so that the app still knows when it completed
+          return new Promise<void>((resolve, reject) => {
+            httpRequest.then(() => resolve()).catch(error => reject(error));
           });
-        // We do not want users returning data directly from the request which violates unidirection data flow
-        // Return empty promise instead so that the app still knows when it completed
-        return new Promise<void>((resolve, reject) => {
-          httpRequest.then(() => resolve()).catch(error => reject(error));
-        });
-      }
-      return Promise.resolve();
-    }
+        }
+        return Promise.resolve();
+      },
+      [state],
+    );
 
     /**
      * Perform a get request to load data into the store
      * @param optionsSrct
      */
+    const get = useCallback(
+      (optionsOverride?: NtsState.Options) => {
+        return _get(optionsOverride);
+      },
+      [_get],
+    );
+
+    /**
+     * Perform a get request to load data into the store
+     * @param optionsSrct
+
     function get(optionsOverride?: NtsState.Options) {
       return _get(optionsOverride);
     }
+      */
 
     /**
      * Request is a POST operation that functions a GET. A payload body is passed and the response is loaded into the store
@@ -241,6 +243,19 @@ export function apiStoreCreator<t, contextType>(config: NtsState.ConfigApi<t> | 
     function reset() {
       setState(isEntityStore ? getStateEntitySrc : getStateSrc);
     }
+
+    /** On load */
+    useEffect(() => {
+      if (!config.autoLoad && state.data === null && !state.loading && !loading) {
+        loading = true;
+        get();
+      }
+      return () => {
+        setTimeout(() => {
+          loading = false;
+        }, 1);
+      };
+    }, [state, get]);
 
     // TODO: Figure out how to type this so that the provider does not throw an error
     const value: any = {

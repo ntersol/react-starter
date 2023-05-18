@@ -13,7 +13,7 @@ export function ViewUsers() {
   useEffect(() => {
     get({ apiUrlAppend: '/' + userId, refresh: true }); // Get new user data in store
     return () => reset(); // Clear store out on exit. Prevents previous content from showing on next page load
-  }, [userId]);
+  }, [get, reset, userId]);
 
   return (
     <div>

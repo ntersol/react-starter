@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
       setToken(storedToken);
       setUser(storedUser);
     }
-  }, []);
+  }, [getItem]);
 
   /**
    * Methods

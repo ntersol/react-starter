@@ -6,19 +6,20 @@ const NUM_ITEMS = 25;
 
 export default function MUITable() {
   const [JSONdata, setJSONdata] = useState<Models.IAdaptedMUIdata[] | any[]>([]);
-  useEffect(() => {}, []);
+
   const url = `https://randomuser.me/api?results=${NUM_ITEMS}`;
-  const fetchData = async (url: string) => {
-    await fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setJSONdata(adaptToFourColumns(data.results));
-      })
-      .catch(e => console.log(`fetch error.  No network connection?  randomuser.me is down? error = ${e}`));
-  };
+
   useEffect(() => {
+    const fetchData = async (url: string) => {
+      await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          setJSONdata(adaptToFourColumns(data.results));
+        })
+        .catch(e => console.log(`fetch error.  No network connection?  randomuser.me is down? error = ${e}`));
+    };
     fetchData(url);
-  }, []); // Empty array for 2nd arg means this will be called once in component lifecycle
+  }, [url]); // Empty array for 2nd arg means this will be called once in component lifecycle
   const columns = useMemo(
     () => [
       {
