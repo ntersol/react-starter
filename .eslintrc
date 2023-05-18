@@ -16,7 +16,7 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react", "jest"],
+  "plugins": ["react", "jest", "react-hooks"],
   "rules": {
     "quotes": ["error", "single"],
     "no-unused-vars": "off",

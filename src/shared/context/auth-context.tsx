@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 import axios, { AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -59,7 +59,6 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   });
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<Models.User | null>(null);
-  const get = useCallback(getItem, [getItem]);
 
   // If user is inactive for this period of time AND logged in, log them out
   useInactivity(5 * 60 * 1000, () => {
@@ -72,14 +71,15 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
    * On Init
    */
   useEffect(() => {
-    const storedToken = get('token');
-    const storedUser = get('user');
+    const storedToken = getItem('token');
+    const storedUser = getItem('user');
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(storedUser);
       setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true }));
     }
-  }, [get]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Methods
