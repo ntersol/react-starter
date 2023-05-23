@@ -16,10 +16,6 @@
   - Remove redundent " | undefined" from each one
  */
 export module Models {
-  export interface GlobalUIState {
-    name?: string | null;
-  }
-
   /********************************
    *  BEGIN CUSTOM GLOBAL MODELS
    ********************************/

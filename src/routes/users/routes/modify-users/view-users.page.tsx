@@ -1,4 +1,4 @@
-import { ApiState } from '$shared';
+import { ApiState } from '$components';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';

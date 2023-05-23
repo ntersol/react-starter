@@ -18,5 +18,6 @@ export const AuthenticatedRoute = (props: { children: React.ReactNode }) => {
     }
   }, [isLoggedIn, logout]);
 
+  // Show fragment instead of component to avoid a FOUC
   return <>{isLoggedIn ? children : <></>}</>;
 };

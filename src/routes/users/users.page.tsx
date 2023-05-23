@@ -1,4 +1,5 @@
-import { ApiState, Models } from '$shared';
+import { ApiState } from '$components';
+import { Models, useUIGlobal } from '$shared';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { useState } from 'react';
@@ -11,13 +12,14 @@ import './users.page.scss';
 export function Users() {
   const { data: usersData, state: usersState, refresh, reset, post, put, remove } = usersStore.useContext();
 
+  const uiGlobalStore = useUIGlobal();
+  console.log(uiGlobalStore.state.name);
   /** Stuff to do on load */
   // useEffect(() => {}, []);
 
   const [user, setUser] = useState<Models.User | null>(null);
 
   const editUser = (user: Models.User) => {
-    console.log(user);
     setUser(user);
   };
 

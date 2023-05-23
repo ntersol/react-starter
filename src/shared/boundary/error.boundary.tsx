@@ -20,11 +20,15 @@ const useErrorBoundary = () => {
   return errorMessage;
 };
 
+/**
+ * Handle global application errors
+ * @param param0
+ * @returns
+ */
 export const ErrorBoundary = ({ children }: { children: ReactNode }) => {
   const errorMessage = useErrorBoundary();
 
   if (errorMessage) {
-    // Render your custom error UI here
     return (
       <div className="container mt-3">
         <Message
