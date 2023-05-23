@@ -1,15 +1,17 @@
 /* eslint-disable no-redeclare */
 
+// When added new properties, only add function overloads when the prop type is NOT a string. String is default.
+
 import { Models } from '../models/global.models';
 
 /** Allowable keys for localStorage typing */
 type keys = 'user' | 'token' | 'savedUserName';
 
 /** Keys added to this array will tell the hook that the payload is JSON and will be automatcally de/serialized when getting/setting */
-const jsonKeys: keys[] = ['token'];
+const jsonKeys: keys[] = ['user'];
 
 /**
- * Wraps localStorage and provides typesafety and automatic JSON de/serialization
+ * Wraps localStorage and provides type safety and automatic JSON de/serialization
  * @returns
  */
 export const useStorage = () => {
@@ -21,7 +23,6 @@ export const useStorage = () => {
    * @param value
    */
   function getItem(key: 'user'): Models.User | null;
-  function getItem(key: 'token'): string | null;
   function getItem(key: keys): string | null;
   function getItem(key: keys): Models.User | string | null {
     let item = localStorage.getItem(key);
@@ -41,7 +42,6 @@ export const useStorage = () => {
    * @param value
    */
   function setItem(key: 'user', value: Models.User | null): void;
-  function setItem(key: 'token', value: string | null): void;
   function setItem(key: keys, value: string | null): void;
   function setItem(key: keys, value: any | null): void {
     if (value && jsonKeys.includes(key)) {

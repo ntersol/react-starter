@@ -1,15 +1,27 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 
 export interface GlobalUIState {
-  name: string | null;
+  name?: string | null;
 }
 
 interface GlobalUIProvider {
+  /**
+   * Global UI State
+   */
   state: GlobalUIState;
+  /**
+   * Update global UI state
+   * @param state
+   */
   update: (state: Partial<GlobalUIState>) => void;
+  /**
+   * Reset global UI state
+   * @returns
+   */
   reset: () => void;
 }
 
+// Initial default state. Used for reset or rehydration
 const uiStateDefault: GlobalUIState = {
   name: null,
 };
@@ -57,12 +69,3 @@ export const UIGlobalProvider = ({ children }: { children?: ReactNode | null }) 
     </UIGlobalContext.Provider>
   );
 };
-
-/**
- * Store for global UI state
- *
- * @usage
- * const uiGlobalStore = GlobalUiStore.useContext();
- * console.log(uiGlobalStore.state.name);
- */
-//export const useGlobalUiStore = useUiStore<Models.GlobalUIState>({ name: '' }, { localStorageId: 'globalUiStore' });

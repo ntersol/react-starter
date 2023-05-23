@@ -12,8 +12,7 @@ import './users.page.scss';
 export function Users() {
   const { data: usersData, state: usersState, refresh, reset, post, put, remove } = usersStore.useContext();
 
-  const uiGlobalStore = useUIGlobal();
-  console.log(uiGlobalStore.state.name);
+  const { state, update } = useUIGlobal();
   /** Stuff to do on load */
   // useEffect(() => {}, []);
 
@@ -21,6 +20,7 @@ export function Users() {
 
   const editUser = (user: Models.User) => {
     setUser(user);
+    update({ name: user.name });
   };
 
   /**
@@ -57,7 +57,7 @@ export function Users() {
           <div style={{ float: 'right' }}>
             <Button onClick={() => refresh()}>Refresh</Button> <Button onClick={() => reset()}>Reset</Button>
           </div>
-          <h1>Current Users</h1>
+          <h1>Current Users {state.name}</h1>
           <div className="row">
             <div className="col col-12 col-md-8">
               <ApiState state={usersState}>

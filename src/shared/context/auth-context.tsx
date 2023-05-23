@@ -11,6 +11,7 @@ const devMode = true;
 type LogOutReason = 'sessionExpired' | 'userInitiated' | 'notLoggedIn';
 
 interface AuthState {
+  token: string | null;
   isLoggedIn: boolean;
   loggedOutReason: LogOutReason | null;
   error: string | null;
@@ -47,17 +48,27 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
   const { search } = useLocation();
   const navigate = useNavigate();
   const location = useLocation();
-
   /**
    * State
    */
-  const [authState, setAuthState] = useState<AuthState>({
-    isLoggedIn: false,
-    loggedOutReason: null,
-    error: null,
-    waiting: false,
+  const [authState, setAuthState] = useState<AuthState>(() => {
+    const storedToken = getItem('token');
+    return {
+      token: storedToken || null,
+      isLoggedIn: !!storedToken,
+      loggedOutReason: null,
+      error: null,
+      waiting: false,
+    };
   });
-  const [token, setToken] = useState<string | null>(null);
+  /**
+  const [token, setToken] = useState<string | null>(() => {
+    // Check localStorage for any saved state first
+    const storedToken = getItem('token');
+    console.log(storedToken);
+    return storedToken || null;
+  });
+   */
   const [user, setUser] = useState<Models.User | null>(null);
 
   // If user is inactive for this period of time AND logged in, log them out
@@ -71,6 +82,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
    * On Init
    */
   useEffect(() => {
+    /**
     const storedToken = getItem('token');
     const storedUser = getItem('user');
     if (storedToken && storedUser) {
@@ -78,6 +90,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
       setUser(storedUser);
       setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true }));
     }
+     */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -106,8 +119,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
         }
         const { token, user } = response.data;
 
-        setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true, waiting: false }));
-        setToken(token);
+        setAuthState(stateSrc => ({ ...stateSrc, isLoggedIn: true, waiting: false, token }));
         setUser(user || null);
         setItem('token', token);
         setItem('user', user || null);
@@ -123,9 +135,8 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
    * Log the user out
    */
   const logout = (logOutReason?: LogOutReason | null) => {
-    setToken(null);
     setUser(null);
-    setAuthState(stateSrc => ({ ...stateSrc, error: null, isLoggedIn: false, loggedOutReason: logOutReason || null }));
+    setAuthState(stateSrc => ({ ...stateSrc, error: null, isLoggedIn: false, loggedOutReason: logOutReason || null, token: null }));
     removeItem('token');
     removeItem('user');
 
@@ -151,7 +162,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | null }) => {
         error: authState.error,
         loggedOutReason: authState.loggedOutReason,
         waiting: authState.waiting,
-        token,
+        token: authState.token,
         user,
         login,
         logout,
