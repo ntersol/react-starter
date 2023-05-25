@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 interface UserFormProps {
   user?: Models.User | null;
   userUpdated?: (user: Models.User) => void;
+  userReset?: () => void;
 }
 
 const defaultUser: Models.User = {
@@ -32,7 +33,7 @@ const defaultUser: Models.User = {
   },
 };
 
-export function UserForm({ user, userUpdated }: UserFormProps) {
+export function UserForm({ user, userUpdated, userReset }: UserFormProps) {
   const {
     register,
     handleSubmit,
@@ -54,13 +55,18 @@ export function UserForm({ user, userUpdated }: UserFormProps) {
    */
   const onSubmit = (data: Models.User) => {
     userUpdated && userUpdated(removeNils(data));
+    onReset();
+  };
+
+  const onReset = () => {
     reset({ ...defaultUser });
+    userReset && userReset();
   };
 
   return (
     <div>
       {userForm?.id && (
-        <button className="link" style={{ float: 'right' }} onClick={() => reset({ ...defaultUser })}>
+        <button className="link" style={{ float: 'right' }} onClick={() => onReset()}>
           Cancel
         </button>
       )}

@@ -3,7 +3,7 @@ import { NtsState } from '../api/api.models';
 
 /** Default UI state */
 interface UiState<t> {
-  state: t;
+  state: t | null;
   update: (state: Partial<t>) => void;
   reset: () => void;
 }
@@ -38,8 +38,8 @@ export function Users() {
   const { state, update, reset } = usersUiStore.useContext();
 }
 */
-export const useUiStore = <t extends object>(initialState: t, options?: NtsState.UIStoreOptions) => {
-  const Context = createContext<UiState<t>>(stateInitial(initialState));
+export const createUiStore = <t extends object | null>(initialState: t, options?: NtsState.UIStoreOptions) => {
+  const Context = createContext<UiState<t>>(stateInitial({ ...initialState }));
 
   /** Global UI State Context */
   const useUiContext = () => useContext(Context);
@@ -47,26 +47,50 @@ export const useUiStore = <t extends object>(initialState: t, options?: NtsState
   /** Global UI State Provider */
   const Provider = ({ children }: { children?: ReactNode | null }) => {
     // Global UI State defaults
-    const [uiState, setUiState] = useState<t>(() => {
+    const [uiState, setUiState] = useState<t | null>(() => {
       if (!options?.localStorageId) {
-        return initialState;
+        return { ...initialState };
       }
       // Check localStorage for any saved state first
       const savedState = localStorage.getItem(options.localStorageId);
-      return savedState ? JSON.parse(savedState) : initialState;
+      return savedState ? JSON.parse(savedState) : { ...initialState };
     });
 
     // On Changes to uiState, update localstorage
     useEffect(() => {
-      if (options?.localStorageId) {
-        window.localStorage.setItem(options?.localStorageId, JSON.stringify(uiState));
+      if (!options?.localStorageId) {
+        return;
+      }
+      // If UI state provided
+      if (uiState) {
+        localStorage.setItem(options.localStorageId, JSON.stringify(uiState));
+      } else if (uiState === null) {
+        // If null, remove
+        localStorage.removeItem(options.localStorageId);
       }
     }, [uiState]);
 
-    /** Change global UI state. Accepts a partial of the UI state object */
-    const update = (state: Partial<t>) => setUiState(stateSrc => ({ ...stateSrc, ...state }));
-    /** Reset state */
-    const reset = () => setUiState(initialState);
+    /**
+     * Change global UI state. Accepts a partial of the UI state object
+     * @param state
+     */
+    const update = (state: Partial<t> | null) => {
+      if (state === null) {
+        setUiState(null);
+      } else if (typeof state === 'object' && state !== null) {
+        setUiState(stateSrc => ({ ...stateSrc!, ...state }));
+      } else {
+        setUiState(state);
+      }
+    };
+
+    /**
+     * Reset state to initial
+     * @returns
+     */
+    const reset = () => setUiState({ ...initialState });
+
+    // Return provider
     return <Context.Provider value={{ state: uiState, update, reset }}>{children}</Context.Provider>;
   };
 
