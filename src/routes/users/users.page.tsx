@@ -53,7 +53,7 @@ export function Users() {
     <div id="users-page">
       <Helmet>
         <title>Manage Users</title>
-        <meta name="description" content="Starter Application for NTERSOL React projects" />
+        <meta name="description" content="Starter Application for React projects" />
       </Helmet>
       <div className="page-content">
         <div className="container-fluid">

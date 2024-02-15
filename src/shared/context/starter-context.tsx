@@ -18,7 +18,7 @@ const NUM_ITEMS = 6;
  * @returns
  */
 export const StarterProvider: FC<Models.IChildrenProps> = function ({ children }) {
-  const HTMLtitlePre = 'NTERSOL React Starter App';
+  const HTMLtitlePre = 'React Starter App';
   const [JSONdata, setJSONdata] = useState([]);
   const url: string = `https://randomuser.me/api?results=${NUM_ITEMS}`;
   const fetchData = async (url: string) => {

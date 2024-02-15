@@ -16,7 +16,7 @@ export default function ReduxDemo() {
       <div>
         <div id={style.contextDemo}>
           <Helmet>
-            <title>NTERSOL React Starter App - Redux Demo</title>
+            <title>React Starter App - Redux Demo</title>
           </Helmet>
           <div className={style.clients}>
             <BlogClient saveArticle={saveArticle} position={1} />
