@@ -1,17 +1,13 @@
 {
+  "parser": "@typescript-eslint/parser",
   "env": {
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "jest/globals": true
+    "jest/globals": true,
+    "jest": true
   },
-  "extends": [
-    "standard",
-    "standard-react",
-    "standard-jsx",
-    "eslint:recommended",
-    "plugin:jest/recommended"
-  ],
+  "extends": ["standard", "standard-react", "standard-jsx", "eslint:recommended", "plugin:jest/recommended", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
@@ -20,16 +16,18 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react", "jest"],
+  "plugins": ["react", "jest", "react-hooks"],
   "rules": {
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "never"],
+    "no-unused-vars": "off",
+    "spaced-comment": "off",
     "one-var": "off",
+    "dot-notation": "off",
+    "react/self-closing-comp": "off",
     "react/jsx-no-bind": "off",
     "react/jsx-boolean-value": "off",
     "jsx-a11y/href-no-hash": "off",
+    "react/no-unused-prop-types": "off",
     "camelcase": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-closing-tag-location": "off",
@@ -41,5 +39,13 @@
     "react": {
       "version": "16.13.1"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
 }

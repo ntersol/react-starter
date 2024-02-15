@@ -1,0 +1,33 @@
+@import '$shared/styles/vars';
+@import '$shared/styles/mixins';
+@import '$shared/styles/_misc';
+
+// Usage: .class{color: var(--nts-primary);}
+@mixin convert($list) {
+  @each $name, $value in $list {
+    --nts-#{$name}: #{$value};
+  }
+}
+
+/**
+* Global CSS Variables
+* USAGE:
+*
+* @media (max-width: var(--nts-large)) {}
+* color: var(--nts-interact);
+*/
+:root {
+  @include convert($breakpoints);
+  @include convert($colors);
+}
+
+button.link {
+  border: 0;
+  background: initial;
+  display: inline-block;
+  color: var(--nts-interact);
+}
+
+a:not([href]):not([tabindex]) {
+  color: var(--nts-interact);
+}
