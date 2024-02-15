@@ -11,7 +11,7 @@ export function Header({ showNav }: HeaderProps = { showNav: true }) {
   return (
     <header>
       <NavLink to="/" className={styles['logo-link']}>
-        <img className={styles['logo']} alt="React Starter" />
+        React Starter
       </NavLink>
 
       <div className={styles['nav-content']}>{showNav !== false && <Nav />}</div>

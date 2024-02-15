@@ -8,7 +8,12 @@ export function HomePage() {
         <title>Home Page</title>
         <meta name="description" content="Starter Application for React projects" />
       </Helmet>
-      <div className="page-content">Home Page</div>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 col-md-8">Write Cool Code</div>
+          <div className="col-12 col-md-4">Sidebar</div>
+        </div>
+      </div>
     </div>
   );
 }
