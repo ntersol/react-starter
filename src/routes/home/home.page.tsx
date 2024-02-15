@@ -6,7 +6,7 @@ export function HomePage() {
     <div id="home-page">
       <Helmet>
         <title>Home Page</title>
-        <meta name="description" content="Starter Application for NTERSOL React projects" />
+        <meta name="description" content="Starter Application for React projects" />
       </Helmet>
       <div className="page-content">Home Page</div>
     </div>

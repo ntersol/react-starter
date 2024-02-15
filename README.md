@@ -1,4 +1,4 @@
-# NTERSOL React Starter app
+# React Starter app
 
 This application is a series of demos of various features of React that can help jump start an application. One can pick and choose from the features list for your apps needs.
 
@@ -191,10 +191,9 @@ turn based on [material-ui (a.k.a. MUI)](https://mui.com/). The packages added t
 
 ## favicon
 
-An NTERSOL favicon as added, look for it in your browser tabs.
+An favicon as added, look for it in your browser tabs.
 
-The approach was to take a small logo from [Company Images](https://ntersol.atlassian.net/wiki/spaces/NTER/pages/98566145/Company+Images)
-and pass it to the online [Favicon Generator](https://favicon.io/favicon-converter/). The images it produced
+The approach was to take a small logo and pass it to the online [Favicon Generator](https://favicon.io/favicon-converter/). The images it produced
 were all copied into `public`, they are:
 
 > android-chrome-192x192.png, favicon.ico, android-chrome-512x512.png, index.html, apple-touch-icon.png manifest.json
