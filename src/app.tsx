@@ -12,8 +12,8 @@ function App() {
   return (
     <div id="app">
       <Helmet>
-        <title>NTERSOL React Starter App - HomePage</title>
-        <meta name="description" content="Starter Application for NTERSOL React projects" />
+        <title>React Starter App - HomePage</title>
+        <meta name="description" content="Starter Application for React projects" />
       </Helmet>
       <Masterpage>
         <main>
