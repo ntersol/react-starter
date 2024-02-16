@@ -26,12 +26,13 @@ export const AutoComplete = () => {
 
   useEffect(() => {
     // On Init
-    getUsers(null, true);
+    // Load initial list of users
+    // getUsers(null, true);
     // On unmount
     return () => {
       console.log('Unload');
     };
-  }, []);
+  });
 
   /**
    * Make changes to state
@@ -52,17 +53,13 @@ export const AutoComplete = () => {
     if (!isDebouncing) {
       isDebouncing = true;
       setTimeout(() => {
-        Promise.all([getUsers(value), axios.get<any[]>('https://jsonplaceholder.typicode.com/posts')]).then(
+        Promise.all([getUsers(value), getPosts(value)]).then(
           ([users, posts]) => {
+            console.log(users, posts);
             stateChange({
               loading: false,
               users,
-              posts: posts.data.filter(user =>
-                JSON.stringify(user)
-                  .toLowerCase()
-                  .replace(/[^a-zA-Z ]/g, '')
-                  .includes(value.toLowerCase().replace(/[^a-zA-Z ]/g, '')),
-              ),
+              posts,
             });
           },
           error => stateChange({ loading: false, error }),
@@ -94,16 +91,55 @@ export const AutoComplete = () => {
     });
   }
 
+  /**
+   * Get all posts
+   * @param searchValue - Optional filter value
+   * @param addData - Add data directly to state in addition to being returned
+   * @returns
+   */
+  function getPosts(searchValue?: string | null, addData = false) {
+    return axios.get<any[]>('https://jsonplaceholder.typicode.com/posts').then(response => {
+      const posts = !searchValue
+        ? response.data
+        : response.data.filter(post =>
+            JSON.stringify(post)
+              .toLowerCase()
+              .replace(/[^a-zA-Z ]/g, '')
+              .includes((searchValue ?? '').toLowerCase().replace(/[^a-zA-Z ]/g, '')),
+          );
+      if (addData) {
+        stateChange({ posts });
+      }
+      return posts;
+    });
+  }
+
   return (
     <div>
       <input onChange={debounceInputChanges} />
       {state.loading && <div>Loading</div>}
       {!!state.error && <div>Error:{state.error}</div>}
+      <hr />
+      <DisplayOutput users={state.users} posts={state.posts}></DisplayOutput>
+    </div>
+  );
+};
+
+interface DisplayOutputProps {
+  users: Models.User[] | null;
+  posts: any[] | null;
+}
+
+export const DisplayOutput: React.FC<Partial<AutoCompleteStateTyped>> = ({ users, posts }) => {
+  // console.log('state', state);
+  // const { users, posts } = state.state;
+  return (
+    <>
       <h2>Users</h2>
-      {state.users?.length ? state.users?.map(user => <div key={user.id}>{user.name}</div>) : <div>No users found</div>}
+      {users?.length ? users?.map(user => <div key={user.id}>{user.name}</div>) : <div>No users found</div>}
       <hr />
       <h2>Posts</h2>
-      {state.posts?.length ? state.posts?.map(post => <div key={post.id}>{post.name}</div>) : <div>No posts found</div>}
-    </div>
+      {posts?.length ? posts?.map(post => <div key={post.id}>{post.title}</div>) : <div>No posts found</div>}
+    </>
   );
 };
