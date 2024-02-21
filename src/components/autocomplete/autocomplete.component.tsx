@@ -21,13 +21,14 @@ const initialState: AutoCompleteStateTyped = {
   error: null,
 };
 
-export const AutoComplete = () => {
+export const AutoComplete: React.FC = () => {
   // State management
   const [state, setState] = useState(initialState);
-  // Component reference
+  // Is component mounted, use to prevent async operations when unmounted
   const isMounted = useRef(false);
+  // Clear up and running debounce operation
+  const timeoutIdRef = useRef<number | null>(null);
 
-  let timeout: any | null = null;
   console.log('Initing');
 
   useEffect(() => {
@@ -38,9 +39,9 @@ export const AutoComplete = () => {
     getUsers(null, true);
     // On unmount
     return () => {
-      if (timeout) {
-        isMounted.current = false;
-        clearTimeout(timeout);
+      isMounted.current = false;
+      if (timeoutIdRef.current !== null) {
+        clearTimeout(timeoutIdRef.current);
       }
     };
   }, []);
@@ -64,10 +65,10 @@ export const AutoComplete = () => {
 
     if (!isDebouncing) {
       isDebouncing = true;
-      if (timeout) {
-        clearTimeout(timeout);
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
       }
-      timeout = setTimeout(() => {
+      timeoutIdRef.current = window.setTimeout(() => {
         Promise.all([getUsers(value), getPosts(value)]).then(
           ([users, posts]) => {
             isDebouncing = false;
