@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { Models } from '$shared';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface AutoCompleteState<t, y> {
   textValue: string | null;
@@ -30,21 +30,6 @@ export const AutoComplete: React.FC = () => {
   const timeoutIdRef = useRef<number | null>(null);
 
   console.log('Initing');
-
-  useEffect(() => {
-    isMounted.current = true;
-    // On Init
-    console.log('useEffect');
-    // Load initial list of users
-    getUsers(null, true);
-    // On unmount
-    return () => {
-      isMounted.current = false;
-      if (timeoutIdRef.current !== null) {
-        clearTimeout(timeoutIdRef.current);
-      }
-    };
-  }, []);
 
   /**
    * Make changes to state
@@ -82,7 +67,7 @@ export const AutoComplete: React.FC = () => {
           },
           error => stateChange({ loading: false, error }),
         );
-      }, 3000);
+      }, 1000);
     }
   };
 
@@ -92,7 +77,7 @@ export const AutoComplete: React.FC = () => {
    * @param addData - Manually add the data to state instead of just returning it
    * @returns
    */
-  function getUsers(searchValue?: string | null, addData = false) {
+  const getUsers = useCallback((searchValue?: string | null, addData = false) => {
     return axios.get<Models.User[]>('https://jsonplaceholder.typicode.com/users').then(response => {
       const users = !searchValue
         ? response.data
@@ -107,7 +92,7 @@ export const AutoComplete: React.FC = () => {
       }
       return users;
     });
-  }
+  }, []);
 
   /**
    * Get all posts
@@ -116,6 +101,7 @@ export const AutoComplete: React.FC = () => {
    * @returns
    */
   function getPosts(searchValue?: string | null, addData = false) {
+    console.log(1);
     return axios.get<any[]>('https://jsonplaceholder.typicode.com/posts').then(response => {
       const posts = !searchValue
         ? response.data
@@ -132,9 +118,24 @@ export const AutoComplete: React.FC = () => {
     });
   }
 
+  useEffect(() => {
+    isMounted.current = true;
+    // On Init
+    console.log('useEffect');
+    // Load initial list of users
+    getUsers(null, true);
+    // On unmount
+    return () => {
+      isMounted.current = false;
+      if (timeoutIdRef.current !== null) {
+        clearTimeout(timeoutIdRef.current);
+      }
+    };
+  }, [getUsers]);
+
   return (
     <div>
-      <input onChange={debounceInputChanges} />
+      <input value={state.textValue ?? ''} onChange={debounceInputChanges} />
       <ApiState loading={state.loading} error={state.error}></ApiState>
       <hr />
       <DisplayOutput users={state.users} posts={state.posts}></DisplayOutput>
