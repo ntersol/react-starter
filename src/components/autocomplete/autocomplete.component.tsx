@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { Models } from '$shared';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AutoCompleteState<t, y> {
   textValue: string | null;
@@ -22,17 +22,28 @@ const initialState: AutoCompleteStateTyped = {
 };
 
 export const AutoComplete = () => {
+  // State management
   const [state, setState] = useState(initialState);
+  // Component reference
+  const isMounted = useRef(false);
+
+  let timeout: any | null = null;
+  console.log('Initing');
 
   useEffect(() => {
+    isMounted.current = true;
     // On Init
+    console.log('useEffect');
     // Load initial list of users
-    // getUsers(null, true);
+    getUsers(null, true);
     // On unmount
     return () => {
-      console.log('Unload');
+      if (timeout) {
+        isMounted.current = false;
+        clearTimeout(timeout);
+      }
     };
-  });
+  }, []);
 
   /**
    * Make changes to state
@@ -50,21 +61,27 @@ export const AutoComplete = () => {
   const debounceInputChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
     value = e.target.value;
     stateChange({ textValue: value, loading: true });
+
     if (!isDebouncing) {
       isDebouncing = true;
-      setTimeout(() => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
         Promise.all([getUsers(value), getPosts(value)]).then(
           ([users, posts]) => {
-            console.log(users, posts);
-            stateChange({
-              loading: false,
-              users,
-              posts,
-            });
+            isDebouncing = false;
+            if (isMounted.current) {
+              stateChange({
+                loading: false,
+                users,
+                posts,
+              });
+            }
           },
           error => stateChange({ loading: false, error }),
         );
-      }, 500);
+      }, 3000);
     }
   };
 
@@ -84,7 +101,7 @@ export const AutoComplete = () => {
               .replace(/[^a-zA-Z ]/g, '')
               .includes((searchValue ?? '').toLowerCase().replace(/[^a-zA-Z ]/g, '')),
           );
-      if (addData) {
+      if (addData && isMounted.current) {
         stateChange({ users });
       }
       return users;
@@ -107,7 +124,7 @@ export const AutoComplete = () => {
               .replace(/[^a-zA-Z ]/g, '')
               .includes((searchValue ?? '').toLowerCase().replace(/[^a-zA-Z ]/g, '')),
           );
-      if (addData) {
+      if (addData && isMounted.current) {
         stateChange({ posts });
       }
       return posts;
@@ -117,22 +134,21 @@ export const AutoComplete = () => {
   return (
     <div>
       <input onChange={debounceInputChanges} />
-      {state.loading && <div>Loading</div>}
-      {!!state.error && <div>Error:{state.error}</div>}
+      <ApiState loading={state.loading} error={state.error}></ApiState>
       <hr />
       <DisplayOutput users={state.users} posts={state.posts}></DisplayOutput>
     </div>
   );
 };
 
-interface DisplayOutputProps {
-  users: Models.User[] | null;
-  posts: any[] | null;
-}
-
+/**
+ * Display users and posts
+ * @param param0
+ * @returns
+ */
 export const DisplayOutput: React.FC<Partial<AutoCompleteStateTyped>> = ({ users, posts }) => {
-  // console.log('state', state);
-  // const { users, posts } = state.state;
+  // export const DisplayOutput: React.FC<{ state: AutoCompleteStateTyped }> = ({ state }) => {
+  // const { users, posts }: AutoCompleteStateTyped = state;
   return (
     <>
       <h2>Users</h2>
@@ -143,3 +159,17 @@ export const DisplayOutput: React.FC<Partial<AutoCompleteStateTyped>> = ({ users
     </>
   );
 };
+
+/**
+ * Display API state
+ * @param param0
+ * @returns
+ */
+function ApiState({ loading, error }: Partial<AutoCompleteStateTyped>) {
+  return (
+    <>
+      {loading && <div>Loading</div>}
+      {!!error && <div>Error:{error}</div>}
+    </>
+  );
+}
