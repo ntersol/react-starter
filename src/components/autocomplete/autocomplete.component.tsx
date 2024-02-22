@@ -46,6 +46,7 @@ export const AutoComplete: React.FC = () => {
   let value = '';
   const debounceInputChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
     value = e.target.value;
+    // Set loading to true
     stateChange({ textValue: value, loading: true });
 
     if (!isDebouncing) {
